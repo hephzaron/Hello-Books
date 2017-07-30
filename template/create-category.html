@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Create category</title>
+
+	<link rel="stylesheet" href="demo.css">
+	<link rel="stylesheet" href="create-category.css">
+
+</head>
+<body>
+
+    <header>
+        <h1>ADMINISTRATOR</h1>
+        <a href="">LOGOUT</a>
+    </header>
+
+    <ul>
+        <li><a href="create-category.html" class="active" >Create Category</a></li>
+        <li><a href="form-admin.html" >Update Record</a></li>
+        <li><a href="" >Upload Book</a></li>
+    </ul>
+
+
+    <div class="main-content">
+
+        <form class="form-labels-on-top" method="post" action="#">
+
+            <div class="form-title-row">
+                <h1>Add to existing book category</h1>
+            </div>
+
+            <div class="form-row">
+                <label>
+                    <span>Existing Book Category</span>
+                    <select name="dropdown">
+                        <option>category 1</option>
+                        <option>category 2</option>
+                        <option>category 3</option>
+                        <option>category 4</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-row">
+                <label>
+                    <span>New Category Name</span>
+                    <input type="text" name="category-name">
+                </label>
+            </div>
+
+            <div class="form-row">
+                <label>
+                    <input type="submit" name="create" value="Create">
+                </label>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

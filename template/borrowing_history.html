@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>User profile</title>
+    <link href="borrowing-history.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <!--header start-->
+    <div id="header" class="section">
+        <img alt="" class="img-circle" src="user-default128x128.png">
+        <p>welcome User name</p>
+    </div>
+    <!--header end-->
+
+    <!--info to user section start-->
+    <div class="section">
+        <p>
+          <i>Check out the books in our archive and select your preferred choice</i> 
+        </p>
+        <p class="quote">'-Hello books'</p>
+    </div>
+    <!--Info to user section end-->
+
+    
+    <!--My borrowed list section start-->
+    <div class="section">
+        <h1><span>Borrowing history</span></h1>
+        <div>
+            <ol>
+                <li>
+                    BOOK 1 was borrowed on
+                    <p id="date">
+                        <script>
+                            var today = new Date;
+                            document.getElementById('date').innerHTML = today.toDateString() + ' @ ' + (today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds());
+                        </script>
+                    </p>
+                </li>
+                <li>
+                    BOOK 2 was borrowed on
+                    <p id="date1">
+                        <script>
+                            var today1 = new Date;
+                            document.getElementById('date1').innerHTML = today1.toDateString() + ' @ ' + (today1.getHours() + ':' + today1.getMinutes() + ':' + today1.getSeconds());
+                        </script>
+                    </p>
+                </li>
+                <li>
+                    BOOK 3 was borrowed on
+                    <p id="date2">
+                        <script>
+                            var today2 = new Date;
+                            document.getElementById('date2').innerHTML = today2.toDateString() + ' @ ' + (today2.getHours() + ':' + today2.getMinutes() + ':' + today2.getSeconds());
+                        </script>
+                    </p>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <!--My borrowed list section end-->
+
+   
+</body>
+</html>

@@ -29,11 +29,10 @@ module.exports = {
         "react/react-in-jsx-scope": 1,
         "no-console": 0,
         "indent": [
-            "error", 4
+            "off"
         ],
         "linebreak-style": [
-            "error",
-            "windows"
+            "off"
         ],
         "quotes": [
             "warn",
@@ -46,6 +45,9 @@ module.exports = {
         "comma-dangle": [
             "error",
             "never"
+        ],
+        "no-useless-escape": [
+            "off"
         ],
         "quote-props": [
             "off"

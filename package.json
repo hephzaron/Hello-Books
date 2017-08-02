@@ -1,0 +1,23 @@
+{
+  "name": "hello-books",
+  "version": "1.0.0",
+  "description": "Liibrary application",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hephzaron/Hello-Books.git"
+  },
+  "keywords": [
+    "TDD",
+    "Javascript"
+  ],
+  "author": "Daramola Tobi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hephzaron/Hello-Books/issues"
+  },
+  "homepage": "https://github.com/hephzaron/Hello-Books#readme"
+}

@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/hephzaron/Hello-Books/issues"
   },
-  "homepage": "https://github.com/hephzaron/Hello-Books#readme"
+  "homepage": "https://github.com/hephzaron/Hello-Books#readme",
+  "dependencies": {
+    "chai": "^4.1.0",
+    "mocha": "^3.5.0"
+  }
 }

@@ -4,14 +4,16 @@
         "username": "hephzibah",
         "password": "hephzibah",
         "database": "hellobook",
-        "host": "localhost",
+        "host": "127.0.0.1",
+        "port": "8000",
         "dialect": "postgres"
     },
     "test": {
         "username": "root",
         "password": null,
         "database": "database_test",
-        "host": "localhost",
+        "host": "127.0.0.1",
+        "port": "8000",
         "dialect": "postgres"
     },
     "production": {
@@ -19,6 +21,7 @@
         "password": null,
         "database": "database_production",
         "host": "127.0.0.1",
+        "port": "8000",
         "dialect": "postgres"
     }
 }

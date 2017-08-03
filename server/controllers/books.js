@@ -43,7 +43,11 @@ module.exports = {
                             }
                             res.send(books);
                         })
+<<<<<<< HEAD
                     };
+=======
+                    }
+>>>>>>> create-controllers
                 }
             }
         }

@@ -5,7 +5,7 @@
         "password": "hephzibah",
         "database": "hellobook",
         "host": "127.0.0.1",
-        "port": "8000",
+        "port": "5432",
         "dialect": "postgres"
     },
     "test": {
@@ -13,7 +13,7 @@
         "password": null,
         "database": "database_test",
         "host": "127.0.0.1",
-        "port": "8000",
+        "port": "5432",
         "dialect": "postgres"
     },
     "production": {
@@ -21,7 +21,7 @@
         "password": null,
         "database": "database_production",
         "host": "127.0.0.1",
-        "port": "8000",
+        "port": "5432",
         "dialect": "postgres"
     }
 }

@@ -3,11 +3,17 @@ module.exports = function(sequelize, DataTypes) {
     var Books = sequelize.define('Books', {
         title: DataTypes.STRING,
         bookInfo: DataTypes.STRING,
-        quantity: DataTypes.STRING
+        quantity: DataTypes.INTEGER
     }, {
         classMethods: {
             associate: function(models) {
-                // associations can be defined here
+                // establish relationship between books and user
+                Books.belongsTo(models.User, {
+                    foriegnKey: 'userId',
+
+                    // Update books in library of roles if onDelete is called
+                    onDelete: 'CASCADE'
+                });
             }
         }
     });

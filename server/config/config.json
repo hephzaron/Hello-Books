@@ -4,15 +4,16 @@
         "username": "hephzibah",
         "password": "hephzibah",
         "database": "hellobook",
-        "host": "127.0.0.1",
+        "host": "localhost",
         "port": "5432",
-        "dialect": "postgres"
+        "dialect": "postgres",
+        "storage": "path/to/folder/prod_database.sqlite"
     },
     "test": {
         "username": "root",
         "password": null,
         "database": "database_test",
-        "host": "127.0.0.1",
+        "host": "localhost",
         "port": "5432",
         "dialect": "postgres"
     },
@@ -20,7 +21,7 @@
         "username": "root",
         "password": null,
         "database": "database_production",
-        "host": "127.0.0.1",
+        "host": "localhost",
         "port": "5432",
         "dialect": "postgres"
     }

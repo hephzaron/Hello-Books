@@ -1,25 +1,40 @@
 const booksController = require('..../controllers').books;
 const signUpController = require('..../controllers').user;
-<<<<<<< HEAD
-const signInController = require('..../controllers').user();
-=======
-const signInController
->>>>>>> create-controllers
+const signInController = require('..../controllers').signin;
+
 
 module.exports = (app) => {
 
     app.get('/api', (req, res) => res.status(200).send({
         message: 'add books'
     }));
+    // create new accounts
+    app.post('/api/user/signup', signUpController.create);
 
+    // user login api
+    app.post('/api/user/signin', signInController.create);
+
+    //
+    app.post('/api/user/signin', signInController.create);
+
+    //allow users to add new books to the library
     app.post('/api/books', booksController.create);
+
+    // allow users to modify book information
     app.put('/api/books/bookId', booksController.update);
+
+    // allow users to get all  books in the library
     app.get('/api/books', booksController.list);
-    app.post('/api/books/:bookId/list', booksController.create);
-    app.post('/api/users/signup', signUpController.create);
-<<<<<<< HEAD
-    app.post('/api/users/signup', signInController.create);
-=======
-    app.post('/api/users/signup', signUPController.create);
->>>>>>> create-controllers
+
+    //allow users to get all books borrrowed unreturned
+
+
+
+    // allow users to borrow book
+    app.post('/api/user/userId/books', booksController.create);
+
+    // enable user to return a book
+    app.put('/api/user/userId/books', booksController.create);
+
+
 };

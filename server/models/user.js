@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-    const User = sequelize.define('User', {
+    const Users = sequelize.define('Users', {
         user_id: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 // Each User is attached to a list of book borrowed from
                 // the library
-                User.hasMany(models.Books, {
+                Users.hasMany(models.Books, {
 
                     foreignKey: 'userId',
                     as: 'books'
@@ -19,6 +19,6 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     });
-    return User;
+    return Users;
 
 }

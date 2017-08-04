@@ -1,6 +1,6 @@
 // ths add books to the library
 
-const SignIn = require('.../models').SignIn;
+const SignIn = require('../models').SignIn;
 
 module.exports = {
     create(req, res) {

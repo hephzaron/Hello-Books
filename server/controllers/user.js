@@ -1,10 +1,10 @@
 // ths add books to the library
 
-const User = require('.../models').User;
+const Users = require('../models').Users;
 
 module.exports = {
     create(req, res) {
-        return User
+        return Users
             .create({
                 user_id: req.body.user_id,
                 email: req.body.email,

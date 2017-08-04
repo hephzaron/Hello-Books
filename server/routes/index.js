@@ -1,6 +1,6 @@
-const booksController = require('..../controllers').books;
-const signUpController = require('..../controllers').user;
-const signInController = require('..../controllers').signin;
+const booksController = require('../controllers').books;
+const signUpController = require('../controllers').user;
+//const signInController = require('../controllers').signin;
 
 
 module.exports = (app) => {
@@ -12,29 +12,22 @@ module.exports = (app) => {
     app.post('/api/user/signup', signUpController.create);
 
     // user login api
-    app.post('/api/user/signin', signInController.create);
-
-    //
-    app.post('/api/user/signin', signInController.create);
+    app.post('/api/user/signin', signUpController.create);
 
     //allow users to add new books to the library
     app.post('/api/books', booksController.create);
 
     // allow users to modify book information
-    app.put('/api/books/bookId', booksController.update);
+    //app.put('/api/books/bookId', booksController.update);
 
     // allow users to get all  books in the library
     app.get('/api/books', booksController.list);
-
-    //allow users to get all books borrrowed unreturned
-
-
 
     // allow users to borrow book
     app.post('/api/user/userId/books', booksController.create);
 
     // enable user to return a book
-    app.put('/api/user/userId/books', booksController.create);
+    //app.put('/api/user/userId/books', booksController.create);
 
 
 };

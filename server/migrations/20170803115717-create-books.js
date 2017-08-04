@@ -29,14 +29,14 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 onDelete: 'CASCADE',
                 references: {
-                    model: 'User',
+                    model: 'Users',
                     key: 'id',
                     as: 'userId'
                 }
             }
         });
     },
-    down: function(queryInterface, Sequelize) {
+    down: function(queryInterface /*, Sequelize*/ ) {
         return queryInterface.dropTable('Books');
     }
 };

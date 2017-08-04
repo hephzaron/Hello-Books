@@ -1,53 +1,46 @@
 // ths add books to the library
 
-const Books = require('.../models').Books;
+const Books = require('../models').Books;
 
 module.exports = {
-        create(req, res) {
-            return Books
-                .create({
-                    bookId: req.params.bookId,
-                    title: req.body.title,
-                    bookInfo: req.body.bookInfo,
-                    quantity: req.body.quantity
-                })
-                .then(books => res.status(201).send(books))
-                .catch(err => res.status(400).send(err));
-        },
-        list(req, res) {
-            return Books
-                .all()
-                .then(books => res.status(200).send(books))
-                .catch(err => res.status(400).send(err));
-        },
-        update(req, res) {
-
-            // find exiisting resource id
-            Books.findById(req.params.bookId, function(err, books) {
-                    if (err) {
-                        res.status(500).send(err);
-                    } else {
-
-                        /*update book library with any possible book attribute 
-                        that may have been submitted to the body of the request
-                        if attribute not found, revert back to default*/
-
-                        book.title = req.body.title || book.title;
-                        book.bookInfo = req.body.bookInfo || book.bookInfo;
-                        book.quantity = req.body.quantity || book.quantity
-
-                        // save updated info
-                        book.save(function(err, books) {
-                            if (err) {
-                                res.status(500).send(err)
-                            }
-                            res.send(books);
-                        })
-<<<<<<< HEAD
-                    };
-=======
-                    }
->>>>>>> create-controllers
+    create(req, res) {
+        return Books
+            .create({
+                bookId: req.params.bookId,
+                title: req.body.title,
+                bookInfo: req.body.bookInfo,
+                quantity: req.body.quantity
+            })
+            .then(books => res.status(201).send(books))
+            .catch(err => res.status(400).send(err));
+    },
+    list(req, res) {
+        return Books
+            .all()
+            .then(books => res.status(200).send(books))
+            .catch(err => res.status(400).send(err));
+    }
+    /*update(req, res) {
+        return Books
+            .find({
+                where: {
+                    id: req.params.bookId,
+                    userId: req.params.userId
                 }
-            }
-        }
+            })
+            .then(books => {
+                    if (!books) {
+                        return res.status(404).send({
+                            message: 'Book not found'
+                        });
+                    }
+                    return books
+                        .update({
+                            content: req.body.content || books.content,
+                            complete: req.body.content || books.complete
+                        })
+                        .then(bookUpdate => res.status(200).send(bookUpdate))
+                        .catch(err => res.status(400).send(err));
+                }
+    }*/
+};

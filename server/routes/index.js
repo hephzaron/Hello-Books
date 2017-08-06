@@ -12,7 +12,7 @@ module.exports = (app) => {
     app.post('/api/user/signup', signUpController.create);
 
     // user login api
-    app.post('/api/user/signin', signUpController.create);
+    //app.post('/api/user/signin', signInController.create);
 
     //allow users to add new books to the library
     app.post('/api/books', booksController.create);

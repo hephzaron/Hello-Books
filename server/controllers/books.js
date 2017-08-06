@@ -19,8 +19,8 @@ module.exports = {
             .all()
             .then(books => res.status(200).send(books))
             .catch(err => res.status(400).send(err));
-    }
-    /*update(req, res) {
+    },
+    update(req, res) {
         return Books
             .find({
                 where: {
@@ -29,18 +29,18 @@ module.exports = {
                 }
             })
             .then(books => {
-                    if (!books) {
-                        return res.status(404).send({
-                            message: 'Book not found'
-                        });
-                    }
-                    return books
-                        .update({
-                            content: req.body.content || books.content,
-                            complete: req.body.content || books.complete
-                        })
-                        .then(bookUpdate => res.status(200).send(bookUpdate))
-                        .catch(err => res.status(400).send(err));
+                if (!books) {
+                    return res.status(404).send({
+                        message: 'Book not found'
+                    });
                 }
-    }*/
+                return books
+                    .update({
+                        content: req.body.content || books.content,
+                        complete: req.body.content || books.complete
+                    })
+                    .then(bookUpdate => res.status(200).send(bookUpdate))
+                    .catch(err => res.status(400).send(err));
+            });
+    }
 };

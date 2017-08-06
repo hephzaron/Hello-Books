@@ -1,6 +1,6 @@
 const booksController = require('../controllers').books;
 const signUpController = require('../controllers').user;
-//const signInController = require('../controllers').signin;
+const signInController = require('../controllers').signin;
 
 
 module.exports = (app) => {
@@ -12,13 +12,13 @@ module.exports = (app) => {
     app.post('/api/user/signup', signUpController.create);
 
     // user login api
-    //app.post('/api/user/signin', signInController.create);
+    app.post('/api/user/signin', signInController.create);
 
     //allow users to add new books to the library
     app.post('/api/books', booksController.create);
 
     // allow users to modify book information
-    //app.put('/api/books/bookId', booksController.update);
+    app.put('/api/books/:id', booksController.update);
 
     // allow users to get all  books in the library
     app.get('/api/books', booksController.list);
@@ -27,7 +27,7 @@ module.exports = (app) => {
     app.post('/api/user/userId/books', booksController.create);
 
     // enable user to return a book
-    //app.put('/api/user/userId/books', booksController.create);
+    app.put('/api/user/:id/books', booksController.create);
 
 
 };

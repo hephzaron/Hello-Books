@@ -2,6 +2,7 @@
 
 const Users = require('../models').Users;
 
+
 module.exports = {
     create(req, res) {
         return Users
@@ -13,4 +14,5 @@ module.exports = {
             .then(users => res.status(201).send(users))
             .catch(err => res.status(400).send(err));
     }
+
 };

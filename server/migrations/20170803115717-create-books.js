@@ -9,13 +9,16 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             title: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: false
             },
             bookInfo: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                allowNull: false
             },
             quantity: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                allowNull: false
             },
             createdAt: {
                 allowNull: false,
@@ -24,16 +27,17 @@ module.exports = {
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
-            },
-            userId: {
+            }
+            /*userId: {
+                autoIncrement: true,
                 type: Sequelize.INTEGER,
                 onDelete: 'CASCADE',
                 references: {
                     model: 'Users',
                     key: 'id',
                     as: 'userId'
-                }
-            }
+                }*
+                }*/
         });
     },
     down: function(queryInterface /*, Sequelize*/ ) {

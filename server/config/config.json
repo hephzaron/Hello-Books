@@ -3,7 +3,7 @@
         "username": "postgres",
         "password": "1234",
         "database": "hellobook",
-        "host": "localhost",
+        "host": "127.0.0.1",
         "port": "8000",
         "dialect": "postgres"
     },

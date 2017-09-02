@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // require routes into hello-books application
 require('./server/routes')(app);
-app.get('*', (req, res) => res.status(200).send({
+/*app.get('*', (req, res) => res.status(200).send({
     message: ('Hello Books!')
-}));
+}));*/
 
 module.exports = app;

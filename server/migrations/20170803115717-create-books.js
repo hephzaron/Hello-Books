@@ -27,17 +27,21 @@ module.exports = {
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
-            }
-            /*userId: {
-                autoIncrement: true,
+            },
+            userId: {
                 type: Sequelize.INTEGER,
                 onDelete: 'CASCADE',
                 references: {
                     model: 'Users',
                     key: 'id',
                     as: 'userId'
-                }*
-                }*/
+                }
+            },
+            returned: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
+            }
         });
     },
     down: function(queryInterface /*, Sequelize*/ ) {

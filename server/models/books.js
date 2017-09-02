@@ -1,21 +1,16 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
     var Books = sequelize.define('Books', {
-        userId:DataTypes.STRING,
         title: DataTypes.STRING,
         bookInfo: DataTypes.STRING,
-        quantity: DataTypes.INTEGER
-    }) /*{
-        classMethods: {
-            associate: function(models) {
-                // establish relationship between books and user
-                Books.belongsTo(models.User, {
-                    foriegnKey: 'userId',
-
-                    // Update books in library of roles if onDelete is called
-                    onDelete: 'CASCADE'
-                });
-            }
-}*/ 
+        quantity: DataTypes.INTEGER,
+        returned: DataTypes.BOOLEAN
+    });
+    Books.associate = (models) => {
+        Books.belongsTo(models.Users, {
+            foreignKey: 'userId',
+            onDelete: 'CASCADE'
+        });
+    };
     return Books;
 };

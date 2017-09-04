@@ -12,10 +12,6 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            author_id: {
-                allowNull: false,
-                type: Sequelize.INTEGER
-            },
             genre_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,

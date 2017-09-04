@@ -2,7 +2,6 @@
 module.exports = function(sequelize, DataTypes) {
     var Book = sequelize.define('Book', {
         title: DataTypes.STRING,
-        author_id: DataTypes.INTEGER,
         genre_id: DataTypes.INTEGER,
         description: DataTypes.TEXT,
         ISBN: DataTypes.STRING,

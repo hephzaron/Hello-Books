@@ -11,6 +11,7 @@ module.exports = {
             author_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
                 references: {
                     model: 'Authors',
@@ -21,6 +22,7 @@ module.exports = {
             book_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
                 references: {
                     model: 'Books',

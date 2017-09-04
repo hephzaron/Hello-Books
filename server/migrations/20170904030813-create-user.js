@@ -8,17 +8,17 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            user_id: {
-                type: Sequelize.STRING,
-                allowNull: false
+            username: {
+                allowNull: false,
+                type: Sequelize.STRING
             },
             email: {
-                type: Sequelize.STRING,
-                allowNull: false
+                allowNull: false,
+                type: Sequelize.STRING
             },
             password: {
-                type: Sequelize.STRING,
-                allowNull: false
+                allowNull: false,
+                type: Sequelize.STRING
             },
             createdAt: {
                 allowNull: false,
@@ -28,10 +28,9 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE
             }
-
         });
     },
-    down: function(queryInterface) {
+    down: function(queryInterface /*, Sequelize*/ ) {
         return queryInterface.dropTable('Users');
     }
 };

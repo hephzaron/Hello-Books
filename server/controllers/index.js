@@ -1,9 +1,6 @@
-const books = require('./books');
-const user = require('./user');
-const signin = require('./signin');
+const userController = require('./userController');
+
 
 module.exports = {
-    books,
-    user,
-    signin
+    userController
 };

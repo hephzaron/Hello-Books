@@ -15,6 +15,7 @@ module.exports = {
             genre_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
                 references: {
                     model: 'Genres',

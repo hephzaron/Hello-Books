@@ -1,12 +1,13 @@
 //const booksController = require('../controllers').books;
 const userController = require('../controllers').userController;
+//const userMiddleware = require('../middlewares').userMiddleware;
 //const signInController = require('../middlewares').user;
 
 
 module.exports = (app) => {
     // Api for users to create account and login to application
     app.post('/api/users/register', userController.create);
-    app.post('/api/users/signin', userController.listUser);
+    app.post('/api/users/signin', userController.signIn);
 
     //allow users to add new books to the library
     //app.post('/api/books', booksController.create);

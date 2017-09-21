@@ -18,7 +18,7 @@ module.exports = {
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
                 references: {
-                    model: 'Genres',
+                    model: 'Genre',
                     key: 'id',
                     as: 'genre_id'
                 }

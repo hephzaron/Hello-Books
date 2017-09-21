@@ -14,7 +14,7 @@ module.exports = {
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
                 references: {
-                    model: 'Authors',
+                    model: 'Author',
                     key: 'id',
                     as: 'author_id'
                 }
@@ -25,7 +25,7 @@ module.exports = {
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
                 references: {
-                    model: 'Books',
+                    model: 'Book',
                     key: 'id',
                     as: 'book_id'
                 }

@@ -7,26 +7,24 @@ module.exports = function(sequelize, DataTypes) {
         ISBN: DataTypes.STRING,
         quantity: DataTypes.INTEGER,
         available: DataTypes.INTEGER
-    }, {
-        classMethods: {
-            associate: function(models) {
-                // associations can be defined here
-                Book.hasMany(models.Borrowed, {
-                    foreignKey: 'book_id',
-                    as: 'borroweds'
-
-                });
-                Book.hasMany(models.Ownership, {
-                    foreignKey: 'book_id',
-                    as: 'ownerships'
-
-                });
-                Book.belongsTo(models.Genre, {
-                    foreignKey: 'genre_id',
-                    onDelete: 'CASCADE'
-                });
-            }
-        }
     });
+    Book.associate = (models) => {
+        // associations can be defined here
+        Book.hasMany(models.Borrowed, {
+            foreignKey: 'book_id',
+            as: 'borrowed'
+
+        });
+        Book.hasMany(models.Ownership, {
+            foreignKey: 'book_id',
+            as: 'owners'
+
+        });
+        Book.belongsTo(models.Genre, {
+            foreignKey: 'genre_id',
+            onDelete: 'CASCADE'
+        });
+
+    };
     return Book;
 };

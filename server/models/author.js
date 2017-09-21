@@ -5,19 +5,16 @@ module.exports = function(sequelize, DataTypes) {
         last_name: DataTypes.STRING,
         date_of_birth: DataTypes.DATE,
         date_of_death: DataTypes.DATE,
-        name: DataTypes.STRING,
-        life_span: DataTypes.INTEGER
-    }, {
-        classMethods: {
-            associate: function(models) {
-                // associations can be defined here
-                Author.hasMany(models.Ownership, {
-                    foreignKey: 'author_id',
-                    as: 'ownerships'
-
-                });
-            }
-        }
+        name: DataTypes.STRING
+            //life_span: DataTypes.INTEGER
     });
+    Author.associate = (models) => {
+        // associations can be defined here
+        Author.hasMany(models.Ownership, {
+            foreignKey: 'author_id',
+            as: 'ownerships'
+
+        });
+    };
     return Author;
 };

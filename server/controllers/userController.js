@@ -24,7 +24,7 @@ module.exports = {
             .then(user => res.status(201).send(user))
             .catch(err => res.status(401).send(err));
     },
-    signIn: function(req, res) {
+    signIn(req, res) {
         Users.find({
                 where: {
                     username: req.body.username,
@@ -42,5 +42,12 @@ module.exports = {
                 }
 
             }).catch(err => res.status(401).send(err));
-    }
-};
+    },
+
+    list(req, res) {
+        return Books
+            .all()
+            .then(books => res.status(200).send(books))
+            .catch(err => res.status(400).send(err));
+    },
+}

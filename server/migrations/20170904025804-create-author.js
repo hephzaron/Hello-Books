@@ -21,15 +21,17 @@ module.exports = {
                 type: Sequelize.DATE
             },
             date_of_death: {
-                type: Sequelize.DATE
+                type: Sequelize.DATE,
+                allowNull: true
             },
             name: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            life_span: {
-                type: Sequelize.INTEGER
-            },
+            /*life_span: {
+                type: Sequelize.INTEGER,
+                allowNull: true
+            },*/
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

@@ -15,6 +15,11 @@ module.exports = function(sequelize, DataTypes) {
             as: 'ownerships'
 
         });
+        Author.belongsToMany(models.Book, {
+            through: models.Ownership,
+            foreignKey: 'authorId'
+
+        });
     };
     return Author;
 };

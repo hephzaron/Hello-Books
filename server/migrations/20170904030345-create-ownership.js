@@ -8,27 +8,27 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            author_id: {
+            authorId: {
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                onUpdate: 'CASCADE',
-                onDelete: 'CASCADE',
-                references: {
-                    model: 'Author',
-                    key: 'id',
-                    as: 'author_id'
-                }
+                type: Sequelize.INTEGER
+                    /* onUpdate: 'CASCADE',
+                     onDelete: 'CASCADE',
+                     references: {
+                         model: 'Author',
+                         key: 'id',
+                         as: 'authorId'
+                     }*/
             },
-            book_id: {
+            bookId: {
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                onUpdate: 'CASCADE',
-                onDelete: 'CASCADE',
-                references: {
-                    model: 'Book',
-                    key: 'id',
-                    as: 'book_id'
-                }
+                type: Sequelize.INTEGER
+                    /* onUpdate: 'CASCADE',
+                     onDelete: 'CASCADE',
+                     references: {
+                         model: 'Book',
+                         key: 'id',
+                         as: 'bookId'
+                     }*/
             },
             createdAt: {
                 allowNull: false,

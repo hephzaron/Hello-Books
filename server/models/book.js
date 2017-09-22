@@ -15,9 +15,9 @@ module.exports = function(sequelize, DataTypes) {
             foreignKey: 'bookId'
 
         });
-        Book.hasMany(models.Ownership, {
-            foreignKey: 'book_id',
-            as: 'owners'
+        Book.belongsToMany(models.Author, {
+            through: models.Ownership,
+            foreignKey: 'bookId'
 
         });
         Book.belongsTo(models.Genre, {

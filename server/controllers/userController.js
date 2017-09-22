@@ -50,7 +50,9 @@ module.exports = {
             .findAll({
                 include: [{
                     model: Books,
+                    attributes: ['title', 'ISBN'],
                     through: {
+                        attributes: ['returned'],
                         where: { returned: false }
                     }
                 }]
@@ -58,6 +60,27 @@ module.exports = {
             .then(userBooks => res.status(201).send(userBooks))
             .catch(err => res.status(400).send(err));
 
+    },
+    // get list of books by a specific user
+    retrieveOne(req, res) {
+        return Users
+            .find({
+                where: {
+                    id: req.params.userId
+                },
+                include: [{
+                    model: Books,
+                    attributes: ['title', 'ISBN'],
+                    through: {
+                        attributes: ['returned'],
+                        where: {
+                            returned: req.query.returned
+                        }
+                    }
+                }]
+            })
+            .then(borrowedBooks => res.status(201).send(borrowedBooks))
+            .catch(err => res.status(201).send(err));
     }
 
 };

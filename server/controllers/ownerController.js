@@ -4,8 +4,8 @@ module.exports = {
     create(req, res) {
         return Owners
             .create({
-                author_id: req.body.author_id,
-                book_id: req.body.book_id
+                authorId: req.params.authorId,
+                bookId: req.params.bookId
             })
             .then(owners => res.status(200).send(owners))
             .catch(err => res.status(400).send(err));

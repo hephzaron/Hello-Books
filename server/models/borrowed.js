@@ -1,11 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
     var Borrowed = sequelize.define('Borrowed', {
-        user_id: DataTypes.INTEGER,
-        book_id: DataTypes.INTEGER,
+        userId: DataTypes.INTEGER,
+        bookId: DataTypes.INTEGER,
         returned: DataTypes.BOOLEAN
     });
-    Borrowed.associate = (models) => {
+    /*Borrowed.associate = (models) => {
         // associations can be defined here
         Borrowed.belongsTo(models.User, {
             foreignKey: 'user_id',
@@ -16,6 +16,6 @@ module.exports = function(sequelize, DataTypes) {
             onDelete: 'CASCADE'
         });
 
-    };
+};*/
     return Borrowed;
 };

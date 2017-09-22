@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const expressJWT = require('express-jwt');
+//const expressJWT = require('express-jwt');
 
 // Set up the express app
 const app = express();
@@ -13,12 +13,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(expressJWT({ secret: 'i love programming' }).unless({
+/*app.use(expressJWT({ secret: 'i love programming' }).unless({
     path: ['/api/users/signin', '/api/genre', '/api/authors',
         '/api/users/books', '/api/books', '/api/owner', '/api/genre/books',
         '/api/books/author', '/api/owner/book'
     ]
-}));
+}));*/
 
 // require routes into hello-books application
 

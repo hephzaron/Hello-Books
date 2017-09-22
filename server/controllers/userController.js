@@ -1,5 +1,6 @@
 const Users = require('../models').User;
 const jwt = require('jsonwebtoken');
+const Books = require('../models').Book;
 
 module.exports = {
     // allow new users to register
@@ -44,10 +45,19 @@ module.exports = {
             }).catch(err => res.status(401).send(err));
     },
 
-    list(req, res) {
-        return Books
-            .all()
-            .then(books => res.status(200).send(books))
+    userBooks(req, res) {
+        return Users
+            .findAll({
+                include: [{
+                    model: Books,
+                    through: {
+                        where: { returned: false }
+                    }
+                }]
+            })
+            .then(userBooks => res.status(201).send(userBooks))
             .catch(err => res.status(400).send(err));
-    },
-}
+
+    }
+
+};

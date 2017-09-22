@@ -1,6 +1,7 @@
 const Books = require('../models').Book;
 const Owners = require('../models').Ownership;
 
+
 module.exports = {
     // add book to library
     create(req, res) {
@@ -13,7 +14,7 @@ module.exports = {
                 quantity: req.body.quantity,
                 available: req.body.quantity
             })
-            .then(books => res.status(200).send(books))
+            .then(books => res.status(201).send(books))
             .catch(err => res.status(400).send(err));
     },
     list(req, res) {
@@ -30,7 +31,6 @@ module.exports = {
                     model: Owners,
                     as: 'owners'
                 }]
-
             })
             .then(owners => {
                 if (!owners) {

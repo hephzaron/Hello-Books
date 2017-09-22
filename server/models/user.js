@@ -5,17 +5,14 @@ module.exports = function(sequelize, DataTypes) {
         email: DataTypes.STRING,
         password: DataTypes.STRING,
         admin: DataTypes.BOOLEAN
-    }, {
-        classMethods: {
-            associate: function(models) {
-                // associations can be defined here
-                User.hasMany(models.Borrowed, {
-                    foreignKey: 'user_id',
-                    as: 'borroweds'
-
-                });
-            }
-        }
     });
+    User.associate = (models) => {
+        // associations can be defined here
+        User.belongsToMany(models.Book, {
+            through: models.Borrowed,
+            foreignKey: 'userId'
+        });
+
+    };
     return User;
 };

@@ -11,8 +11,8 @@ module.exports = {
                 genre_id: req.body.genre_id,
                 description: req.body.description,
                 ISBN: req.body.ISBN,
-                quantity: req.body.quantity,
-                available: req.body.quantity
+                quantity: req.body.quantity
+
             })
             .then(books => res.status(201).send(books))
             .catch(err => res.status(400).send(err));
@@ -38,8 +38,7 @@ module.exports = {
                         genre_id: req.body.genre_id || books.genre_id,
                         description: req.body.description || books.description,
                         ISBN: req.body.ISBN || books.ISBN,
-                        quantity: req.body.quantity || books.quantity,
-                        available: req.body.available || books.available
+                        quantity: req.body.quantity || books.quantity
                     })
                     .then(updatedBooks => res.status(200).send(updatedBooks))
                     .catch(err => res.status(400).send(err));

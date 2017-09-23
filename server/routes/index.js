@@ -5,6 +5,7 @@ const authorController = require('../controllers').authorController;
 const ownerController = require('../controllers').ownerController;
 const borrowController = require('../controllers').borrowController;
 const bookCount = require('../middlewares').bookCount;
+const userCount = require('../middlewares').userCount;
 //const signInController = require('../middlewares').user;
 
 
@@ -38,7 +39,8 @@ module.exports = (app) => {
     app.get('/api/genre/books', genreController.list);
 
     // allow users to borrow book
-    app.post('/api/users/:userId/books/:bookId', bookCount.countBook /*, borrowController.create*/ );
+    app.post('/api/users/:userId/books/:bookId', userCount.countUserBook,
+        bookCount.checkBookCount, borrowController.create);
 
     // list all borrowed book by users
     app.get('/api/users', userController.userBooks);

@@ -1,5 +1,5 @@
 const Books = require('../models').Book;
-const Owners = require('../models').Ownership;
+const Authors = require('../models').Author;
 
 
 module.exports = {
@@ -17,32 +17,7 @@ module.exports = {
             .then(books => res.status(201).send(books))
             .catch(err => res.status(400).send(err));
     },
-    list(req, res) {
-        return Books
-            .all()
-            .then(books => res.status(200).send(books))
-            .catch(err => res.status(400).send(err));
-    },
-
-    retrieve(req, res) {
-        return Books
-            .findAll({
-                include: [{
-                    model: Owners,
-                    as: 'owners'
-                }]
-            })
-            .then(owners => {
-                if (!owners) {
-                    return res.status(404).send({
-                        message: 'Book not found'
-                    });
-                }
-                return res.status(200).send(owners);
-            })
-            .catch(err => res.status(400).send(err));
-    },
-    //  allow users to modify book information
+    //allow users to modify book information
     update(req, res) {
         return Books
             .find({
@@ -70,5 +45,38 @@ module.exports = {
                     .catch(err => res.status(400).send(err));
             })
             .catch(err => res.status(400).send(err));
+    },
+    list(req, res) {
+        return Books
+            .findAll({
+                attributes: ['title', 'ISBN', 'description'],
+                include: [{
+                    model: Authors,
+                    attributes: ['name'],
+                    through: {
+                        attributes: []
+                    }
+                }]
+            })
+            .then(authors => res.status(200).send(authors))
+            .catch(err => res.status(400).send(err));
     }
+    /*retrieveOne(req, res) {
+        return Books
+            .find({
+                where: {
+                    id: req.params.bookId
+                },
+                attributes: ['title', 'ISBN', 'description'],
+                include: [{
+                    model: Authors,
+                    attributes: ['name'],
+                    through: {
+                        attributes: []
+                    }
+                }]
+            })
+            .then(authors => res.status(200).send(authors))
+            .catch(err => res.status(400).send(err));
+    }*/
 };

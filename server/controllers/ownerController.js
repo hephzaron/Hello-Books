@@ -1,5 +1,6 @@
 const Owners = require('../models').Ownership;
 
+
 module.exports = {
     create(req, res) {
         return Owners
@@ -9,12 +10,7 @@ module.exports = {
             })
             .then(owners => res.status(200).send(owners))
             .catch(err => res.status(400).send(err));
-    },
-
-    list(req, res) {
-        return Owners
-            .all()
-            .then(books => res.status(200).send(books))
-            .catch(err => res.status(400).send(err));
     }
+
+
 };

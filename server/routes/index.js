@@ -4,7 +4,7 @@ const genreController = require('../controllers').genreController;
 const authorController = require('../controllers').authorController;
 const ownerController = require('../controllers').ownerController;
 const borrowController = require('../controllers').borrowController;
-//const userMiddleware = require('../middlewares').userMiddleware;
+const bookCount = require('../middlewares').bookCount;
 //const signInController = require('../middlewares').user;
 
 
@@ -28,18 +28,17 @@ module.exports = (app) => {
     // allocate books to respective author
     app.post('/api/authors/:authorId/books/:bookId', ownerController.create);
 
-    //get owners list
-    app.get('/api/owner/book', ownerController.list);
+    //List all books with respective author
+    app.get('/api/books/authors', authorController.authorBooks);
 
     //view all books in library
     app.get('/api/users/books', bookController.list);
 
     //view books by category
     app.get('/api/genre/books', genreController.list);
-    app.get('/api/books/author', bookController.retrieve);
 
     // allow users to borrow book
-    app.post('/api/users/:userId/books/:bookId', borrowController.create);
+    app.post('/api/users/:userId/books/:bookId', bookCount.countBook /*, borrowController.create*/ );
 
     // list all borrowed book by users
     app.get('/api/users', userController.userBooks);
@@ -47,6 +46,10 @@ module.exports = (app) => {
     // enable user to return a book set returned col to true
     app.put('/api/users/:userId/books/:bookId', borrowController.update);
 
-    // all users to view unreturned books Add ?returned=false to url
+    // allow users to view unreturned books Add ?returned=false to url
     app.get('/api/users/:userId/books', userController.retrieveOne);
+
+    //allow user to view all books written by same author
+    app.get('/api/authors/:authorId/books', authorController.retrieveOne);
+
 };

@@ -14,17 +14,6 @@ module.exports = {
             .then(users => res.status(201).send(users))
             .catch(err => res.status(401).send(err));
     },
-    listUser(req, res) {
-        return Users
-            .find({
-                where: {
-                    username: req.body.username,
-                    password: req.body.password
-                }
-            })
-            .then(user => res.status(201).send(user))
-            .catch(err => res.status(401).send(err));
-    },
     signIn(req, res) {
         Users.find({
                 where: {
@@ -44,7 +33,7 @@ module.exports = {
 
             }).catch(err => res.status(401).send(err));
     },
-
+        // get all books borrowed by all respective users
     userBooks(req, res) {
         return Users
             .findAll({

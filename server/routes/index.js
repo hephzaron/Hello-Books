@@ -6,12 +6,14 @@ const ownerController = require('../controllers').ownerController;
 const borrowController = require('../controllers').borrowController;
 const bookCount = require('../middlewares').bookCount;
 const userCount = require('../middlewares').userCount;
+const userSignUp = require('../middlewares').userSignUp;
+const membershipVal = require('../middlewares').membershipVal;
 //const signInController = require('../middlewares').user;
 
 
 module.exports = (app) => {
     // Api for users to create account and login to application
-    app.post('/api/users/register', userController.create);
+    app.post('/api/users/register', userSignUp.signUp, userController.create);
     app.post('/api/users/signin', userController.signIn);
 
     // add book category
@@ -39,7 +41,7 @@ module.exports = (app) => {
     app.get('/api/genre/books', genreController.list);
 
     // allow users to borrow book
-    app.post('/api/users/:userId/books/:bookId', userCount.countUserBook,
+    app.post('/api/users/:userId/books/:bookId', membershipVal.memberVal, userCount.countUserBook,
         bookCount.checkBookCount, borrowController.create);
 
     // list all borrowed book by users

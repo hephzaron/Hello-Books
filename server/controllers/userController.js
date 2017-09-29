@@ -9,7 +9,8 @@ module.exports = {
             .create({
                 username: req.body.username,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                memValue: 'platinum'
             })
             .then(users => res.status(201).send(users))
             .catch(err => res.status(401).send(err));
@@ -33,7 +34,7 @@ module.exports = {
 
             }).catch(err => res.status(401).send(err));
     },
-        // get all books borrowed by all respective users
+    // get all books borrowed by all respective users
     userBooks(req, res) {
         return Users
             .findAll({

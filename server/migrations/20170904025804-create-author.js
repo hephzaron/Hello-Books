@@ -8,30 +8,22 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            first_name: {
+            firstName: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            last_name: {
+            lastName: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            date_of_birth: {
+            dateOfBirth: {
                 allowNull: false,
                 type: Sequelize.DATE
             },
-            date_of_death: {
+            dateOfDeath: {
                 type: Sequelize.DATE,
                 allowNull: true
             },
-            name: {
-                allowNull: false,
-                type: Sequelize.STRING
-            },
-            /*life_span: {
-                type: Sequelize.INTEGER,
-                allowNull: true
-            },*/
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

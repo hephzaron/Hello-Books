@@ -2,12 +2,14 @@ const bookCount = require('./bookCount');
 const userCount = require('./userCount');
 const userSignUp = require('./userSignUp');
 const membershipVal = require('./membershipVal');
-const crypto = require('./securePassword');
+const Crypto = require('./securePassword');
+const auth = require('./auth');
 
 module.exports = {
-    crypto,
+    Crypto,
     bookCount,
     userCount,
     userSignUp,
-    membershipVal
+    membershipVal,
+    auth
 };

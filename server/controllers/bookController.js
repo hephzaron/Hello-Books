@@ -51,7 +51,7 @@ module.exports = {
                 attributes: ['title', 'ISBN', 'description'],
                 include: [{
                     model: Authors,
-                    attributes: ['name'],
+                    //attributes: ['name'],
                     through: {
                         attributes: []
                     }
@@ -60,22 +60,5 @@ module.exports = {
             .then(authors => res.status(200).send(authors))
             .catch(err => res.status(400).send(err));
     }
-    /*retrieveOne(req, res) {
-        return Books
-            .find({
-                where: {
-                    id: req.params.bookId
-                },
-                attributes: ['title', 'ISBN', 'description'],
-                include: [{
-                    model: Authors,
-                    attributes: ['name'],
-                    through: {
-                        attributes: []
-                    }
-                }]
-            })
-            .then(authors => res.status(200).send(authors))
-            .catch(err => res.status(400).send(err));
-    }*/
+
 };

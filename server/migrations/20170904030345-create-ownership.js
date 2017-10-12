@@ -10,25 +10,25 @@ module.exports = {
             },
             authorId: {
                 allowNull: false,
-                type: Sequelize.INTEGER
-                    /* onUpdate: 'CASCADE',
-                     onDelete: 'CASCADE',
-                     references: {
-                         model: 'Author',
-                         key: 'id',
-                         as: 'authorId'
-                     }*/
+                type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'Authors',
+                    key: 'id',
+                    as: 'authorId'
+                }
             },
             bookId: {
                 allowNull: false,
-                type: Sequelize.INTEGER
-                    /* onUpdate: 'CASCADE',
-                     onDelete: 'CASCADE',
-                     references: {
-                         model: 'Book',
-                         key: 'id',
-                         as: 'bookId'
-                     }*/
+                type: Sequelize.INTEGER,
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+                references: {
+                    model: 'Books',
+                    key: 'id',
+                    as: 'bookId'
+                }
             },
             createdAt: {
                 allowNull: false,

@@ -1,51 +1,52 @@
 {
-  "name": "hello-books",
-  "version": "1.0.0",
-  "description": "Library application",
-  "main": "index.js",
-  "scripts": {
-    "start:dev": "nodemon ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hephzaron/Hello-Books.git"
-  },
-  "keywords": [
-    "TDD",
-    "Javascript"
-  ],
-  "author": "Daramola Tobi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hephzaron/Hello-Books/issues"
-  },
-  "homepage": "https://github.com/hephzaron/Hello-Books#readme",
-  "dependencies": {
-    "body-parser": "^1.17.2",
-    "chai": "^4.1.0",
-    "crypto": "^1.0.1",
-    "express": "^4.15.3",
-    "express-jwt": "^5.3.0",
-    "jsonwebtoken": "^8.0.0",
-    "mocha": "^3.5.0",
-    "morgan": "^1.8.2",
-    "passport": "^0.4.0",
-    "pg": "^7.0.2",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.4.2"
-  },
-  "devDependencies": {
-    "babel-preset-env": "^1.6.0",
-    "eslint": "^4.3.0",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0",
-    "nodemon": "^1.11.0",
-    "sequelize-cli": "^2.7.0"
-  },
-  "directories": {
-    "test": "tests"
-  }
+    "name": "hello-books",
+    "version": "1.0.0",
+    "description": "Library application",
+    "main": "index.js",
+    "scripts": {
+        "start:dev": "nodemon ./bin/www",
+        "test": "mocha tests/models/test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hephzaron/Hello-Books.git"
+    },
+    "keywords": [
+        "TDD",
+        "Javascript"
+    ],
+    "author": "Daramola Tobi",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/hephzaron/Hello-Books/issues"
+    },
+    "homepage": "https://github.com/hephzaron/Hello-Books#readme",
+    "dependencies": {
+        "body-parser": "^1.17.2",
+        "crypto": "^1.0.1",
+        "express": "^4.15.3",
+        "express-jwt": "^5.3.0",
+        "jsonwebtoken": "^8.0.0",
+        "morgan": "^1.8.2",
+        "passport": "^0.4.0",
+        "pg": "^7.0.2",
+        "pg-hstore": "^2.3.2",
+        "sequelize": "^4.4.2"
+    },
+    "devDependencies": {
+        "babel-preset-env": "^1.6.0",
+        "chai": "^4.1.0",
+        "eslint": "^4.3.0",
+        "eslint-config-airbnb": "^15.1.0",
+        "eslint-plugin-import": "^2.7.0",
+        "eslint-plugin-jsx-a11y": "^5.1.1",
+        "eslint-plugin-react": "^7.1.0",
+        "jasmine-node": "^1.14.5",
+        "mocha": "^3.5.0",
+        "nodemon": "^1.11.0",
+        "sequelize-cli": "^2.7.0"
+    },
+    "directories": {
+        "test": "tests"
+    }
 }

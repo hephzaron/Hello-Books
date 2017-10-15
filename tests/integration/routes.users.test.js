@@ -12,16 +12,14 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('User', () => {
-    beforeEach((done) => {
-        User.destroy().then(user => {
+    before((done) => {
+        User.destroy({ where: {} }).then(user => {
             if (user) { done(); }
-        }).then(() => {
-            done();
         }).catch(err => { throw err; });
     });
 
     describe('/POST user', () => {
-        it('it should POST user detals to database', (done) => {
+        it('it should POST user details to database', (done) => {
             let user = {
                 username: 'John Doe',
                 email: 'pheonixera@gmail.com',
@@ -33,28 +31,104 @@ describe('User', () => {
                 .post('/api/users/register')
                 .send(user)
                 .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('errors');
-                    res.body.errors.should.have.property('pages');
-                    res.body.errors.pages.should.have.property('kind').eql('required');
-                    // there should be no errors
-                    should.not.exist(err);
                     // there should be a 201 status code
                     // (indicating that something was "created")
-                    res.status.should.equal(201);
+                    res.should.have.status(201);
+                    res.body.should.be.a('object');
+                    // there should be no errors
+                    should.not.exist(err);
                     // the response should be JSON
                     res.type.should.equal('application/json');
-                    // the JSON response body should have a
-                    // key-value pair of {"status": "success"}
-                    res.body.status.should.eql('success');
-                    // the JSON response body should have a
-                    // key-value pair of {"data": 1 user object}
-                    res.body.data[0].should.include.keys(
-                        'id', 'username', 'email', 'created_at');
+                    // the response shpild generate default membership value
+                    res.body.should.have.property('memValue').not.be.empty;
+                    // setterPassword shpould be invoked to hash password
+                    res.body.should.have.property('salt').not.be.empty;
+                    res.body.should.have.property('hash').not.be.empty;
+                    // all attributs of user should be generated
+                    res.body.should.have.all.keys('id', 'username', 'email', 'password', 'createdAt', 'updatedAt', 'salt', 'hash', 'admin', 'memValue', 'validPassword');
+                    done();
+                });
+        }).timeout(5000);
+
+        // Each username should be unique
+        it('it should not post user credentials to database where username exist on the database', (done) => {
+            let user = {
+                username: 'John Doe',
+                email: 'pheonixera@gmail.com',
+                password: 'synix123',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            chai.request(app)
+                .post('/api/users/register')
+                .send(user)
+                .end((err, res) => {
+                    // there should be a 406 status code
+                    // (indicating that nothing was "created")
+                    res.should.have.status(406);
+                    // there should be errors
+                    should.exist(err);
+                    // response should be a text bearing the error message
+                    res.type.should.equal('text/html');
+                    res.text.should.equal('username already exist');
+
+                    // server body response should be empty
+                    res.body.should.be.empty;
 
                     done();
                 });
-        });
+        }).timeout(5000);
+
+        // User email should be unique
+
+        it('it should not post user credentials to database where email exist on the database', (done) => {
+            let user = {
+                username: 'John Daniel',
+                email: 'pheonixera@gmail.com',
+                password: 'synix123',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            chai.request(app)
+                .post('/api/users/register')
+                .send(user)
+                .end((err, res) => {
+                    // there should be a 406 status code
+                    // (indicating that nothing was "created")
+                    res.should.have.status(406);
+                    // there should be errors
+                    should.exist(err);
+                    // response should be a text bearing the error message
+                    res.type.should.equal('text/html');
+                    res.text.should.equal('This email is registered');
+                    // server body response should be empty
+                    res.body.should.be.empty;
+
+                    done();
+                });
+        }).timeout(5000);
+
+        // return error 404 if anuy of the user field is empty
+        /* it('it should not post user credentials to database where email exist on the database', (done) => {
+             let user = {
+                 username: '',
+                 email: '',
+                 password: 'synix123',
+                 createdAt: new Date(),
+                 updatedAt: new Date()
+             };
+             chai.request(app)
+                 .post('/api/users/register')
+                 .send(user)
+                 .end((err, res) => {
+                     // there should be a 406 status code
+                     // (indicating that nothing was "created")
+                     res.should.have.status(406);
+                     // there should be errors
+                     should.exist(err);
+                     res.body.should.be.empty;
+                     done();
+                 });
+         }).timeout(5000);*/
     });
 });

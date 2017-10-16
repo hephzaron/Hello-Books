@@ -4,6 +4,7 @@ const Users = require('../models').User;
 
 module.exports = {
     signUp: function(req, res, next) {
+        
         Users.find({
             where: {
                 username: req.body.username
@@ -17,7 +18,12 @@ module.exports = {
                         }
                     }).then(userEmail => {
                         if (!userEmail) {
-                            next();
+                            // if any user field is empty throw error
+                            if ((req.body.username && req.body.email && req.body.password) != '') {
+                            next();}
+                            // if any user field is empty throw error
+                            else if ((req.body.username && req.body.email && req.body.password) == '') {
+                            res.status(406).send('Some fields are empty')}
                         }
                         if (userEmail) {
                             res.status(406).send('This email is registered');

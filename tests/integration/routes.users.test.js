@@ -108,27 +108,27 @@ describe('User', () => {
                 });
         }).timeout(5000);
 
-        // return error 404 if anuy of the user field is empty
-        /* it('it should not post user credentials to database where email exist on the database', (done) => {
-             let user = {
-                 username: '',
-                 email: '',
-                 password: 'synix123',
-                 createdAt: new Date(),
-                 updatedAt: new Date()
-             };
-             chai.request(app)
-                 .post('/api/users/register')
-                 .send(user)
-                 .end((err, res) => {
-                     // there should be a 406 status code
-                     // (indicating that nothing was "created")
-                     res.should.have.status(406);
-                     // there should be errors
-                     should.exist(err);
-                     res.body.should.be.empty;
-                     done();
-                 });
-         }).timeout(5000);*/
+        // return error 406 if anuy of the user field is empty
+        it('it should not post user credentials to database where any field is empty', (done) => {
+            let user = {
+                username: '',
+                email: 'linux@gmail.com',
+                password: 'synix123',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            chai.request(app)
+                .post('/api/users/register')
+                .send(user)
+                .end((err, res) => {
+                    // there should be a 406 status code
+                    // (indicating that nothing was "created")
+                    res.should.have.status(406);
+                    // there should be errors
+                    should.exist(err);
+                    res.body.should.be.empty;
+                    done();
+                });
+        }).timeout(5000);
     });
 });

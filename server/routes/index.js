@@ -41,6 +41,9 @@ module.exports = (app) => {
     //view books by category
     app.get('/api/genre/books', genreController.list);
 
+    //allow user to delete book record
+    app.delete('/api/books/:bookId', bookController.delete);
+
     // allow users to borrow book
     app.post('/api/users/:userId/books/:bookId', membershipVal.memberVal, userCount.countUserBook,
         bookCount.checkBookCount, borrowController.create);

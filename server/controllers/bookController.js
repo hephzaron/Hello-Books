@@ -61,14 +61,16 @@ module.exports = {
     },
     delete(req, res) {
         return Books
-            .find({
+            .destroy({
                 where: { id: req.params.bookId }
             }).then(books => {
-                if (!books) { res.status(404).send('Book not found'); }
-                return books
-                    .destroy();
-
-            }).then(updatedBooks => res.status(200).send(updatedBooks))
+                if (!books) {
+                    res.status(404).send('Book not found');
+                }
+                if (books) {
+                    res.status(200).send('${Books.title} deleted');
+                }
+            })
             .catch(err => res.status(404).send(err));
     }
 

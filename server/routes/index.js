@@ -8,14 +8,14 @@ const bookCount = require('../middlewares').bookCount;
 const userCount = require('../middlewares').userCount;
 const userSignUp = require('../middlewares').userSignUp;
 const membershipVal = require('../middlewares').membershipVal;
-const auth = require('../middlewares').auth;
+const jwt = require('../middlewares').jwt;
 //const signInController = require('../middlewares').user;
 
 
 module.exports = (app) => {
     // Api for users to create account and login to application
     app.post('/api/users/register', userSignUp.signUp, userController.create);
-    app.post('/api/users/signin', userController.signIn, auth.generateJWT);
+    app.post('/api/users/signin', userController.signIn, jwt.generateJWT);
 
     // add book category
     app.post('/api/genre', genreController.create);

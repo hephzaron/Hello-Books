@@ -35,6 +35,7 @@ module.exports = {
                     try {
                         const verifyPassword = validPassword(req.body.password, user.salt, user.hash);
                         if (verifyPassword) {
+                        //res.json('proceed');
                             next();
                         }
                         if (!verifyPassword) {

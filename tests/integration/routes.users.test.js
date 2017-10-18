@@ -131,4 +131,33 @@ describe('User', () => {
                 });
         }).timeout(5000);
     });
+
+    // Integraton test for user sign in
+    describe('/POST /api/users/signin', () => {
+        it('it should generate token and save to cookie on successful login', (done) => {
+            let user = {
+                username: 'John Doe',
+                password: 'synix123'
+            };
+            chai.request(app)
+                .post('/api/users/signin')
+                .send(user)
+                .end((err, res) => {
+                    // there should be a 200 status code
+                    // (indicating that signin was successsful)
+                    res.should.have.status(200);
+                    res.headers.should.not.be.empty;
+                    //cookie should not be empty
+                    res.should.have.cookie('id_token').not.be.empty;
+                    // cookie should be sent back to user
+                    res.text.should.not.be.empty;
+                    // there should be no errors
+                    should.not.exist(err);
+                    // the response should be JSON
+                    res.type.should.equal('application/json');
+
+                    done();
+                });
+        }).timeout(5000);
+    });
 });

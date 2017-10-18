@@ -22,8 +22,7 @@ module.exports = {
         return Books
             .find({
                 where: {
-                    id: req.params.bookId,
-                    userId: req.params.userId
+                    id: req.params.bookId
                 }
             })
             .then(books => {
@@ -59,6 +58,18 @@ module.exports = {
             })
             .then(authors => res.status(200).send(authors))
             .catch(err => res.status(400).send(err));
+    },
+    delete(req, res) {
+        return Books
+            .find({
+                where: { id: req.params.bookId }
+            }).then(books => {
+                if (!books) { res.status(404).send('Book not found'); }
+                return books
+                    .destroy();
+
+            }).then(updatedBooks => res.status(200).send(updatedBooks))
+            .catch(err => res.status(404).send(err));
     }
 
 };

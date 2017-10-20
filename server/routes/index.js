@@ -8,29 +8,33 @@ const bookCount = require('../middlewares').bookCount;
 const userCount = require('../middlewares').userCount;
 const userSignUp = require('../middlewares').userSignUp;
 const membershipVal = require('../middlewares').membershipVal;
-const jwt = require('../middlewares').jwt;
+const authorize = require('../middlewares').authorize;
 //const signInController = require('../middlewares').user;
 
 
 module.exports = (app) => {
     // Api for users to create account and login to application
     app.post('/api/users/register', userSignUp.signUp, userController.create);
-    app.post('/api/users/signin', userController.signIn, jwt.generateJWT);
+    app.post('/api/users/signin', userController.signIn, authorize.generateJWT);
+    //test secure route
+    app.post('/api/auth', authorize.verifyUser);
+    //logout
+    app.post('/api/logout', authorize.logout);
 
     // add book category
-    app.post('/api/genre', genreController.create);
+    app.post('/api/genre', authorize.adminProtect, genreController.create);
 
     // add books to library
-    app.post('/api/books', bookController.create);
+    app.post('/api/books', authorize.adminProtect, bookController.create);
 
     // allow users to modify book information
-    app.put('/api/books/:bookId', bookController.update);
+    app.put('/api/books/:bookId', authorize.adminProtect, bookController.update);
 
     //create author details
-    app.post('/api/authors', authorController.create);
+    app.post('/api/authors', authorize.adminProtect, authorController.create);
 
     // allocate books to respective author
-    app.post('/api/authors/:authorId/books/:bookId', ownerController.create);
+    app.post('/api/authors/:authorId/books/:bookId', authorize.adminProtect, ownerController.create);
 
     //List all books with respective author
     app.get('/api/books/authors', authorController.authorBooks);
@@ -42,7 +46,7 @@ module.exports = (app) => {
     app.get('/api/genre/books', genreController.list);
 
     //allow user to delete book record
-    app.delete('/api/books/:bookId', bookController.delete);
+    app.delete('/api/books/:bookId', authorize.adminProtect, bookController.delete);
 
     // allow users to borrow book
     app.post('/api/users/:userId/books/:bookId', membershipVal.memberVal, userCount.countUserBook,

@@ -148,8 +148,8 @@ describe('User', () => {
                     res.should.have.status(200);
                     res.headers.should.not.be.empty;
                     //cookie should not be empty
-                    res.should.have.cookie('id_token').not.be.empty;
-                    // cookie should be sent back to user
+                    res.should.have.cookie('loginCookie').not.be.empty;
+                    // user token should be sent back to user
                     res.text.should.not.be.empty;
                     // there should be no errors
                     should.not.exist(err);

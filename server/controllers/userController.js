@@ -15,6 +15,7 @@ module.exports = {
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
+                admin: req.body.admin,
                 setPassword: req.body.password
             })
             .then(users => res.status(201).send(users))
@@ -35,7 +36,7 @@ module.exports = {
                     try {
                         const verifyPassword = validPassword(req.body.password, user.salt, user.hash);
                         if (verifyPassword) {
-                        //res.json('proceed');
+                            //res.json('proceed');
                             next();
                         }
                         if (!verifyPassword) {

@@ -3,3 +3,4 @@ check.js
 npm-debug.log
 seeders
 credentials.js
+testauth.js

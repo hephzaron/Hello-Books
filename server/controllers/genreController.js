@@ -8,7 +8,7 @@ module.exports = {
                 name: req.body.name
             })
             .then(genres => res.status(200).send(genres))
-            .catch(err => res.status(200).send(err));
+            .catch(err => res.status(400).send(err));
     },
     list(req, res) {
         return Genres

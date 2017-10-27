@@ -10,12 +10,7 @@ function generateGUID() {
 function decodeJWT(token, res) {
     // verifies secret 
     const decoded = jwt.decode(token, secret, { algorithm: 'HS256' });
-    if (!decoded) {
-        return res.status(401).send('You are not authorized to view this page');
-    }
-    if (decoded) {
-        return decoded;
-    }
+    return decoded;
 }
 
 module.exports = {
@@ -41,54 +36,55 @@ module.exports = {
                     admin: user.admin
                 };
 
-                var signed = jwt.sign(payload, secret, { algorithm: 'HS256' });
+                var token = jwt.sign(payload, secret, { algorithm: 'HS256' });
 
-                res.cookie('loginCookie', signed, {
+                res.cookie('loginCookie', token, {
                     httpOnly: true,
-                    signed: true,
+                    signed: false,
                     maxAge: 1000 * 60 * 60 * 12
                 });
-                res.json(signed);
+                res.json({
+                    'token': token
+                });
             })
             .catch(err => res.status(404).send(err));
 
     },
 
-
     verifyUser: function(req, res, next) {
-        const loginCookie = req.signedCookies.loginCookie;
+        const loginCookie = req.cookies.loginCookie;
         if (!loginCookie) {
-            return res.redirect(303, '/api/users/signin');
+            return res.status(403).send('please login');
         }
         if (loginCookie) {
-            const decoded = decodeJWT(loginCookie, res);
-            res.json(decoded);
+            //const decoded = decodeJWT(loginCookie, res);
+            next();
         }
     },
 
     // Authorize user-admin only to perform certain actions
     adminProtect: function(req, res, next) {
         // check header  for token
-        var token = req.headers['user-agent'];
-        if (!token) {
-            // return an error
-            return res.status(403).send({
-                success: false,
-                message: 'No token provided.'
-            });
-
-        }
-        if (token) {
+        try {
+            const token = req.headers['user-agent'];
 
             const decoded = decodeJWT(token, res);
-            if (decoded.admin == true) {
-                next();
-            } else if (decoded.admin == false) {
-                res.status(401).send('You are not authorized to perform this action');
-            }
+            if (decoded == null) {
+                res.status(400).send('Token not provided');
 
-        }
+            } else if (decoded.admin == false) {
+
+                res.status(401).send('You are not authorized to perform this action');
+                // res.send(token);      
+            } else if (decoded.admin == true) {
+
+                next();
+            }
+        } catch (error) { res.status(400).send(error); }
+
+
     },
+
     logout: function(req, res) {
         //Check if user is logged in 
         const loginCookie = req.signedCookies.loginCookie;

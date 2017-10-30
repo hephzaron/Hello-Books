@@ -12,7 +12,7 @@ module.exports = {
                 description: req.body.description,
                 ISBN: req.body.ISBN,
                 quantity: req.body.quantity,
-                available:req.body.quantity
+                available: req.body.quantity
 
             })
             .then(books => res.status(201).send(books))
@@ -39,7 +39,7 @@ module.exports = {
                         description: req.body.description || books.description,
                         ISBN: req.body.ISBN || books.ISBN,
                         quantity: req.body.quantity || books.quantity,
-                        available:req.body.available||books.available
+                        available: req.body.available || books.available
                     })
                     .then(updatedBooks => res.status(200).send(updatedBooks))
                     .catch(err => res.status(400).send(err));
@@ -70,7 +70,7 @@ module.exports = {
                     res.status(404).send('Book not found');
                 }
                 if (books) {
-                    res.status(200).send('${Books.title} deleted');
+                    res.status(200).send('Book deleted');
                 }
             })
             .catch(err => res.status(404).send(err));

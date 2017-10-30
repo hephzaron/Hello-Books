@@ -6,7 +6,9 @@
     "scripts": {
         "start:dev": "nodemon ./bin/www",
         "test": "mocha tests/integration/routes.users.test.js",
-        "test:book": "mocha tests/integration/routes.books.test.js"
+        "test:book:admin": "mocha tests/integration/routes.admin.books.test.js",
+        "test:book:user": "mocha tests/integration/routes.users.books.test.js",
+        "test:borrow:book": "mocha tests/integration/routes.borrow.books.test.js"
     },
     "repository": {
         "type": "git",

@@ -44,7 +44,8 @@ module.exports = {
                     maxAge: 1000 * 60 * 60 * 12
                 });
                 res.json({
-                    'token': token
+                    'token': token,
+                    'body': user
                 });
             })
             .catch(err => res.status(404).send(err));

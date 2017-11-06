@@ -4,3 +4,5 @@ npm-debug.log
 seeders
 credentials.js
 testauth.js
+testk.js
+author.test.js

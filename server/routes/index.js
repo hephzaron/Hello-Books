@@ -31,19 +31,19 @@ module.exports = (app) => {
     app.put('/api/books/:bookId', authorize.verifyUser, authorize.adminProtect, bookController.update); //
 
     //create author details
-    app.post('/api/authors', authorize.verifyUser, authorize.adminProtect, authorController.create); //
+    app.post('/api/authors', /*authorize.verifyUser, authorize.adminProtect,*/ authorController.create); //
 
     // allocate books to respective author
     app.post('/api/authors/:authorId/books/:bookId', authorize.verifyUser, authorize.adminProtect, ownerController.create); //
 
     //List all authors with respective books written
-    app.get('/api/authors/books', authorController.authorBooks);//
+    app.get('/api/authors/books', authorController.authorBooks); //
 
     //view all books in library
-    app.get('/api/users/books', bookController.list);//
+    app.get('/api/users/books', bookController.list); //
 
     //view books by category
-    app.get('/api/genre/books', genreController.list);//
+    app.get('/api/genre/books', genreController.list); //
 
     //allow user to delete book record
     app.delete('/api/books/:bookId', authorize.verifyUser, authorize.adminProtect, bookController.delete); //

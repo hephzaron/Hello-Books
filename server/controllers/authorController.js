@@ -10,7 +10,7 @@ module.exports = {
                 dateOfBirth: req.body.dateOfBirth,
                 dateOfDeath: req.body.dateOfDeath
             })
-            .then(authors => res.status(200).send(authors))
+            .then(authors => { res.status(200).send(authors), console.log(authors.fullName); })
             .catch(err => res.status(400).send(err));
     },
     authorBooks(req, res) {

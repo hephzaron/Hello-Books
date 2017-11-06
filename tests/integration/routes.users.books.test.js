@@ -4,6 +4,19 @@
 
 //set env variable to test to access the test database
 process.env.NODE_ENV = 'test';
+const db = require('../../server/models');
+
+//import models
+const Genre = require('../../server/models').Genre;
+const Book = require('../../server/models').Book;
+const Author = require('../../server/models').Author;
+const Owner = require('../../server/models').Ownership;
+
+//import test-dATA
+const genreData = require('../unit/models/test-data').Genres;
+const bookData = require('../unit/models/test-data').Books;
+const authorData = require('../unit/models/test-data').Authors;
+const ownerData = require('../unit/models/test-data').Owners;
 
 //Require the dev-dependencies
 let chai = require('chai');
@@ -15,6 +28,25 @@ chai.use(chaiHttp);
 
 
 describe('GET BOOK', () => {
+    before((done) => {
+        db.sequelize.sync({ force: true }).then(() => {
+            Genre.bulkCreate(genreData).then(() => {
+                Book.bulkCreate(bookData).then(() => {
+                    Author.bulkCreate(authorData).then(() => {
+                        Owner.bulkCreate(ownerData).then(owner => {
+                            if (owner) {
+                                done();
+                            }
+                        });
+                    });
+
+                });
+            });
+
+
+        });
+
+    });
 
     //get  all books
     it('it should get all books in database', (done) => {

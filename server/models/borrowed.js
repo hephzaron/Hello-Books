@@ -1,6 +1,7 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
     var Borrowed = sequelize.define('Borrowed', {
+        borrowId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         userId: DataTypes.INTEGER,
         bookId: DataTypes.INTEGER,
         returned: DataTypes.BOOLEAN

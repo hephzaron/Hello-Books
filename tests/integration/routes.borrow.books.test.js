@@ -1,9 +1,14 @@
 //set env variable to test to access the test database
 process.env.NODE_ENV = 'test';
+const db = require('../../server/models');
 
-let Book = require('../../server/models').Book;
-let User = require('../../server/models').User;
-let Author = require('../../server/models').Author;
+// import book model
+const Genre = require('../../server/models').Genre;
+const Book = require('../../server/models').Book;
+
+//import needed data for testing
+const genreData = require('../unit/models/test-data').Genres;
+const bookData = require('../unit/models/test-data').Books;
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -13,20 +18,24 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('REGISTER USER', () => {
-    before((done)=>{
-        User.destroy({
-            where:{username:'Philip'}
-        }).then(user=>{
-            if(user){
-                done();
-            }
-        }).catch(err=>{throw err;})
+    before((done) => {
+        db.sequelize.sync({ force: true }).then(() => {
+            Genre.bulkCreate(genreData).then(() => {
+                Book.bulkCreate(bookData).then((book) => {
+                    if (book) {
+                        done();
+                    }
+                });
+            });
+        });
     });
 
     let user = {
         username: 'Philip',
         email: 'philip2017@gmail.com',
-        password: 'phil17'
+        password: 'phil17',
+        createdAt: new Date(),
+        updatedAt: new Date()
     };
     it('it should register user', (done) => {
         chai.request(app)
@@ -57,9 +66,10 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
 
                 let token = res.body.token;
                 let loginCookie = res.headers['set-cookie'];
-                let userId = res.body.body.id;
+
                 // get user id from login
-                console.log(1);
+                let userId = res.body.body.id;
+
 
                 describe('BORROW AND RETURN BOOKS', () => {
                     it('it should borrrow books', (done) => {
@@ -74,7 +84,7 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
                                 res.status.should.equals(201);
                                 res.type.should.equal('application/json');
                                 res.body.should.have.property('returned').to.be.equal(false);
-                                res.body.should.have.all.keys('id', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
+                                res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
 
                                 //....borrow second book with id equals 2
                                 let bookId = 2;
@@ -85,26 +95,11 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
                                         res.status.should.equals(201);
                                         res.type.should.equal('application/json');
                                         res.body.should.have.property('returned').to.be.equal(false);
-                                        res.body.should.have.all.keys('id', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
+                                        res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
                                         //borrow second book with id equals 2
                                         done();
 
                                     });
-                            });
-
-                    });
-                    it('it should list all borrowed books by users', (done) => {
-
-                        // List all books borrowed by user with userId
-                        agent.get('/api/users')
-                            .set({ 'token': token }, { 'cookies': loginCookie })
-                            .end((err, res) => {
-                                res.should.have.status(201);
-                                should.not.exist(err);
-                                res.body.should.be.a('array');
-                                res.body.length.should.be.equal(2);
-                                done();
-
                             });
 
                     });

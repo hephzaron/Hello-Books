@@ -7,10 +7,10 @@ module.exports = function(sequelize, DataTypes) {
         username: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING,
-        admin: DataTypes.BOOLEAN,
+        admin: { type: DataTypes.BOOLEAN, defaultValue: false },
         salt: DataTypes.STRING,
         hash: DataTypes.STRING,
-        memValue: DataTypes.STRING
+        memValue: { type: DataTypes.STRING, defaultValue: 'platinum' }
     }, {
         getterMethods: {
             validPassword: function(password) {

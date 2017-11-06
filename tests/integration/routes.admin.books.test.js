@@ -5,9 +5,9 @@
 
 //set env variable to test to access the test database
 process.env.NODE_ENV = 'test';
+const db = require('../../server/models');
 
 let Book = require('../../server/models').Book;
-let User = require('../../server/models').User;
 let Author = require('../../server/models').Author;
 //Require the dev-dependencies
 let chai = require('chai');
@@ -19,31 +19,9 @@ chai.use(chaiHttp);
 
 describe('Book', () => {
     before((done) => {
-        User.destroy({ where: {} }).then(user => {
-                if (user) {
-                    Book.destroy({ where: {} })
-                        .then(book => {
-                            if (book) {
-                                Author.destroy({ where: {} })
-                                    .then(author => {
-                                        if (author) {
-                                            done();
-                                        }
-                                    })
-                                    .catch(err => {
-                                        throw err;
-                                    });
-                            }
-                        })
-                        .catch(err => {
-                            throw err;
-                        });
-                }
-            })
-            .catch(err => {
-                throw err;
-            });
-
+        db.sequelize.sync({ force: true }).then(() => {
+            done();
+        });
     });
 
     //Signup user admin and non admin for subsequent login and authorization
@@ -290,7 +268,7 @@ describe('Book', () => {
                                         // Allow only admin to update book record
                                         describe('PUT /api/books/:bookId', () => {
                                             let updatedBook = {
-                                                genre_id: 2,
+                                                genre_id: 1,
                                                 quantity: 3,
                                                 createdAt: new Date(),
                                                 updatedAt: new Date()
@@ -331,18 +309,18 @@ describe('Book', () => {
                                                     let authorId = author.id;
 
                                                     agent.post('/api/authors/' + authorId + '/books/' + bookId)
-                                                    .set({ 'User-Agent': token }, { 'cookies': loginCookie })
-                                                    .end((err, res) => {
-                                                        res.should.have.status(200);
-                                                        should.not.exist(err);
-                                                        res.type.should.equal('application/json');
-                                                        //Intended book should be attached to the right author
-                                                        res.body.should.have.property('authorId').to.be.equal(authorId);
-                                                        res.body.should.have.property('bookId').to.be.equal(bookId);
-                                                        done();
-                                                    });
-                                                
-                                                }).catch(err=>{throw err});
+                                                        .set({ 'User-Agent': token }, { 'cookies': loginCookie })
+                                                        .end((err, res) => {
+                                                            res.should.have.status(200);
+                                                            should.not.exist(err);
+                                                            res.type.should.equal('application/json');
+                                                            //Intended book should be attached to the right author
+                                                            res.body.should.have.property('authorId').to.be.equal(authorId);
+                                                            res.body.should.have.property('bookId').to.be.equal(bookId);
+                                                            done();
+                                                        });
+
+                                                }).catch(err => { throw err; });
 
                                             }).timeout(5000);
 

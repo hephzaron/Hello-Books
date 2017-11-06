@@ -1,5 +1,6 @@
 //set env variable to test to access the test database
 process.env.NODE_ENV = 'test';
+const db = require('../../server/models');
 
 let User = require('../../server/models').User;
 
@@ -13,9 +14,9 @@ chai.use(chaiHttp);
 
 describe('User', () => {
     before((done) => {
-        User.destroy({ where: {} }).then(user => {
-            if (user) { done(); }
-        }).catch(err => { throw err; });
+        db.sequelize.sync({ force: true }).then(() => {
+            done();
+        });
     });
 
     describe('/POST user', () => {

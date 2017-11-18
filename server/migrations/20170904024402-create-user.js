@@ -6,22 +6,13 @@ module.exports = {
             id: {
                 allowNull: false,
                 autoIncrement: true,
-                primaryKey: true,
                 type: Sequelize.INTEGER
-            },
-            username: {
-                unique: true,
-                allowNull: false,
-                type: Sequelize.STRING
             },
             email: {
                 allowNull: false,
                 type: Sequelize.STRING,
+                primaryKey: true,
                 validate: { isEmail: true }
-            },
-            password: {
-                allowNull: false,
-                type: Sequelize.STRING
             },
             admin: {
                 allowNull: false,
@@ -32,13 +23,9 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING
             },
-            hash: {
-                allowNull: true,
-                type: Sequelize.STRING
-            },
             memValue: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.ENUM('platinum', 'silver', 'gold'),
                 defaultValue: 'platinum'
             },
             createdAt: {

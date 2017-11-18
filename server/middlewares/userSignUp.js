@@ -1,18 +1,18 @@
 // Ensure username and email entry at registration is unique
 
-const Users = require('../models').User;
+const LocalUsers = require('../models').LocalUser;
 
 module.exports = {
     signUp: function(req, res, next) {
-        
-        Users.find({
+
+        LocalUsers.find({
             where: {
                 username: req.body.username
             }
         }).then(
             user => {
                 if (!user) {
-                    Users.find({
+                    LocalUsers.find({
                         where: {
                             email: req.body.email
                         }
@@ -20,10 +20,12 @@ module.exports = {
                         if (!userEmail) {
                             // if any user field is empty throw error
                             if ((req.body.username && req.body.email && req.body.password) != '') {
-                            next();}
+                                next();
+                            }
                             // if any user field is empty throw error
                             else if ((req.body.username && req.body.email && req.body.password) == '') {
-                            res.status(406).send('Some fields are empty')}
+                                res.status(406).send('Some fields are empty');
+                            }
                         }
                         if (userEmail) {
                             res.status(406).send('This email is registered');

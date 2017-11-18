@@ -13,12 +13,10 @@ module.exports = function(sequelize, DataTypes) {
         Book.belongsToMany(models.User, {
             through: models.Borrowed,
             foreignKey: 'bookId'
-
         });
         Book.belongsToMany(models.Author, {
             through: models.Ownership,
             foreignKey: 'bookId'
-
         });
         Book.belongsTo(models.Genre, {
             foreignKey: 'genre_id',

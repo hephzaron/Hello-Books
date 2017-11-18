@@ -1,4 +1,4 @@
-const Users = require('../models').User;
+const LocalUsers = require('../models').LocalUser;
 const jwt = require('jsonwebtoken');
 const secret = process.env.JWT_SECRET || 'iloveprogramming';
 
@@ -17,7 +17,7 @@ module.exports = {
 
     // generate token and send to user
     generateJWT: function(req, res) {
-        Users.find({
+        return LocalUsers.find({
                 where: {
                     username: req.body.username
                 }
@@ -47,6 +47,7 @@ module.exports = {
                     'token': token,
                     'body': user
                 });
+                //return token;
             })
             .catch(err => res.status(404).send(err));
 
@@ -59,7 +60,7 @@ module.exports = {
         }
         if (loginCookie) {
             //const decoded = decodeJWT(loginCookie, res);
-            next();
+            return next();
         }
     },
 
@@ -67,7 +68,7 @@ module.exports = {
     adminProtect: function(req, res, next) {
         // check header  for token
         try {
-            const token = req.headers['user-agent'];
+            const token = req.headers['authorization'];
 
             const decoded = decodeJWT(token, res);
             if (decoded == null) {

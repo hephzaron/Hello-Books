@@ -29,7 +29,7 @@ chai.use(chaiHttp);
 
 describe('GET BOOK', () => {
     before((done) => {
-        db.sequelize.sync({ force: true }).then(() => {
+        db.sequelize.sync({ force: true, logging: false }).then(() => {
             Genre.bulkCreate(genreData).then(() => {
                 Book.bulkCreate(bookData).then(() => {
                     Author.bulkCreate(authorData).then(() => {

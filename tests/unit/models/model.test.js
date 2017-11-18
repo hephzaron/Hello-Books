@@ -16,6 +16,8 @@ const testData = require('./test-data');
 
 // import models
 const User = require('../../../server/models').User;
+const LocalUser = require('../../../server/models').LocalUser;
+const GoogleUser = require('../../../server/models').GoogleUser;
 const Author = require('../../../server/models').Author;
 const Genre = require('../../../server/models').Genre;
 const Book = require('../../../server/models').Book;
@@ -29,15 +31,46 @@ let genreData = testData.Genres;
 let bookData = testData.Books;
 let ownerData = testData.Owners;
 let borrowData = testData.Borrowed;
+let localUserData = testData.LocalUsers;
+let googleUserData = testData.GoogleUsers;
 
 const assert = require('chai').assert;
 
 describe('BOOK MODEL', () => {
-
     try {
-        before((done) => {
-            db.sequelize.sync({ force: true }).then(() => {
-                User.bulkCreate(userData).then(() => {
+        before(function(done) {
+            this.timeout(5000);
+            db.sequelize.sync({ force: true, logging: false }).then(() => {
+                LocalUser.bulkCreate(localUserData).then((localUser) => {
+                    GoogleUser.bulkCreate(googleUserData).then((googleUser) => {
+                        User.bulkCreate([{
+                            userId: localUser[0].uuid,
+                            email: localUser[0].email,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
+                        }, {
+                            userId: localUser[1].uuid,
+                            email: localUser[1].email,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
+                        }, {
+                            userId: localUser[2].uuid,
+                            email: localUser[2].email,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
+                        }, {
+                            userId: googleUser[0].guid,
+                            email: googleUser[0].gmail,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
+                        }, {
+                            userId: googleUser[1].guid,
+                            email: googleUser[1].gmail,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
+                        }]);
+
+                    });
                     Author.bulkCreate(authorData).then(() => {
                         Genre.bulkCreate(genreData).then(() => {
                             Book.bulkCreate(bookData).then(() => {
@@ -54,7 +87,7 @@ describe('BOOK MODEL', () => {
                 });
             });
 
-        }).timeout(5000);
+        });
 
     } catch (e) {
         console.log(e);
@@ -65,10 +98,14 @@ describe('BOOK MODEL', () => {
     describe('USER Model', () => {
         it('it should create a user object with its properties', (done) => {
             User.findAll().then(user => {
+                LocalUser.findAll().then(localUser => {
+                    assert.equal(typeof(localUser), 'object'); //an object should be returned
+                    assert.equal(localUser.length, 3); // All user should be created
+                    assert.isNotEmpty(localUser[0].hash && localUser[0].salt); //password should be hashed and not null
+                    done();
+                });
                 assert.equal(typeof(user), 'object'); //an object should be returned
-                assert.equal(user.length, 3); // All user should be created
-                assert.isNotEmpty(user[0].hash && user[0].salt); //password should be hashed and not null
-                done();
+                assert.equal(user.length, 5); // All user should be created with google users
             });
         }).timeout(5000);
         it('it should have association -belongsToMany for user borrowed books', (done) => {
@@ -166,8 +203,6 @@ describe('BOOK MODEL', () => {
                 });
                 // it should not return a book not in that category    
                 assert.deepEqual(check, []);
-
-                console.log(genreBook);
                 done();
             });
 

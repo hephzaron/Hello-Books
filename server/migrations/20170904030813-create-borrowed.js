@@ -12,23 +12,13 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 onUpdate: 'CASCADE',
-                onDelete: 'CASCADE',
-                references: {
-                    model: 'Books',
-                    key: 'id',
-                    as: 'book_id'
-                }
+                onDelete: 'CASCADE'
             },
             userId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 onUpdate: 'CASCADE',
-                onDelete: 'CASCADE',
-                references: {
-                    model: 'Users',
-                    key: 'id',
-                    as: 'user_id'
-                }
+                onDelete: 'CASCADE'
             },
             returned: {
                 type: Sequelize.BOOLEAN,

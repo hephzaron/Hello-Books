@@ -18,8 +18,9 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('Book', () => {
-    before((done) => {
-        db.sequelize.sync({ force: true }).then(() => {
+    before(function(done) {
+        db.sequelize.sync({ force: true, logging: false }).then(() => {
+            this.timeout(5000);
             done();
         });
     });
@@ -58,15 +59,13 @@ describe('Book', () => {
                     should.not.exist(err);
                     // the response should be JSON
                     res.type.should.equal('application/json');
-                    // the response shpild generate default membership value
-                    res.body.should.have.property('memValue').not.be.empty;
                     // setterPassword shpould be invoked to hash password
                     res.body.should.have.property('salt').not.be.empty;
                     res.body.should.have.property('hash').not.be.empty;
                     //admin property should be set to false
                     res.body.should.have.property('admin').to.be.false;
                     // all attributs of user should be generated
-                    res.body.should.have.all.keys('id', 'username', 'email', 'password', 'createdAt', 'updatedAt', 'salt', 'hash', 'admin', 'memValue', 'validPassword');
+                    res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'salt', 'hash', 'admin', 'validPassword', 'userId', 'localUserId');
 
                     //post admin credentals to database
                     chai.request(app)
@@ -81,15 +80,13 @@ describe('Book', () => {
                             should.not.exist(err);
                             // the response should be JSON
                             res.type.should.equal('application/json');
-                            // the response shpild generate default membership value
-                            res.body.should.have.property('memValue').not.be.empty;
                             // setterPassword shpould be invoked to hash password
                             res.body.should.have.property('salt').not.be.empty;
                             res.body.should.have.property('hash').not.be.empty;
                             //admin property should be set to true
                             res.body.should.have.property('admin').to.be.true;
                             // all attributs of user should be generated
-                            res.body.should.have.all.keys('id', 'username', 'email', 'password', 'createdAt', 'updatedAt', 'salt', 'hash', 'admin', 'memValue', 'validPassword');
+                            res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'salt', 'hash', 'admin', 'validPassword', 'userId', 'localUserId');
                             done();
                         });
 
@@ -118,7 +115,7 @@ describe('Book', () => {
                     let loginCookie = res.headers['set-cookie'];
 
                     agent.post('/api/genre')
-                        .set({ 'User-Agent': token }, { 'cookies': loginCookie })
+                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
                         .send(category)
                         .end((err, res) => {
                             res.should.have.status(200);
@@ -181,7 +178,7 @@ describe('Book', () => {
 
                     // Unauthorised user:non-admin should not create book
                     agent.post('/api/books')
-                        .set({ 'User-Agent': token }, { 'cookies': loginCookie })
+                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
                         .send(book)
                         .end((err, res) => {
                             should.exist(err);
@@ -210,7 +207,7 @@ describe('Book', () => {
 
                     // Unauthorised user:admin should  create book
                     agent.post('/api/books')
-                        .set({ 'User-Agent': token }, { 'cookies': loginCookie })
+                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
                         .send(book)
                         .end((err, res) => {
                             // should have a status code of 201
@@ -241,7 +238,7 @@ describe('Book', () => {
 
                                     };
                                     agent.post('/api/authors')
-                                        .set({ 'User-Agent': token }, { 'cookies': loginCookie })
+                                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
                                         .send(author)
                                         .end((err, res) => {
                                             res.should.have.status(200);
@@ -279,7 +276,7 @@ describe('Book', () => {
 
                                             it('it should update book record in database', (done) => {
                                                 agent.put('/api/books/' + bookId)
-                                                    .set({ 'User-Agent': token }, { 'cookies': loginCookie })
+                                                    .set({ 'Authorization': token }, { 'cookies': loginCookie })
                                                     .send(updatedBook)
                                                     .end((err, res) => {
                                                         res.should.have.status(200);
@@ -309,7 +306,7 @@ describe('Book', () => {
                                                     let authorId = author.id;
 
                                                     agent.post('/api/authors/' + authorId + '/books/' + bookId)
-                                                        .set({ 'User-Agent': token }, { 'cookies': loginCookie })
+                                                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
                                                         .end((err, res) => {
                                                             res.should.have.status(200);
                                                             should.not.exist(err);
@@ -326,7 +323,7 @@ describe('Book', () => {
 
                                             it('it should delete book from database', (done) => {
                                                 agent.del('/api/books/' + bookId)
-                                                    .set({ 'User-Agent': token }, { 'cookies': loginCookie })
+                                                    .set({ 'Authorization': token }, { 'cookies': loginCookie })
                                                     .end((err, res) => {
 
                                                         res.should.have.status(200);

@@ -1,10 +1,9 @@
 // Test data to be used for models
 
 module.exports = {
-    Users: [{
+    LocalUsers: [{
         username: 'John Doe',
         email: 'pheonixera@gmail.com',
-        password: 'synix123',
         setPassword: 'synix123',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -12,15 +11,38 @@ module.exports = {
     }, {
         username: 'John Billy',
         email: 'pheonixeralip@gmail.com',
-        password: 'synix1234+',
         setPassword: 'synix1234+',
         createdAt: new Date(),
         updatedAt: new Date()
     }, {
         username: 'Billy Jerry',
         email: 'yakoyo@yahoo.com',
-        password: '1980bobo',
         setPassword: '1980bobo',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    }],
+    GoogleUsers: [{
+        googleId: 1234,
+        username: 'hephzibah',
+        gmail: 'hephzarony@gmail.com',
+        token: 'bshbuyggy177238y47h1hj'
+    }, {
+        googleId: 56789,
+        username: 'hephzibahbah',
+        gmail: 'hephzaronibah@gmail.com',
+        token: 'bshbuyggy177238y4dnbf34783h-7h1hj'
+    }],
+    Users: [{
+        email: 'pheonixera@gmail.com',
+        createdAt: new Date(),
+        updatedAt: new Date()
+
+    }, {
+        email: 'pheonixeralip@gmail.com',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    }, {
+        email: 'yakoyo@yahoo.com',
         createdAt: new Date(),
         updatedAt: new Date()
     }],
@@ -109,20 +131,17 @@ module.exports = {
     Borrowed: [{
         userId: 1,
         bookId: 1,
-        returned: false,
         createdAt: new Date(),
         updatedAt: new Date()
 
     }, {
         userId: 1,
         bookId: 3,
-        returned: false,
         createdAt: new Date(),
         updatedAt: new Date()
     }, {
         userId: 2,
         bookId: 3,
-        returned: false,
         createdAt: new Date(),
         updatedAt: new Date()
 

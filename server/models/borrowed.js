@@ -1,22 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-    var Borrowed = sequelize.define('Borrowed', {
-        borrowId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        userId: DataTypes.INTEGER,
-        bookId: DataTypes.INTEGER,
-        returned: DataTypes.BOOLEAN
-    });
-    /*Borrowed.associate = (models) => {
-        // associations can be defined here
-        Borrowed.belongsTo(models.User, {
-            foreignKey: 'user_id',
-            onDelete: 'CASCADE'
-        });
-        Borrowed.belongsTo(models.Book, {
-            foreignKey: 'book_id',
-            onDelete: 'CASCADE'
-        });
 
-};*/
+    var Borrowed = sequelize.define('Borrowed', {
+        borrowId: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+        userId: { type: DataTypes.UUID, compoundKey: true },
+        bookId: { type: DataTypes.INTEGER, compoundKey: true },
+        returned: { type: DataTypes.BOOLEAN, defaultValue: false }
+    });
     return Borrowed;
 };

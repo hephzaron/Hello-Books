@@ -1,4 +1,5 @@
 const Users = require('../models').User;
+const LocalUsers = require('../models').LocalUser;
 const Books = require('../models').Book;
 const Crypto = require('crypto');
 
@@ -10,26 +11,33 @@ function validPassword(password, userSalt, userHash) {
 module.exports = {
     // allow new users to register
     create(req, res) {
-        return Users
+        return LocalUsers
             .create({
                 username: req.body.username,
                 email: req.body.email,
-                password: req.body.password,
-                admin: req.body.admin,
-                setPassword: req.body.password
+                setPassword: req.body.password,
+                admin: req.body.admin
             })
-            .then(users => res.status(201).send(users))
+            .then(localusers => {
+                return Users.create({
+                    userId: localusers.uuid,
+                    email: localusers.email,
+                    admin: localusers.admin
+                }).then(() => {
+                    res.status(201).send(localusers);
+                });
+            })
             .catch(err => res.status(401).send(err));
     },
     signIn(req, res, next) {
-        Users.find({
+        LocalUsers.find({
                 where: {
                     username: req.body.username
                 }
             })
             .then(user => {
                 if (!user) {
-                    res.json('username not found');
+                    res.json('incorrect username or password');
                 }
                 // if user is found verify password
                 if (user) {
@@ -40,7 +48,7 @@ module.exports = {
                             next();
                         }
                         if (!verifyPassword) {
-                            res.json('incorrect password');
+                            res.json('incorrect username or password');
                         }
                     } catch (e) {
                         res.json('please provide a password');

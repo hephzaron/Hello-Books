@@ -10,7 +10,8 @@
         "test:book:user": "mocha tests/integration/routes.users.books.test.js",
         "test:borrow:book": "mocha tests/integration/routes.borrow.books.test.js",
         "test:models": "mocha tests/unit/models/model.test.js",
-        "author": "node testk.js"
+        "author": "node testk.js",
+        "model": "node ./server/oauth-login/config/passport.js"
     },
     "repository": {
         "type": "git",
@@ -31,12 +32,15 @@
         "cookie-parser": "^1.4.3",
         "cookie-session": "^2.0.0-beta.3",
         "crypto": "^1.0.1",
+        "events": "^1.1.1",
         "express": "^4.15.3",
         "express-jwt": "^5.3.0",
         "express-session": "^1.15.6",
         "jsonwebtoken": "^8.0.0",
         "morgan": "^1.8.2",
+        "nodemailer": "^4.4.0",
         "passport": "^0.4.0",
+        "passport-google-oauth": "^1.0.0",
         "pg": "^7.0.2",
         "pg-hstore": "^2.3.2",
         "sequelize": "^4.4.2"
@@ -50,6 +54,7 @@
         "eslint-plugin-import": "^2.7.0",
         "eslint-plugin-jsx-a11y": "^5.1.1",
         "eslint-plugin-react": "^7.1.0",
+        "events": "^1.1.1",
         "jasmine-node": "^1.14.5",
         "log-suppress": "^1.0.3",
         "mocha": "^3.5.0",

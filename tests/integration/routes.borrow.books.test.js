@@ -19,7 +19,7 @@ chai.use(chaiHttp);
 
 describe('REGISTER USER', () => {
     before((done) => {
-        db.sequelize.sync({ force: true }).then(() => {
+        db.sequelize.sync({ force: true, logging: false }).then(() => {
             Genre.bulkCreate(genreData).then(() => {
                 Book.bulkCreate(bookData).then((book) => {
                     if (book) {

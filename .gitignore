@@ -6,3 +6,6 @@ credentials.js
 testauth.js
 testk.js
 author.test.js
+mock.js
+config
+views

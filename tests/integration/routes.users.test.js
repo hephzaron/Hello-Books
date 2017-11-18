@@ -2,8 +2,6 @@
 process.env.NODE_ENV = 'test';
 const db = require('../../server/models');
 
-let User = require('../../server/models').User;
-
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -14,7 +12,7 @@ chai.use(chaiHttp);
 
 describe('User', () => {
     before((done) => {
-        db.sequelize.sync({ force: true }).then(() => {
+        db.sequelize.sync({ force: true, logging: false }).then(() => {
             done();
         });
     });
@@ -40,13 +38,11 @@ describe('User', () => {
                     should.not.exist(err);
                     // the response should be JSON
                     res.type.should.equal('application/json');
-                    // the response shpild generate default membership value
-                    res.body.should.have.property('memValue').not.be.empty;
                     // setterPassword shpould be invoked to hash password
                     res.body.should.have.property('salt').not.be.empty;
                     res.body.should.have.property('hash').not.be.empty;
                     // all attributs of user should be generated
-                    res.body.should.have.all.keys('id', 'username', 'email', 'password', 'createdAt', 'updatedAt', 'salt', 'hash', 'admin', 'memValue', 'validPassword');
+                    res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'salt', 'hash', 'validPassword', 'userId', 'localUserId', 'admin');
                     done();
                 });
         }).timeout(5000);

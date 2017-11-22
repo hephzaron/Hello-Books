@@ -34,4 +34,9 @@ app.use(passport.session()); // persistent login sessions
 require('./server/routes')(app, passport); // load  routes and pass in our app and fully configured passport
 require('./server/oauth-login/config/passport')(passport);
 
+
+// send reminder mail for unreturned books
+require('./server/email/notifyUser').sendReminder();
+
+
 module.exports = app;

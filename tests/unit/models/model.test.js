@@ -46,26 +46,31 @@ describe('BOOK MODEL', () => {
                         User.bulkCreate([{
                             userId: localUser[0].uuid,
                             email: localUser[0].email,
+                            username: localUser[0].username,
                             createdAt: new Date(),
                             updatedAt: new Date()
                         }, {
                             userId: localUser[1].uuid,
                             email: localUser[1].email,
+                            username: localUser[1].username,
                             createdAt: new Date(),
                             updatedAt: new Date()
                         }, {
                             userId: localUser[2].uuid,
                             email: localUser[2].email,
+                            username: localUser[2].username,
                             createdAt: new Date(),
                             updatedAt: new Date()
                         }, {
                             userId: googleUser[0].guid,
                             email: googleUser[0].gmail,
+                            username: googleUser[0].username,
                             createdAt: new Date(),
                             updatedAt: new Date()
                         }, {
                             userId: googleUser[1].guid,
                             email: googleUser[1].gmail,
+                            username: googleUser[1].username,
                             createdAt: new Date(),
                             updatedAt: new Date()
                         }]);

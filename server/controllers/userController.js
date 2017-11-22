@@ -22,7 +22,8 @@ module.exports = {
                 return Users.create({
                     userId: localusers.uuid,
                     email: localusers.email,
-                    admin: localusers.admin
+                    admin: localusers.admin,
+                    username: localusers.username
                 }).then(() => {
                     res.status(201).send(localusers);
                 });

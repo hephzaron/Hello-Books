@@ -3,6 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define('User', {
         userId: DataTypes.UUID,
+        username: DataTypes.STRING,
         email: { type: DataTypes.STRING, unique: true, validate: { isEmail: true } },
         admin: { type: DataTypes.BOOLEAN, defaultValue: false },
         memValue: { type: DataTypes.STRING, defaultValue: 'platinum' }

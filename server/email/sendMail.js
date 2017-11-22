@@ -17,7 +17,7 @@ function sendMail(email, data, updatedAt) {
             user: 'hephzaron@gmail.com',
             pass: 'sharon123'
         }
-    })
+    });
 
     ejs.renderFile(tempdir, templateData, function(error, html) {
         if (error) console.log(error);

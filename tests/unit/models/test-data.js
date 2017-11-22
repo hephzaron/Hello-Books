@@ -2,15 +2,15 @@
 
 module.exports = {
     LocalUsers: [{
-        username: 'John Doe',
-        email: 'pheonixera@gmail.com',
+        username: 'Hephzibah',
+        email: 'hephzaron@gmail.com',
         setPassword: 'synix123',
         createdAt: new Date(),
         updatedAt: new Date()
 
     }, {
-        username: 'John Billy',
-        email: 'pheonixeralip@gmail.com',
+        username: 'Tobi',
+        email: 'tobi_daramola@yahoo.com',
         setPassword: 'synix1234+',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -33,16 +33,16 @@ module.exports = {
         token: 'bshbuyggy177238y4dnbf34783h-7h1hj'
     }],
     Users: [{
-        email: 'pheonixera@gmail.com',
+        email: 'tobi_daramola@yahoo.com',
         createdAt: new Date(),
         updatedAt: new Date()
 
     }, {
-        email: 'pheonixeralip@gmail.com',
+        email: 'hephzaron@gmail.com',
         createdAt: new Date(),
         updatedAt: new Date()
     }, {
-        email: 'yakoyo@yahoo.com',
+        email: 'adeyemiadekunle@gmail.com',
         createdAt: new Date(),
         updatedAt: new Date()
     }],

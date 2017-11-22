@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html ; charset=utf-8" />
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--<![endif]-->
+    <meta name="viewport" content="width=device-width initial-scale=1.0" />
+    <title></title>
+    <style>
+        .container {
+            border-radius: 20px;
+            border: 4px solid gray;
+            padding: 0px 0px;
+            max-width: 700px;
+            min-width: 200px;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0
+        }
+        
+        .bottom {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+        
+        .content {
+            padding: 10px;
+            background-color: white;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+        
+        .heading {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            background-color: ghostwhite;
+            border-top-color: gray;
+        }
+        
+        h6 {
+            text-align: center;
+            text-decoration-color: white
+        }
+        
+        p {
+            padding-top: 4px;
+            padding-bottom: 4px
+        }
+        
+        .header {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            background-color: dodgerblue;
+            height: 20px;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            border: 4px solid dodgerblue
+        }
+        
+        .footer {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            background-color: gray;
+            padding-left: 10px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            border: 4px solid gray;
+        }
+        
+        .footer p {
+            color: rgb(20, 50, 50);
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 4px 4px
+        }
+        
+        .button {
+            background-color: rgb(20, 67, 70);
+            border-radius: 5px;
+            display: inline-block;
+            height: auto;
+            font-size: 60%;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            padding: 2px 5px;
+            cursor: not-allowed;
+            opacity: 0.6;
+            font-weight: lighter;
+            font-size: 10px
+        }
+        
+        section {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin: 0px
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <section class="header">
+        </section>
+        <section>
+            <h3 style="color:dodgerblue; background-color:white">Book Update</h3>
+        </section>
+        <section class="heading">
+            <h5 class="heading-1" style="color:grey">Book Update from:</h5>
+            <h4 class="heading-2" style="color:black; font-size:medium">Power Library Management</h2>
+        </section>
+        <section class="content">
+            <%if(user){%>
+                <h5>Hello
+                    <%=user%>,</h5>
+                <p style="text-align:justify">Thank you for using Power Library Mnagement Sytem! We sincerely appreciate your interest in looking through our archives. This to inform you that
+                    <%=book%> borrowed on
+                        <%=date%> is overdue to be returned Please return the book soonest as you will have to pay $40 for every extra day the the book stays with you
+                </p>
+                <p>Sincerely,</p>
+                <p>The Library Administrator</p>
+                <%};%>
+        </section>
+        <section class="bottom">
+            <button class="button"><p style="color:white; text-align:center">Thank you for staying with us</p></button>
+        </section>
+        <section class="footer">
+            <p>Copyright 2017 Power Library</p>
+            <p>2, Imafu Crescent, Uwagboe, Benin-City</p>
+        </section>
+    </div>
+</body>
+
+</html>

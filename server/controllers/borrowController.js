@@ -1,4 +1,14 @@
 const Borrowed = require('../models').Borrowed;
+const User = require('../models').User;
+const nodemailer = require('nodemailer');
+const sendMail = require('../middlewares').sendMail;
+
+function GetAdminMail() {
+    return User.find({ where: { admin: true } }, (error, admin) => {
+        if (error) throw error('administrator does not exist');
+        return (admin.email);
+    });
+}
 
 module.exports = {
 
@@ -10,7 +20,19 @@ module.exports = {
                 bookId: req.params.bookId,
                 returned: false
             })
-            .then(borrow => res.status(201).send(borrow))
+            .then(borrow => {
+                User.find({ where: { id: req.params.userId } }, function(error, user) {
+                    if (error) throw error;
+                    let userEmail = user.email; //get user email
+                    let adminEmail = GetAdminMail(); // get admin email
+                    if (adminEmail && userEmail) {
+                        sendMail.borrowMail(adminEmail);
+                    }
+
+                });
+
+                res.status(201).send(borrow);
+            })
             .catch(err => res.status(400).send(err));
     },
     update(req, res) {

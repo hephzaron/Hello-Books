@@ -5,6 +5,7 @@ const db = require('../../server/models');
 // import book model
 const Genre = require('../../server/models').Genre;
 const Book = require('../../server/models').Book;
+const User = require('../../server/models').User;
 
 //import needed data for testing
 const genreData = require('../unit/models/test-data').Genres;
@@ -18,8 +19,19 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('REGISTER USER', () => {
-    before((done) => {
+    //create test admin user data to mock admin object
+    let admin = {
+        username: 'Daramola',
+        email: 'tobi_daramola@yahoo.com',
+        password: 'admin',
+        admin: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    };
+    before(function(done) {
+        this.timeout(20000);
         db.sequelize.sync({ force: true, logging: false }).then(() => {
+            User.create(admin);
             Genre.bulkCreate(genreData).then(() => {
                 Book.bulkCreate(bookData).then((book) => {
                     if (book) {
@@ -72,7 +84,7 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
 
 
                 describe('BORROW AND RETURN BOOKS', () => {
-                    it('it should borrrow books', (done) => {
+                    it('it should borrow books', (done) => {
 
                         //User with userId borrows two book with id equals 1 and id equals 2
 

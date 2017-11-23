@@ -20,7 +20,8 @@ module.exports = function(sequelize, DataTypes) {
         });
         Book.belongsTo(models.Genre, {
             foreignKey: 'genre_id',
-            onDelete: 'CASCADE'
+            onDelete: 'CASCADE',
+            as: 'genre'
         });
 
     };

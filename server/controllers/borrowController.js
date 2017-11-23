@@ -1,14 +1,8 @@
 const Borrowed = require('../models').Borrowed;
 const User = require('../models').User;
-const nodemailer = require('nodemailer');
-const sendMail = require('../middlewares').sendMail;
-
-function GetAdminMail() {
-    return User.find({ where: { admin: true } }, (error, admin) => {
-        if (error) throw error('administrator does not exist');
-        return (admin.email);
-    });
-}
+const Book = require('../models').Book;
+const Genre = require('../models').Genre;
+const mailAdmin = require('../email/notifyAdmin').mailAdmin;
 
 module.exports = {
 
@@ -20,18 +14,41 @@ module.exports = {
                 bookId: req.params.bookId,
                 returned: false
             })
+            //get details of book borrowed and notify admin
             .then(borrow => {
-                User.find({ where: { id: req.params.userId } }, function(error, user) {
-                    if (error) throw error;
-                    let userEmail = user.email; //get user email
-                    let adminEmail = GetAdminMail(); // get admin email
-                    if (adminEmail && userEmail) {
-                        sendMail.borrowMail(adminEmail);
-                    }
 
+                let userId = borrow.userId;
+                let bookId = borrow.bookId;
+                let date = borrow.createdAt;
+                //get complete user details from users table in the database
+                return User.findById(userId).then(user => {
+                    let userEmail = user.email;
+                    let username = user.username;
+                    //get details of book borrowed from books table in the database
+                    return Book.findById(bookId, {
+                        include: {
+                            model: Genre,
+                            as: 'genre'
+                        }
+                    }).then(function(book) {
+                        //wait for borrow details to be fetched and sent to admin
+                        let timeout = 10000; //set a timeout of 10s
+                        this.setTimeout(() => {
+                            let bookTitle = book.title;
+                            let genre = book.genre;
+                            let userData = {
+                                username: username,
+                                email: userEmail,
+                                bookTitle: bookTitle,
+                                genre: genre,
+                                date: date
+                            };
+                            mailAdmin(userData);
+                            res.status(201).send(borrow);
+
+                        }, timeout);
+                    });
                 });
-
-                res.status(201).send(borrow);
             })
             .catch(err => res.status(400).send(err));
     },

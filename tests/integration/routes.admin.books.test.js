@@ -38,7 +38,7 @@ describe('Book', () => {
         };
         let admin = {
             username: 'John Carther',
-            email: 'johncarter@gmail.com',
+            email: 'tobi_daramola@yahoo.com',
             password: 'admin',
             admin: true,
             createdAt: new Date(),

@@ -1,14 +1,7 @@
-let path = require('path');
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
-const tempdir = path.join(__dirname, './template/reminder.ejs');
 
-function sendMail(email, data, updatedAt) {
-    let templateData = {
-        user: data.name,
-        book: data.book,
-        date: updatedAt
-    };
+function sendEmail(email, tempdir, templateData, subject) {
 
     let transport = nodemailer.createTransport({
         service: 'Gmail',
@@ -25,11 +18,9 @@ function sendMail(email, data, updatedAt) {
         const mailOptions = {
             from: '"Power Library 👻" <tobi_daramola@yahoo.com>', // sender address
             to: email, // list of receivers
-            subject: 'Return Book', // Subject line
+            subject: subject, // Subject line
             html: html // html body
         };
-
-
         // send mail with defined transport object
         return transport.sendMail(mailOptions, (error, info) => {
             if (error) {
@@ -46,4 +37,4 @@ function sendMail(email, data, updatedAt) {
 
 }
 //sendMail();
-exports.sendMail = sendMail;
+exports.sendEmail = sendEmail;

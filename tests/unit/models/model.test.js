@@ -39,7 +39,7 @@ const assert = require('chai').assert;
 describe('BOOK MODEL', () => {
     try {
         before(function(done) {
-            this.timeout(5000);
+            this.timeout(20000);
             db.sequelize.sync({ force: true, logging: false }).then(() => {
                 LocalUser.bulkCreate(localUserData).then((localUser) => {
                     GoogleUser.bulkCreate(googleUserData).then((googleUser) => {
@@ -274,9 +274,9 @@ describe('BOOK MODEL', () => {
         it('it should have association -belongsTo one Genre', (done) => {
             Book.findOne({
                 where: { title: 'R - the tool for data science' },
-                include: { model: Genre }
+                include: { model: Genre, as: 'genre' }
             }).then(book => {
-                let bookGenre = book.Genre.dataValues;
+                let bookGenre = book.genre;
                 /**This removes key id from returned genre data 
                  * so it's content can be compared with the input data */
                 function remove(key, obj) {
@@ -286,8 +286,8 @@ describe('BOOK MODEL', () => {
                 }
 
                 assert.equal(typeof(bookGenre), 'object');
-                assert.equal(book.Genre.length, undefined); // book should belong to only one genre and not return an array of Genre
-                assert.deepEqual(remove('id', bookGenre), genreData[2]); //book should return the right category
+                assert.equal(book.genre.length, undefined); // book should belong to only one genre and not return an array of Genre
+                assert.deepEqual(remove('id', bookGenre.dataValues), genreData[2]); //book should return the right category
                 done();
             });
 

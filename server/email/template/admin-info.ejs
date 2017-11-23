@@ -22,11 +22,6 @@
             right: 0
         }
         
-        .bottom {
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
-        
         .content {
             padding: 10px;
             background-color: white;
@@ -77,20 +72,6 @@
             margin: 4px 4px
         }
         
-        .button {
-            background-color: rgb(20, 67, 70);
-            border-radius: 5px;
-            display: inline-block;
-            height: auto;
-            font-size: 60%;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            padding: 2px 5px;
-            cursor: not-allowed;
-            opacity: 0.6;
-            font-weight: lighter;
-            font-size: 10px
-        }
-        
         section {
             padding-left: 20px;
             padding-right: 20px;
@@ -114,19 +95,20 @@
             <h4 class="heading-2" style="color:black; font-size:medium">Power Library Management</h2>
         </section>
         <section class="content">
-            <%if(user){%>
+            <%if(admin){%>
                 <h5>Hello
-                    <%=user%>,</h5>
-                <p style="text-align:justify">Thank you for using Power Library Management Sytem! We sincerely appreciate your interest in looking through our archives. This to inform you that
-                    <%=book%> borrowed on
-                        <%=date%> is overdue to be returned Please return the book soonest as you will have to pay $40 for every extra day the the book stays with you.
+                    <%=admin%>,</h5>
+                <p style="text-align:justify">
+                    <%=username%>-
+                        <%=userEmail%> has just borrowed '
+                            <%=book%>' from
+                                <%=catalog%> catalogue
+
                 </p>
-                <p>Sincerely,</p>
-                <p>The Library Administrator</p>
+                <p>
+                    <%=date%>
+                </p>
                 <%};%>
-        </section>
-        <section class="bottom">
-            <button class="button"><p style="color:white; text-align:center">Thank you for staying with us</p></button>
         </section>
         <section class="footer">
             <p>Copyright 2017 Power Library</p>

@@ -1,9 +1,11 @@
 /**Query database every 24hours and notify user if time is up to returned borrowed books */
-
-const sendMail = require('./sendMail').sendMail;
+let path = require('path');
+const tempdir = path.join(__dirname, './template/reminder.ejs');
+const sendEmail = require('./sendMail').sendEmail;
 const Borrowed = require('../models').Borrowed;
 const User = require('../models').User;
 const Book = require('../models').Book;
+
 
 
 //check database every 24 hours
@@ -39,12 +41,13 @@ function loop() {
                         let userEmail = user.email;
                         let bookTitle = book.title;
                         let data = {
-                            name: username,
-                            book: bookTitle
+                            user: username,
+                            book: bookTitle,
+                            date: updatedAt
                         };
 
                         if (duration >= expire) {
-                            sendMail(userEmail, data, updatedAt);
+                            sendEmail(userEmail, tempdir, data, 'Return Book');
                         }
 
                     });
@@ -56,6 +59,5 @@ function loop() {
         });
     });
 }
-sendReminder();
 
 exports.sendReminder = sendReminder;

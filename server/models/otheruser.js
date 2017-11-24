@@ -1,16 +1,16 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-    var GoogleUser = sequelize.define('GoogleUser', {
+    var OtherUser = sequelize.define('OtherUser', {
         guid: { type: DataTypes.UUID, unique: true, defaultValue: DataTypes.UUIDV4 },
-        googleId: DataTypes.STRING,
+        authId: DataTypes.STRING,
         username: DataTypes.STRING,
-        gmail: DataTypes.STRING,
+        email: DataTypes.STRING,
         token: DataTypes.STRING,
         admin: { type: DataTypes.BOOLEAN, defaultValue: false }
     });
-    GoogleUser.associate = (models) => {
+    OtherUser.associate = (models) => {
         // associations can be defined here
-        GoogleUser.belongsTo(models.User, {
+        OtherUser.belongsTo(models.User, {
             foreignKey: 'userId',
             otherkey: 'guid',
             onUpdate: 'CASCADE',
@@ -18,5 +18,5 @@ module.exports = function(sequelize, DataTypes) {
         });
 
     };
-    return GoogleUser;
+    return OtherUser;
 };

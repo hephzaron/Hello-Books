@@ -17,7 +17,7 @@ const testData = require('./test-data');
 // import models
 const User = require('../../../server/models').User;
 const LocalUser = require('../../../server/models').LocalUser;
-const GoogleUser = require('../../../server/models').GoogleUser;
+const OtherUser = require('../../../server/models').OtherUser;
 const Author = require('../../../server/models').Author;
 const Genre = require('../../../server/models').Genre;
 const Book = require('../../../server/models').Book;
@@ -42,7 +42,7 @@ describe('BOOK MODEL', () => {
             this.timeout(20000);
             db.sequelize.sync({ force: true, logging: false }).then(() => {
                 LocalUser.bulkCreate(localUserData).then((localUser) => {
-                    GoogleUser.bulkCreate(googleUserData).then((googleUser) => {
+                    OtherUser.bulkCreate(googleUserData).then((googleUser) => {
                         User.bulkCreate([{
                             userId: localUser[0].uuid,
                             email: localUser[0].email,

@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
             targetKey: 'uuid',
             as: 'localUsers'
         });
-        User.hasOne(models.GoogleUser, {
+        User.hasOne(models.OtherUser, {
             sourceKey: 'userId',
             targetKey: 'guid',
             as: 'googleUsers'

@@ -1,14 +1,14 @@
 'use strict';
 module.exports = {
     up: function(queryInterface, Sequelize) {
-        return queryInterface.createTable('GoogleUsers', {
+        return queryInterface.createTable('OtherUsers', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            googleId: {
+            authId: {
                 type: Sequelize.STRING,
                 allowNull: false
             },
@@ -16,7 +16,7 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false
             },
-            gmail: {
+            email: {
                 allowNull: false,
                 type: Sequelize.STRING,
                 unique: true,
@@ -44,6 +44,6 @@ module.exports = {
         });
     },
     down: function(queryInterface, Sequelize) {
-        return queryInterface.dropTable('GoogleUsers');
+        return queryInterface.dropTable('OtherUsers');
     }
 };

@@ -34,7 +34,6 @@ module.exports = {
                 where: {
                     id: req.params.authorId
                 },
-                //attributes: ['name'],
                 include: [{
                     model: Books,
                     attributes: ['title', 'ISBN', 'description'],

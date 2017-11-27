@@ -29,7 +29,7 @@ module.exports = {
             .then(books => {
                 if (!books) {
                     return res.status(404).send({
-                        message: 'Book  Not Found'
+                        message: 'Book Not Found'
                     });
                 }
                 return books
@@ -49,7 +49,7 @@ module.exports = {
     list(req, res) {
         return Books
             .findAll({
-                attributes: ['title', 'ISBN', 'description'],
+                attributes: ['id', 'title', 'ISBN', 'description'],
                 include: [{
                     model: Authors,
                     //attributes: ['name'],

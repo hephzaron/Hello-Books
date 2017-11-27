@@ -15,7 +15,8 @@
         "sendmail": "node ./server/email/sendMail.js",
         "notifyuser": "node ./server/email/notifyUser.js",
         "test:admin:email": "mocha tests/integration/admin.email.test.js",
-        "test:author": "mocha tests/unit/controllers/test.author.js"
+        "test:author": "mocha tests/unit/controllers/test.author.js",
+        "test:book": "mocha tests/unit/controllers/test.book.js"
     },
     "repository": {
         "type": "git",

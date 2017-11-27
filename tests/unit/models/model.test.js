@@ -25,7 +25,6 @@ const Owner = require('../../../server/models').Ownership;
 const Borrow = require('../../../server/models').Borrowed;
 
 //import test data
-let userData = testData.Users;
 let authorData = testData.Authors;
 let genreData = testData.Genres;
 let bookData = testData.Books;

@@ -32,7 +32,7 @@ module.exports = {
                         }
                     }).then(function(book) {
                         //wait for borrow details to be fetched and sent to admin
-                        let timeout = 10000; //set a timeout of 10s
+                        let timeout = 15000; //set a timeout of 10s
                         this.setTimeout(() => {
                             let bookTitle = book.title;
                             let genre = book.genre;
@@ -63,7 +63,7 @@ module.exports = {
             .then(books => {
                 if (!books) {
                     return res.status(404).send({
-                        message: 'Book  Not Found'
+                        message: 'Book Not Found'
                     });
                 }
                 return books

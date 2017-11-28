@@ -38,21 +38,20 @@ module.exports = {
             })
             .then(user => {
                 if (!user) {
-                    res.json('incorrect username or password');
+                    res.status(404).send('incorrect username or password');
                 }
                 // if user is found verify password
                 if (user) {
                     try {
                         const verifyPassword = validPassword(req.body.password, user.salt, user.hash);
                         if (verifyPassword) {
-                            //res.json('proceed');
                             next();
                         }
                         if (!verifyPassword) {
-                            res.json('incorrect username or password');
+                            res.status(404).send('incorrect username or password');
                         }
                     } catch (e) {
-                        res.json('please provide a password');
+                        res.status(404).send('please provide a password');
                     }
                 }
 

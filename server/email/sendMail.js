@@ -7,8 +7,8 @@ function sendEmail(email, tempdir, templateData, subject) {
         service: 'Gmail',
         secure: true,
         auth: {
-            user: 'hephzaron@gmail.com',
-            pass: 'sharon123'
+            user: 'your gmail',
+            pass: 'password'
         }
     });
 

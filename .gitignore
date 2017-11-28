@@ -7,5 +7,6 @@ testauth.js
 testk.js
 author.test.js
 mock.js
+server/email/sendMail.js
 config
 views

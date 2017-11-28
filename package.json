@@ -17,7 +17,8 @@
         "test:admin:email": "mocha tests/integration/admin.email.test.js",
         "test:author": "mocha tests/unit/controllers/test.author.js",
         "test:book": "mocha tests/unit/controllers/test.book.js",
-        "test:borrow": "mocha tests/unit/controllers/test.borrow.book.js"
+        "test:borrow": "mocha tests/unit/controllers/test.borrow.book.js",
+        "test:genre": "mocha tests/unit/controllers/test.genre.js"
     },
     "repository": {
         "type": "git",

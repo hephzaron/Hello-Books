@@ -18,7 +18,8 @@
         "test:author": "mocha tests/unit/controllers/test.author.js",
         "test:book": "mocha tests/unit/controllers/test.book.js",
         "test:borrow": "mocha tests/unit/controllers/test.borrow.book.js",
-        "test:genre": "mocha tests/unit/controllers/test.genre.js"
+        "test:genre": "mocha tests/unit/controllers/test.genre.js",
+        "test:user:ctrlr": "mocha tests/unit/controllers/test.user.js"
     },
     "repository": {
         "type": "git",

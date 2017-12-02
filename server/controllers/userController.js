@@ -45,7 +45,8 @@ module.exports = {
                     try {
                         const verifyPassword = validPassword(req.body.password, user.salt, user.hash);
                         if (verifyPassword) {
-                            next();
+                            res.status(202).send('You are logged in');
+                            next(null, user);
                         }
                         if (!verifyPassword) {
                             res.status(404).send('incorrect username or password');
@@ -93,7 +94,7 @@ module.exports = {
                 }]
             })
             .then(borrowedBooks => res.status(201).send(borrowedBooks))
-            .catch(err => res.status(201).send(err));
+            .catch(err => res.status(400).send(err));
     }
 
 };

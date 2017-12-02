@@ -11,7 +11,8 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('User', () => {
-    before((done) => {
+    before(function(done) {
+        this.timeout(5000);
         db.sequelize.sync({ force: true, logging: false }).then(() => {
             done();
         });

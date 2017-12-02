@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 
 function sendEmail(email, tempdir, templateData, subject) {
-
     let transport = nodemailer.createTransport({
         service: 'Gmail',
         secure: true,
@@ -11,7 +10,6 @@ function sendEmail(email, tempdir, templateData, subject) {
             pass: 'password'
         }
     });
-
     ejs.renderFile(tempdir, templateData, function(error, html) {
         if (error) console.log(error);
         // setup email data with unicode symbols

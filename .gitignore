@@ -10,3 +10,4 @@ mock.js
 server/email/sendMail.js
 config
 views
+sendMail.js

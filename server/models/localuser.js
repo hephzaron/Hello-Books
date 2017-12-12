@@ -9,6 +9,8 @@ module.exports = function(sequelize, DataTypes) {
         email: DataTypes.STRING,
         salt: DataTypes.STRING,
         hash: DataTypes.STRING,
+        resetPasswordToken: DataTypes.STRING,
+        resetPasswordExpires: DataTypes.DATE,
         admin: { type: DataTypes.BOOLEAN, defaultValue: false }
     }, {
         getterMethods: {

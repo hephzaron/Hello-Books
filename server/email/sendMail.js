@@ -6,8 +6,8 @@ function sendEmail(email, tempdir, templateData, subject) {
         service: 'Gmail',
         secure: true,
         auth: {
-            user: 'your gmail',
-            pass: 'password'
+            user: 'hephzaron@gmail.com',
+            pass: 'sharon123'
         }
     });
     ejs.renderFile(tempdir, templateData, function(error, html) {

@@ -4,6 +4,7 @@ const userSignUp = require('./userSignUp');
 const membershipVal = require('./membershipVal');
 const authorize = require('./authorize');
 const isLoggedIn = require('./isLoggedIn');
+const newPassword = require('./newPassword');
 
 module.exports = {
     bookCount,
@@ -11,5 +12,6 @@ module.exports = {
     userSignUp,
     membershipVal,
     authorize,
-    isLoggedIn
+    isLoggedIn,
+    newPassword
 };

@@ -10,7 +10,11 @@ const userSignUp = require('../middlewares').userSignUp;
 const membershipVal = require('../middlewares').membershipVal;
 const authorize = require('../middlewares').authorize;
 const isLoggedIn = require('../middlewares').isLoggedIn;
+const newPassword = require('../middlewares').newPassword;
 //const signInController = require('../middlewares').user;
+
+const resetPassword = require('../email/passwordReset').resetPassword;
+const forgotPassword = require('../email/passwordReset').forgotPassword;
 
 
 module.exports = (app, passport) => {
@@ -48,6 +52,9 @@ module.exports = (app, passport) => {
             failureRedirect: '/'
         }));
 
+    <<
+    <<
+    << < HEAD
     // =====================================
     // FACEBOOK ROUTES =======================
     // =====================================
@@ -62,6 +69,20 @@ module.exports = (app, passport) => {
         }));
 
 
+    // get login page
+    app.get('/login', function(req, res) {
+        res.render('login.ejs', { message: 'test' });
+    });
+    //route to recover password
+    app.post('/forgot_password', forgotPassword);
+    // reset-password
+
+    // route for password reset link from user email with query ?token= user-token
+    app.get('/auth/reset_password', resetPassword, function(req, res) {
+        res.render('change-password.ejs'); //load the change-password.ejs file
+    });
+    //route for changing userPassword
+    app.put('/api/users/change_password', newPassword.verifyUser, newPassword.changePassword);
 
 
     // Api for users to create account and login to application

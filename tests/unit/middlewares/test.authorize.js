@@ -10,14 +10,11 @@ let auth = require('../../../server/middlewares').authorize;
 let httpMocks = require('node-mocks-http');
 let EventEmitter = require('events').EventEmitter;
 let assert = require('chai').assert;
-
-let setTimeout = require('timers').setTimeout;
-
+// import model and test data
 const LocalUser = require('../../../server/models').LocalUser;
 const localUsers = require('../models/test-data').LocalUsers;
 
-// drop all tables and create new ones
-
+// drop all tables and create new ones and insert test data 
 function createTest() {
     return db.sequelize.sync({ force: true, logging: false }).then(() => {
         return LocalUser.create(localUsers[0]).then((localuser) => {
@@ -26,8 +23,7 @@ function createTest() {
     });
 }
 
-
-//Function to modify token to ensure authorisation is properly carried out
+/**Create function to manipulate token to ensure only authorised users are passed */
 function TamperToken(expires, username, admin, req, _secret) {
 
     let request = req;
@@ -56,10 +52,8 @@ function TamperToken(expires, username, admin, req, _secret) {
 
 
 describe('PERFORM USER Authorization', () => {
-
-
-    let token;
-
+    let token; // make generated token accessible to all aspects of code.
+    /** test to ensure token is generated and sent as a cookie to user once user is found in the database*/
     it('it should generate JWT, send to user and create a cookie', (done) => {
         let request = httpMocks.createRequest({
             method: 'POST',
@@ -84,6 +78,7 @@ describe('PERFORM USER Authorization', () => {
 
             } catch (e) { console.log(e); }
         });
+        /**persist test data to database before calling authorization middleware function */
         createTest().then((created) => {
             if (created) {
                 auth.generateJWT(request, response);
@@ -93,10 +88,12 @@ describe('PERFORM USER Authorization', () => {
     }).timeout(5000);
 
     describe('VERIFY Token', () => {
+        /**Expose token claims throughout test suite to serve as default parameters */
         let expires = Math.floor(new Date().getTime() / 1000) + 1 * 60 * 60; //token expires in 1hr
-        let username = localUsers[1].username;
-        let admin = false;
+        let username = localUsers[1].username; // user 1 and 0 was persisted to database
+        let admin = false; // set admin value to false
 
+        /**Arbitrary user should not be authorised if user cannot be found in database */
         it('it should not authorize user if user credentials does not exist in database', (done) => {
             let req = httpMocks.createRequest({
                 method: 'POST',
@@ -108,7 +105,8 @@ describe('PERFORM USER Authorization', () => {
                 }
             });
 
-            let tamperToken = new TamperToken(expires, username, admin, req, secret) //Create new TamperToken Object
+            /**generate token for a user that does not exist in database */
+            let tamperToken = new TamperToken(expires, username, admin, req, secret); //Create new TamperToken Object
             let token = tamperToken.generateToken();
             let userToken;
             let request = httpMocks.createRequest({
@@ -126,7 +124,7 @@ describe('PERFORM USER Authorization', () => {
                 try {
                     assert.equal(response._getStatusCode(), 404);
                     assert.equal(response._getData(), 'Token invalid or expired-user not found');
-                    assert.equal(userToken, undefined);
+                    assert.equal(userToken, undefined); // it should not return user credentials
                     done();
                 } catch (e) { console.log(e); }
             });
@@ -134,6 +132,8 @@ describe('PERFORM USER Authorization', () => {
                 return userToken = _decoded;
             });
         });
+
+        /**test to check for expired token */
         it('it should not authorize user for expired token', (done) => {
             let expires = Math.floor(new Date().getTime() / 1000) - 5 * 60; //token expired 5minutes ago
             let username = localUsers[0].username;
@@ -148,6 +148,7 @@ describe('PERFORM USER Authorization', () => {
                 }
             });
 
+            /**create token that expired 5 minutes ago and pass into function */
             let tamperToken = new TamperToken(expires, username, admin, req, secret); //Create new TamperToken Object
             let token = tamperToken.generateToken();
             let request = httpMocks.createRequest({
@@ -165,7 +166,7 @@ describe('PERFORM USER Authorization', () => {
                 try {
                     assert.equal(response._getStatusCode(), 401);
                     assert.equal(response._getData(), 'jwt expired');
-                    assert.equal(userToken, undefined);
+                    assert.equal(userToken, undefined); //user credentials should not be returned
                     done();
                 } catch (e) { console.log(e); }
             });
@@ -174,11 +175,11 @@ describe('PERFORM USER Authorization', () => {
             });
 
         });
-
+        /**test to ensure user is not authorised if signnature has been stripped */
         it('it should not authorize user if token signature is stripped', (done) => {
             let userToken;
-            let stripSignature = token.split('.');
-            let unsignedToken = stripSignature[0] + '.' + stripSignature[1];
+            let stripSignature = token.split('.'); //generate an array that contains the header, payload and secret
+            let unsignedToken = stripSignature[0] + '.' + stripSignature[1]; //concatenate the header and payload
             let request = httpMocks.createRequest({
                 method: 'POST',
                 headers: {
@@ -205,7 +206,7 @@ describe('PERFORM USER Authorization', () => {
 
         });
 
-
+        /**with signature intact, user should not be authorised if payload has been tampered with */
         it('it should not authorize user  if user credentials have been tampered with', (done) => {
             let userToken;
             let tamper = token.split('.');
@@ -235,8 +236,7 @@ describe('PERFORM USER Authorization', () => {
             });
         });
 
-        ////
-
+        /**it should not authorize user for wrong signature or secret */
         it('it should not authorize user  with wrong signature', (done) => {
             let userToken;
             let tamper = token.split('.');
@@ -266,7 +266,7 @@ describe('PERFORM USER Authorization', () => {
 
             });
         });
-
+        /**it should not authorise user if no token is supplied */
         it('it should not authorize user if token is not provided', (done) => {
             let userToken;
             let token = null;
@@ -295,7 +295,7 @@ describe('PERFORM USER Authorization', () => {
             });
         });
 
-
+        /**user with valid token should be authorised */
         it('it should authorize user for valid token', (done) => {
             let now = Math.floor(new Date().getTime() / 1000);
 
@@ -313,11 +313,81 @@ describe('PERFORM USER Authorization', () => {
             response.on('send', () => {});
 
             auth.verifyUser(request, response, (_decoded) => {
-                assert.equal(_decoded.username, localUsers[0].username);
-                assert.equal(_decoded.exp > now, true);
+                assert.equal(_decoded.username, localUsers[0].username); //check to ensure the right user credential is returned from token
+                assert.equal(_decoded.exp > now, true); //check to ensure token has not expired.
                 done();
             });
 
         });
     });
+
+    describe('PROTECT Admin route', () => {
+        it('it should restrict non-admin from accessing admin protected route', (done) => {
+            let nonAdminToken = token; //access non admn token from parent block
+            let userAdmin;
+            let request = httpMocks.createRequest({
+                method: 'POST',
+                headers: {
+                    'user-agent': 'Mozilla/5.0',
+                    'authorization': token
+                }
+            })
+            let response = httpMocks.createResponse({
+                eventEmitter: EventEmitter
+            })
+            response.on('send', () => {
+                try {
+                    assert.equal(response._getStatusCode(), 401); //user not authorised
+                    assert.equal(response._getData(), 'You are not authorized to perform this action');
+                    assert.equal(userAdmin, undefined);
+                    done();
+                } catch (e) { console.log(e); }
+
+            })
+            auth.adminProtect(request, response, (user) => {
+                return userAdmin = user;
+            });
+
+        });
+        it('it should allow admin to access admin protected route', (done) => {
+            /**generate another token and set admin to be true */
+
+            let expires = Math.floor(new Date().getTime() / 1000) + 5 * 60; //token should expire in 5minutes ago
+            let username = localUsers[0].username;
+            let admin = true;
+            let userAdmin;
+            let req = httpMocks.createRequest({
+                method: 'POST',
+                headers: {
+                    'user-agent': 'Mozilla/5.0'
+                },
+                body: {
+                    username: username
+                }
+            });
+
+            /**create token that expired 5 minutes ago and pass into function */
+            let tamperToken = new TamperToken(expires, username, admin, req, secret); //Create new TamperToken Object
+            let token = tamperToken.generateToken();
+            let request = httpMocks.createRequest({
+                method: 'POST',
+                headers: {
+                    'user-agent': 'Mozilla/5.0',
+                    'authorization': token
+                }
+            });
+
+            let response = httpMocks.createResponse({
+                eventEmitter: EventEmitter
+            })
+            response.on('send', () => {});
+            auth.adminProtect(request, response, (user) => {
+                assert.equal(user.admin, true);
+                assert.equal(user.username, localUsers[0].username);
+                done();
+            });
+
+        });
+
+    })
 });

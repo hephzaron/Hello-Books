@@ -74,13 +74,13 @@ module.exports = {
             if (decoded == null) {
                 res.status(400).send('Token not provided');
 
-            } else if (decoded.admin == false) {
+            } else if (decoded.admin === false) {
 
                 res.status(401).send('You are not authorized to perform this action');
                 // res.send(token);      
-            } else if (decoded.admin == true) {
+            } else if (decoded.admin === true) {
 
-                next();
+                next(decoded);
             }
         } catch (error) { res.status(400).send(error); }
 

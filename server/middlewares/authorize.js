@@ -2,15 +2,11 @@ const LocalUsers = require('../models').LocalUser;
 const jwt = require('jsonwebtoken');
 const secret = process.env.JWT_SECRET || 'iloveprogramming';
 
+//import user model
+
 function generateGUID() {
     var now = new Date().getTime();
     return now;
-}
-
-function decodeJWT(token, res) {
-    // verifies secret 
-    const decoded = jwt.decode(token, secret, { algorithm: 'HS256' });
-    return decoded;
 }
 
 module.exports = {
@@ -24,10 +20,10 @@ module.exports = {
             }).then(user => {
                 const GUID = generateGUID();
 
-                // By default, expire the token after 7 days.
+                // By default, expire the token after 1hour
                 // NOTE: the value for 'exp' needs to be in seconds since
                 // the epoch as per the spec!
-                var expiresDefault = Math.floor(new Date().getTime() / 1000) + 7 * 24 * 60 * 60;
+                var expiresDefault = Math.floor(new Date().getTime() / 1000) + 1 * 60 * 60;
                 var payload = {
                     auth: GUID,
                     agent: req.headers['user-agent'],
@@ -43,10 +39,7 @@ module.exports = {
                     signed: false,
                     maxAge: 1000 * 60 * 60 * 12
                 });
-                res.json({
-                    'token': token,
-                    'body': user
-                });
+                res.status(200).send(token);
                 //return token;
             })
             .catch(err => res.status(404).send(err));
@@ -54,23 +47,30 @@ module.exports = {
     },
 
     verifyUser: function(req, res, next) {
-        const loginCookie = req.cookies.loginCookie;
-        if (!loginCookie) {
-            return res.status(403).send('please login');
+        try {
+            let token = req.headers['authorization'];
+            let decoded = jwt.verify(token, secret, { algorithm: 'HS256' });
+
+            LocalUsers.findOne({ where: { username: decoded.username } }).then((user) => {
+                if (!user) {
+                    res.status(404).send('Token invalid or expired-user not found');
+                }
+                next(decoded, user);
+            }).catch(err => { throw err; });
+        } catch (e) {
+            // catch error messages for named error:TokenExpiredError and JsonWebTokenError
+            res.status(401).send(e.message);
         }
-        if (loginCookie) {
-            //const decoded = decodeJWT(loginCookie, res);
-            return next();
-        }
+
     },
 
     // Authorize user-admin only to perform certain actions
     adminProtect: function(req, res, next) {
         // check header  for token
         try {
-            const token = req.headers['authorization'];
+            let token = req.headers['authorization'];
 
-            const decoded = decodeJWT(token, res);
+            let decoded = jwt.decode(token, secret, { algorithm: 'HS256' });
             if (decoded == null) {
                 res.status(400).send('Token not provided');
 

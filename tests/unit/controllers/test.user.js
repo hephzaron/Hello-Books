@@ -161,8 +161,7 @@ describe('SIGN-IN User', () => {
         userController.signIn(request, response, (err, user) => {
             if (user) {
                 try {
-                    assert.equal(response._getStatusCode(), 202);
-                    assert.equal(response._getData(), 'You are logged in');
+                    assert.equal(response._getStatusCode(), 200);
                     assert.equal(response._getStatusMessage(), 'OK');
                     assert.equal(user.username, localUser[0].username);
                     done();

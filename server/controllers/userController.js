@@ -45,7 +45,7 @@ module.exports = {
                     try {
                         const verifyPassword = validPassword(req.body.password, user.salt, user.hash);
                         if (verifyPassword) {
-                            res.status(202).send('You are logged in');
+                            //res.status(202).send('You are logged in');
                             next(null, user);
                         }
                         if (!verifyPassword) {

@@ -86,35 +86,38 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
                 describe('BORROW AND RETURN BOOKS', () => {
                     it('it should borrow books', (done) => {
 
-                        //User with userId borrows two book with id equals 1 and id equals 2
+                        try {
+                            //User with userId borrows two book with id equals 1 and id equals 2
+                            let bookId = 1;
+                            agent.post('/api/users/' + userId + '/books/' + bookId)
+                                .set({ 'token': token }, { 'cookies': loginCookie })
+                                .end((err, res) => {
+                                    // it should be successful
+                                    res.status.should.equals(201);
+                                    res.type.should.equal('application/json');
+                                    res.body.should.have.property('returned').to.be.equal(false);
+                                    res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
 
-                        let bookId = 1;
-                        agent.post('/api/users/' + userId + '/books/' + bookId)
-                            .set({ 'token': token }, { 'cookies': loginCookie })
-                            .end((err, res) => {
-                                // it should be successful
-                                res.status.should.equals(201);
-                                res.type.should.equal('application/json');
-                                res.body.should.have.property('returned').to.be.equal(false);
-                                res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
+                                    //....borrow second book with id equals 2
+                                    let bookId = 2;
+                                    agent.post('/api/users/' + userId + '/books/' + bookId)
+                                        .set({ 'token': token }, { 'cookies': loginCookie })
+                                        .end((err, res) => {
+                                            // it should be successful
+                                            res.status.should.equals(201);
+                                            res.type.should.equal('application/json');
+                                            res.body.should.have.property('returned').to.be.equal(false);
+                                            res.body.bookId.should.equal(2);
+                                            res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
+                                            //borrow second book with id equals 2
+                                            done();
 
-                                //....borrow second book with id equals 2
-                                let bookId = 2;
-                                agent.post('/api/users/' + userId + '/books/' + bookId)
-                                    .set({ 'token': token }, { 'cookies': loginCookie })
-                                    .end((err, res) => {
-                                        // it should be successful
-                                        res.status.should.equals(201);
-                                        res.type.should.equal('application/json');
-                                        res.body.should.have.property('returned').to.be.equal(false);
-                                        res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
-                                        //borrow second book with id equals 2
-                                        done();
+                                        });
+                                });
 
-                                    });
-                            });
+                        } catch (e) { console.log(e); }
 
-                    });
+                    }).timeout(34000);
 
                     it('it should get unreturned book by a user before return of any', (done) => {
                         agent.get('/api/users/' + userId + '/books')

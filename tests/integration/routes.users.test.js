@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 describe('User', () => {
     before(function(done) {
-        this.timeout(5000);
+        this.timeout(10000);
         db.sequelize.sync({ force: true, logging: false }).then(() => {
             done();
         });
@@ -43,7 +43,7 @@ describe('User', () => {
                     res.body.should.have.property('salt').not.be.empty;
                     res.body.should.have.property('hash').not.be.empty;
                     // all attributs of user should be generated
-                    res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'salt', 'hash', 'validPassword', 'userId', 'localUserId', 'admin');
+                    res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'salt', 'hash', 'validPassword', 'userId', 'localUserId', 'resetPasswordExpires', 'resetPasswordToken', 'admin');
                     done();
                 });
         }).timeout(5000);

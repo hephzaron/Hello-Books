@@ -19,8 +19,8 @@ chai.use(chaiHttp);
 
 describe('Book', () => {
     before(function(done) {
+        this.timeout(5000);
         db.sequelize.sync({ force: true, logging: false }).then(() => {
-            this.timeout(5000);
             done();
         });
     });
@@ -65,7 +65,7 @@ describe('Book', () => {
                     //admin property should be set to false
                     res.body.should.have.property('admin').to.be.false;
                     // all attributs of user should be generated
-                    res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'salt', 'hash', 'admin', 'validPassword', 'userId', 'localUserId');
+                    res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'resetPasswordExpires', 'resetPasswordToken', 'salt', 'hash', 'admin', 'validPassword', 'userId', 'localUserId');
 
                     //post admin credentals to database
                     chai.request(app)
@@ -86,7 +86,7 @@ describe('Book', () => {
                             //admin property should be set to true
                             res.body.should.have.property('admin').to.be.true;
                             // all attributs of user should be generated
-                            res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'salt', 'hash', 'admin', 'validPassword', 'userId', 'localUserId');
+                            res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'resetPasswordExpires', 'resetPasswordToken', 'salt', 'hash', 'admin', 'validPassword', 'userId', 'localUserId');
                             done();
                         });
 

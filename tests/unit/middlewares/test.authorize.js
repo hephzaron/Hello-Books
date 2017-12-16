@@ -1,8 +1,12 @@
+/**This test user authentication and authorisation middleware, it modify tokens and test against middleware
+ * to ensure only authenticated and authorised user can access route. It also check to ensure only
+ * an admin personnel is authorise to access admin protected route
+ */
+
 //set env variable to test to access the test database
 process.env.NODE_ENV = 'test';
 const jwt = require('jsonwebtoken');
 const secret = process.env.JWT_SECRET || 'iloveprogramming';
-const async = require('async-waterfall');
 // require database
 const db = require('../../../server/models');
 let auth = require('../../../server/middlewares').authorize;

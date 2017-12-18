@@ -21,7 +21,8 @@
         "test:genre": "mocha tests/unit/controllers/test.genre.js",
         "test:user:ctrlr": "mocha tests/unit/controllers/test.user.js",
         "test:middleware:auth": "mocha tests/unit/middlewares/test.authorize.js",
-        "test:book:count": "mocha tests/unit/middlewares/test.bookCount.js"
+        "test:book:count": "mocha tests/unit/middlewares/test.bookCount.js",
+        "test:memVal": "mocha tests/unit/middlewares/test.membershipVal.js"
     },
     "repository": {
         "type": "git",

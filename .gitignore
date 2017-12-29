@@ -4,7 +4,7 @@ npm-debug.log
 seeders
 credentials.js
 testauth.js
-testk.js
+testk.json
 author.test.js
 mock.js
 server/email/sendMail.js

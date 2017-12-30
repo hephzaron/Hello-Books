@@ -33,25 +33,29 @@ Ensure the underlisted are installed on your PC before running this application
 1. Download or clone this branch at https://github.com/hephzaron/Hello-Books.git"
 2. Navigate to working directory and install dependencies:
 
-```npm install 
+```
+npm install 
 ```
 
 3. Install sequelize-cli, Create Postgresql database, Navigate to server directory and run migrations:
 
-```npm install -g seqeulize-cli
+```
+npm install -g seqeulize-cli
 cd server
 sequelize db:migrate
 ```
 
 4. Create a `.env` file in the root directory of the application. Use a different database for your testing and development. Example of the content of a .env file looks like this
 
-```PRIVATE_KEY=myprivatekey
+```
+PRIVATE_KEY=myprivatekey
 TEST_DATABASE_URL=postgres://127.0.0.1:5432/hello-books-test
 ```
 
 5. Start the server:
 
-```npm run start:dev
+```
+npm run start:dev
 ```
 
 The server listens on port '5432' which can be changed by setting environment variable 'PORT'

@@ -1,0 +1,25 @@
+engines:
+eslint:
+    enabled: true
+    checks:
+      import/extensions:
+        enabled: false
+      file-lines:
+        enabled: false
+      method-lines:
+        enabled: false
+  duplication:
+    enabled: false
+    config:
+      languages:
+        javascript:
+          mass_threshold: 20
+ratings:
+  paths:
+  - "**.js"
+exclude_paths:
+- "tests"
+- "node_modules/"
+- "server/dist/"
+- "server/migrations/"
+- "server/seeders/"

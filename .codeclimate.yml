@@ -1,19 +1,34 @@
 engines:
-eslint:
-    enabled: true
-    checks:
-      import/extensions:
-        enabled: false
-      file-lines:
-        enabled: false
-      method-lines:
-        enabled: false
-  duplication:
+checks:
+  argument-count:
     enabled: false
-    config:
-      languages:
-        javascript:
-          mass_threshold: 20
+  complex-logic:
+    enabled: false
+  file-lines:
+    enabled: false
+  method-complexity:
+    enabled: false
+  method-count:
+    enabled: false
+  method-lines:
+    enabled: false
+  nested-control-flow:
+    enabled: false
+  return-statements:
+    enabled: false
+  similar-code:
+    enabled: false
+  identical-code:
+    enabled: false
+
+eslint:
+  enabled: true
+  config:
+    extensions:
+    - .es6
+    - .js
+    - .jsx
+    
 ratings:
   paths:
   - "**.js"

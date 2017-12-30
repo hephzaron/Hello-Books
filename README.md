@@ -109,6 +109,6 @@ To contribute,
 
 ## Acknowledgement
 
-Would lkke to use this medium to acknowledge **Temitayo Fadojutimi** who have helped me thus far in areas that looks confusing, his contributions by suggestions, advice and guides have really encouraged me to press on.He tweets at [@adesege_](http://twitter.com/adesege_)
+I would like to use this medium to acknowledge **Temitayo Fadojutimi** who have helped me thus far in areas that looks confusing, his contributions by suggestions, advice and guides have really encouraged me to press on.He tweets at [@adesege_](http://twitter.com/adesege_)
 
 **Ekundayo Abiona** (ekundayo.abiona@andela.com) is not left out, whose project work have been of immense benefit to me as a guide for Continous integration and Test Coverage Reporting config.

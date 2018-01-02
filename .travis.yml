@@ -23,7 +23,7 @@ notifications:
 services:
   - postgresql
 before_script:
-  - npm install - g codeclimate-test-reporter@0.5.0 coveralls@3.0.0 sequelize@4.4.2
+  - npm install - g codeclimate-test-reporter@latest coveralls@latest sequelize@latest
   - psql -c 'drop database if exists travis-testdb;' -U postgres
   - psql -c 'create database travis-testdb;' -U postgres
   - NODE_ENV=test npm run test:db

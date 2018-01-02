@@ -24,8 +24,8 @@ services:
   - postgresql
 before_script:
   - npm install -g codeclimate-test-reporter coveralls sequelize istanbul-combine
-  - psql -c 'drop database if exists travis-testdb;' -U postgres
-  - psql -c 'create database travis-testdb;' -U postgres
+  - psql -c 'drop database if exists testdb;' -U postgres
+  - psql -c 'create database testdb;' -U postgres
   - NODE_ENV=test npm run test:db
 script:
   - npm run coveralls

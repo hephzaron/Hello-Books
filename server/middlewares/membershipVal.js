@@ -30,14 +30,14 @@ module.exports = {
                     if (borrowed) {
                         let memVal;
                         if (borrowed.count > 0) {
-                            let array = new Array();
-                            var mVal = 0;
+                            let array = [];
+                            let mVal = 0;
                             for (let i = 0; i < borrowed.count; i++) {
                                 const imVal = (borrowed.rows[i].updatedAt - borrowed.rows[i].createdAt) / (60 * 60 * 24 * 1000);
-                                mVal = mVal + imVal;
+                                mVal += imVal;
                                 array.push(mVal);
                             }
-                            var returnTime = (array[borrowed.count - 1]) / (borrowed.count);
+                            let returnTime = (array[borrowed.count - 1]) / (borrowed.count);
                             memVal = duration * returnTime;
                         } else { memVal = 0; }
 
@@ -55,21 +55,21 @@ module.exports = {
                                         memValue: 'platinum'
                                     });
                                     if (userCount.count <= 1) {
-                                        next(userCount.count, 'platinum');
+                                        next();
                                     } else { res.status(403).send('You are not allowed to borrow more than 1 book'); }
                                 } else if (memVal > 0.35 && memVal < 0.7) {
                                     users.update({
                                         memValue: 'silver'
                                     });
                                     if (userCount.count <= 2) {
-                                        next(userCount.count, 'silver');
+                                        next();
                                     } else { res.status(403).send('You are not allowed to borrow more than 2 books'); }
                                 } else if (memVal >= 0.7) {
                                     users.update({
                                         memValue: 'gold'
                                     });
                                     if (userCount.count <= 3) {
-                                        next(userCount.count, 'gold');
+                                        next();
                                     } else { res.status(403).send('You are not allowed to borrow more than 3 books'); }
                                 }
                             }

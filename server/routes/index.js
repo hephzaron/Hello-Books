@@ -100,7 +100,7 @@ module.exports = (app, passport) => {
     app.put('/api/books/:bookId', authorize.verifyUser, authorize.adminProtect, bookController.update); //
 
     //create author details
-    app.post('/api/authors', /*authorize.verifyUser, authorize.adminProtect,*/
+    app.post('/api/authors', authorize.verifyUser, authorize.adminProtect,
         authorController.create); //
 
     // allocate books to respective author

@@ -120,7 +120,7 @@ describe('BOOK MODEL', () => {
                     assert.equal(userBooks[1].get().title, bookData[2].title); //borrowed book with id:3
                     //find book id:2 in returned arrays
                     let check = userBooks.filter((object) => {
-                        return object.get().title == bookData[1].title;
+                        return object.get().title === bookData[1].title;
                     });
 
                     assert.deepEqual(check, []); //book id:2 should not be present in returned user books
@@ -161,7 +161,7 @@ describe('BOOK MODEL', () => {
                     assert.equal(authorBooks[1].get().id, 3);
 
                     let check = authorBooks.filter((object) => {
-                        return object.get().id == 1;
+                        return object.get().id === 1;
                     });
                     assert.deepEqual(check, []); //book id:1 should not be present for author id:1 book published
                     done();
@@ -203,7 +203,7 @@ describe('BOOK MODEL', () => {
                 assert.equal(genreBook[1].dataValues.title, 'R - the tool for data science');
 
                 let check = genreBook.filter((object) => {
-                    return object.get().title == 'Java programming for beginners';
+                    return object.get().title === 'Java programming for beginners';
                 });
                 // it should not return a book not in that category    
                 assert.deepEqual(check, []);
@@ -238,7 +238,7 @@ describe('BOOK MODEL', () => {
                     assert.equal(bookUsers[0].get().id, 1);
                     assert.equal(bookUsers[1].get().id, 2);
                     let check = bookUsers.filter((object) => {
-                        return object.get().id == 3;
+                        return object.get().id === 3;
                     });
 
                     assert.deepEqual(check, []); //user id:3 should not be present in for book id:3 borrowed
@@ -259,7 +259,7 @@ describe('BOOK MODEL', () => {
                     assert.equal(bookAuthors[0].get().id, 1);
                     assert.equal(bookAuthors[1].get().id, 2);
                     let check = bookAuthors.filter((object) => {
-                        return object.get().id == 3;
+                        return object.get().id === 3;
                     });
 
                     assert.deepEqual(check, []); //author id:3 should not be present in for book id:3 published
@@ -338,7 +338,4 @@ describe('BOOK MODEL', () => {
             });
         }).timeout(5000);
     });
-
-
-
 });

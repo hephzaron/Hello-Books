@@ -13,9 +13,9 @@ module.exports = {
                 }
             })
             .then(book => {
-                if (book.count == 0) { //if count is 0, i.e book has not been borrowed, pass to user
+                if (book.count === 0) { //if count is 0, i.e book has not been borrowed, pass to user
 
-                    next(book.count);
+                    next();
 
                 } else if (book.count > 0) {
                     let bookCount = book.count;
@@ -38,7 +38,7 @@ module.exports = {
                                         res.status(403).send('Book not available');
                                     }
                                     if (qty && available > 0) {
-                                        next(qty, available);
+                                        next();
                                     }
                                 }).catch(err => { throw err; });
                             }

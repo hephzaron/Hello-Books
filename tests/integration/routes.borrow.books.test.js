@@ -61,7 +61,7 @@ describe('REGISTER USER', () => {
                 done();
 
             });
-    });
+    }).timeout(3000);
 });
 //sign in a user to test the protected routes from seeders entries
 describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
@@ -76,13 +76,11 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
                 res.should.have.status(200);
                 res.body.should.have.property('token').not.be.empty;
 
-                let token = res.body.token;
+                let token = res.body['token'];
                 let loginCookie = res.headers['set-cookie'];
 
                 // get user id from login
-                let userId = res.body.body.id;
-
-
+                let userId = res.body['user'].id;
                 describe('BORROW AND RETURN BOOKS', () => {
                     it('it should borrow books', (done) => {
 
@@ -90,7 +88,7 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
                             //User with userId borrows two book with id equals 1 and id equals 2
                             let bookId = 1;
                             agent.post('/api/users/' + userId + '/books/' + bookId)
-                                .set({ 'token': token }, { 'cookies': loginCookie })
+                                .set({ 'authorization': token }, { 'cookies': loginCookie })
                                 .end((err, res) => {
                                     // it should be successful
                                     res.status.should.equals(201);
@@ -101,7 +99,7 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
                                     //....borrow second book with id equals 2
                                     let bookId = 2;
                                     agent.post('/api/users/' + userId + '/books/' + bookId)
-                                        .set({ 'token': token }, { 'cookies': loginCookie })
+                                        .set({ 'authorization': token }, { 'cookies': loginCookie })
                                         .end((err, res) => {
                                             // it should be successful
                                             res.status.should.equals(201);
@@ -121,9 +119,9 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
 
                     it('it should get unreturned book by a user before return of any', (done) => {
                         agent.get('/api/users/' + userId + '/books')
+                            .set({ 'authorization': token }, { 'cookies': loginCookie })
                             .query('returned=false')
                             .end((err, res) => {
-
                                 res.should.have.status(201);
                                 should.not.exist(err);
                                 res.type.should.equal('application/json');
@@ -144,6 +142,7 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
                         };
                         let bookId = 1;
                         agent.put('/api/users/' + userId + '/books/' + bookId)
+                            .set({ 'authorization': token }, { 'cookies': loginCookie })
                             .send(book)
                             .end((err, res) => {
                                 res.should.have.status(200);
@@ -158,9 +157,9 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
                     });
                     it('it should get unreturned book by a user', (done) => {
                         agent.get('/api/users/' + userId + '/books')
+                            .set({ 'authorization': token }, { 'cookies': loginCookie })
                             .query('returned=false')
                             .end((err, res) => {
-
                                 res.should.have.status(201);
                                 should.not.exist(err);
                                 res.type.should.equal('application/json');

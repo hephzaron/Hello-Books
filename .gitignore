@@ -1,4 +1,5 @@
 node_modules/
+tmp/middlewares-test/
 check.js
 npm-debug.log
 server/seeders/

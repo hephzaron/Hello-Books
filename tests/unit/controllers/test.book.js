@@ -112,8 +112,6 @@ describe('BOOK', () => {
 
     });
 
-
-
     // it should return error for uncreated book
     it('it should return error 404, book not found', (done) => {
         let request = httpMocks.createRequest({

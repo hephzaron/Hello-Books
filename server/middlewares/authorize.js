@@ -23,7 +23,7 @@ module.exports = {
                 // By default, expire the token after 1hour
                 // NOTE: the value for 'exp' needs to be in seconds since
                 // the epoch as per the spec!
-                var expiresDefault = Math.floor(new Date().getTime() / 1000) + 1 * 60 * 60;
+                var expiresDefault = Math.floor(new Date().getTime() / 1000) + (1 * 60 * 60);
                 var payload = {
                     auth: GUID,
                     agent: req.headers['user-agent'],
@@ -39,8 +39,7 @@ module.exports = {
                     signed: false,
                     maxAge: 1000 * 60 * 60 * 12
                 });
-                res.status(200).send(token);
-                //return token;
+                res.status(200).send({ 'token': token, 'user': user });
             })
             .catch(err => res.status(404).send(err));
 
@@ -51,15 +50,15 @@ module.exports = {
             let token = req.headers['authorization'];
             let decoded = jwt.verify(token, secret, { algorithm: 'HS256' });
 
-            LocalUsers.findOne({ where: { username: decoded.username } }).then((user) => {
+            return LocalUsers.findOne({ where: { username: decoded.username } }).then((user) => {
                 if (!user) {
                     res.status(404).send('Token invalid or expired-user not found');
                 }
-                next(decoded, user);
+                next();
             }).catch(err => { throw err; });
         } catch (e) {
             // catch error messages for named error:TokenExpiredError and JsonWebTokenError
-            res.status(401).send(e.message);
+            res.status(401).send('please login');
         }
 
     },
@@ -80,7 +79,7 @@ module.exports = {
                 // res.send(token);      
             } else if (decoded.admin === true) {
 
-                next(decoded);
+                next();
             }
         } catch (error) { res.status(400).send(error); }
 

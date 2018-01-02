@@ -29,7 +29,7 @@ let ownerData = require('../models/test-data').Owners;
 
 // drop all tables and create new ones
 function dropTable() {
-    db.sequelize.sync({ force: true, logging: true }).then(() => {
+    return db.sequelize.sync({ force: true, logging: false }).then(() => {
         //create realted data in database
         return Genre.bulkCreate(genreData).then(() => {
             Users.bulkCreate(userData);
@@ -67,9 +67,10 @@ describe('BORROW Books', () => {
                 done();
             } catch (e) { console.log(e); }
         });
-        dropTable();
-        setTimeout(() => { borrowController.create(request, response); }, 10000);
-    }).timeout(50000);
+        dropTable().then(() => {
+            borrowController.create(request, response);
+        });
+    }).timeout(60000);
 
     //user should be able to return books
     it('it should return books', (done) => {

@@ -96,7 +96,7 @@ describe('Book', () => {
     });
 
     // Test to ensure book category are added to database on admin login
-    describe('/POST book category', () => {
+    describe('/POST Book category', () => {
         let category = {
             name: 'Computer science',
             createdAt: new Date(),
@@ -111,11 +111,12 @@ describe('Book', () => {
                     res.should.have.status(200);
                     res.body.should.have.property('token').not.be.empty;
 
-                    let token = res.body.token;
+                    let token = res.body['token'];
+                    console.log(token);
                     let loginCookie = res.headers['set-cookie'];
 
                     agent.post('/api/genre')
-                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
+                        .set({ 'authorization': token }, { 'cookies': loginCookie })
                         .send(category)
                         .end((err, res) => {
                             res.should.have.status(200);
@@ -148,7 +149,7 @@ describe('Book', () => {
                 .post('/api/books')
                 .send(book)
                 .end((err, res) => {
-                    res.should.have.status(403);
+                    res.should.have.status(401);
                     // there should be errors
                     should.exist(err);
                     //body should be empty
@@ -173,12 +174,12 @@ describe('Book', () => {
                     res.body.should.have.property('token').not.be.empty;
 
 
-                    let token = res.body.token;
+                    let token = res.body['token'];
                     let loginCookie = res.headers['set-cookie'];
 
                     // Unauthorised user:non-admin should not create book
                     agent.post('/api/books')
-                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
+                        .set({ 'authorization': token }, { 'cookies': loginCookie })
                         .send(book)
                         .end((err, res) => {
                             should.exist(err);
@@ -202,12 +203,12 @@ describe('Book', () => {
                     res.body.should.have.property('token').not.be.empty;
 
 
-                    let token = res.body.token;
+                    let token = res.body['token'];
                     let loginCookie = res.headers['set-cookie'];
 
                     // Unauthorised user:admin should  create book
                     agent.post('/api/books')
-                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
+                        .set({ 'authorization': token }, { 'cookies': loginCookie })
                         .send(book)
                         .end((err, res) => {
                             // should have a status code of 201
@@ -238,7 +239,7 @@ describe('Book', () => {
 
                                     };
                                     agent.post('/api/authors')
-                                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
+                                        .set({ 'authorization': token }, { 'cookies': loginCookie })
                                         .send(author)
                                         .end((err, res) => {
                                             res.should.have.status(200);
@@ -276,7 +277,7 @@ describe('Book', () => {
 
                                             it('it should update book record in database', (done) => {
                                                 agent.put('/api/books/' + bookId)
-                                                    .set({ 'Authorization': token }, { 'cookies': loginCookie })
+                                                    .set({ 'authorization': token }, { 'cookies': loginCookie })
                                                     .send(updatedBook)
                                                     .end((err, res) => {
                                                         res.should.have.status(200);
@@ -306,7 +307,7 @@ describe('Book', () => {
                                                     let authorId = author.id;
 
                                                     agent.post('/api/authors/' + authorId + '/books/' + bookId)
-                                                        .set({ 'Authorization': token }, { 'cookies': loginCookie })
+                                                        .set({ 'authorization': token }, { 'cookies': loginCookie })
                                                         .end((err, res) => {
                                                             res.should.have.status(200);
                                                             should.not.exist(err);
@@ -323,7 +324,7 @@ describe('Book', () => {
 
                                             it('it should delete book from database', (done) => {
                                                 agent.del('/api/books/' + bookId)
-                                                    .set({ 'Authorization': token }, { 'cookies': loginCookie })
+                                                    .set({ 'authorization': token }, { 'cookies': loginCookie })
                                                     .end((err, res) => {
 
                                                         res.should.have.status(200);

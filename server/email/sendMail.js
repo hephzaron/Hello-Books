@@ -27,12 +27,6 @@ function sendEmail(email, tempdir, templateData, subject) {
             return console.log('Message sent: %s', info.response);
 
         });
-
-
     });
-
-
-
 }
-//sendMail();
 exports.sendEmail = sendEmail;

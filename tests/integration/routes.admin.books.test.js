@@ -256,7 +256,6 @@ describe('Book', () => {
                                 })
                                 .then((book) => {
                                     if (book) {
-
                                         // Allow only admin to update book record
                                         describe('PUT /api/books/:bookId', () => {
                                             let updatedBook = {
@@ -271,7 +270,6 @@ describe('Book', () => {
 
                                             it('it should update book record in database', (done) => {
                                                 agent.put('/api/books/' + bookId)
-                                                    .set({ 'authorization': token }, { 'cookies': loginCookie })
                                                     .send(updatedBook)
                                                     .end((err, res) => {
                                                         res.should.have.status(200);
@@ -301,7 +299,6 @@ describe('Book', () => {
                                                     let authorId = author.id;
 
                                                     agent.post('/api/authors/' + authorId + '/books/' + bookId)
-                                                        .set({ 'authorization': token }, { 'cookies': loginCookie })
                                                         .end((err, res) => {
                                                             res.should.have.status(200);
                                                             should.not.exist(err);
@@ -318,7 +315,6 @@ describe('Book', () => {
 
                                             it('it should delete book from database', (done) => {
                                                 agent.del('/api/books/' + bookId)
-                                                    .set({ 'authorization': token }, { 'cookies': loginCookie })
                                                     .end((err, res) => {
 
                                                         res.should.have.status(200);

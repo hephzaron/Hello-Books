@@ -1,4 +1,4 @@
-//set env variable to test to access the test database
+// set env variable to test to access the test database
 process.env.NODE_ENV = 'test';
 
 // require database
@@ -11,19 +11,18 @@ let assert = require('chai').assert;
 
 let setTimeout = require('timers').setTimeout;
 
-//import models
+// import models
 const Genre = require('../../../server/models').Genre;
 const Book = require('../../../server/models').Book;
 const Borrowed = require('../../../server/models').Borrowed;
 const User = require('../../../server/models').User;
 
-
-//import test data sets
+// import test data sets
 let bookData = require('../models/test-data').Books;
 let borrowData = require('../models/test-data').Borrowed;
 let localUser = require('../models/test-data').LocalUsers;
-let userData = require('../models/test-data').Users
-let genreData = require('../models/test-data').Genres
+let userData = require('../models/test-data').Users;
+let genreData = require('../models/test-data').Genres;
 
 // drop all tables and create new ones
 function dropTable() {
@@ -40,7 +39,6 @@ function createTest() {
             });
         });
     });
-
 }
 
 describe('REGISTER User', () => {
@@ -69,10 +67,10 @@ describe('REGISTER User', () => {
         });
 
         dropTable();
-        setTimeout(() => { userController.create(request, response); }, 10000);
+        setTimeout(() => {
+            userController.create(request, response);
+        }, 10000);
     }).timeout(20000);
-
-
 });
 
 describe('SIGN-IN User', () => {
@@ -95,7 +93,7 @@ describe('SIGN-IN User', () => {
                 done();
             } catch (e) { console.log(e); }
         });
-        userController.signIn(request, response, () => {}); //next() is not called
+        userController.signIn(request, response, () => {}); // next() is not called
     });
 
     it('it should not sign in user for incorrect password', (done) => {
@@ -119,7 +117,7 @@ describe('SIGN-IN User', () => {
         });
         userController.signIn(request, response, () => {}); // next() is not called
     });
-    //where password field is empty request for it and not sign in user
+    // where password field is empty request for it and not sign in user
     it('it should request for password if empty and not sign in user', (done) => {
         let request = httpMocks.createRequest({
             method: 'POST',
@@ -134,15 +132,15 @@ describe('SIGN-IN User', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 404);
-                assert.equal(response._getData(), 'please provide a password');
+                assert.equal(response._getData(), 'incorrect username or password');
                 done();
             } catch (e) { console.log(e); }
         });
-        userController.signIn(request, response, () => {}); //next() is not called
+        userController.signIn(request, response, () => {}); // next() is not called
     });
 
-    //it should sign in user with correct username and password and save to the 
-    //general user tables and local login table and allows user to proceed
+    // it should sign in user with correct username and password and save to the 
+    // general user tables and local login table and allows user to proceed
     it('it should sign in user with correct credentials', (done) => {
         let request = httpMocks.createRequest({
             method: 'POST',
@@ -157,7 +155,7 @@ describe('SIGN-IN User', () => {
         });
         response.on('send', () => {});
 
-        //user should be passed to next middleware after login
+        // user should be passed to next middleware after login
         userController.signIn(request, response, (err, user) => {
             if (user) {
                 try {
@@ -184,19 +182,18 @@ describe('FETCH User Books', () => {
             eventEmitter: EventEmitter
         });
 
-
         function loop(id) {
             return borrowData.filter(function(data) {
-                return data.userId == id;
+                return data.userId === id;
             });
         }
 
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 201);
-                assert.equal(response._getData().length, userData.length);
-                response._getData().map(function(book) {
-                    book.getBooks().then(function(userBooks) {
+                assert.equal(response._getData().length, userData.length)
+                response._getData().map((book) => {
+                    return book.getBooks().then(function(userBooks) {
                         let userId = book.id;
                         assert.equal(userBooks.length, loop(userId).length);
                         done();
@@ -210,7 +207,6 @@ describe('FETCH User Books', () => {
         setTimeout(() => {
             userController.userBooks(request, response);
         }, 10000);
-
     }).timeout(30000);
 
     it('it should retrieve a user book', (done) => {
@@ -228,15 +224,13 @@ describe('FETCH User Books', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 201);
-                assert.equal(response._getData().id, 1); //ensure user 1 is returned
+                assert.equal(response._getData().id, 1); // ensure user 1 is returned
                 response._getData().getBooks().then(books => {
                     assert.equal(books.length, 2); // return two books unreturned by user
                     done();
                 });
             } catch (e) { console.log(e); }
-
         });
         userController.retrieveOne(request, response);
     });
-
 });

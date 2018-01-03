@@ -69,20 +69,15 @@ module.exports = {
             let token = req.headers['authorization'];
 
             let decoded = jwt.decode(token, secret, { algorithm: 'HS256' });
-            if (decoded == null) {
+            if (decoded === null) {
                 res.status(400).send('Token not provided');
 
             } else if (decoded.admin === false) {
-
                 res.status(401).send('You are not authorized to perform this action');
-                // res.send(token);      
             } else if (decoded.admin === true) {
-
                 next();
             }
         } catch (error) { res.status(400).send(error); }
-
-
     },
 
     logout: function(req, res) {

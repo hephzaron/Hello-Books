@@ -28,12 +28,11 @@ module.exports = {
             })
             .then(books => {
                 if (!books) {
-                    return res.status(404).send({
+                    res.status(404).send({
                         message: 'Book Not Found'
                     });
                 }
-                return books
-                    .update({
+                books.update({
                         title: req.body.title || books.title,
                         genre_id: req.body.genre_id || books.genre_id,
                         description: req.body.description || books.description,

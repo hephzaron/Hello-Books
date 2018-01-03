@@ -57,7 +57,6 @@ module.exports = {
                 next();
             }).catch(err => { throw err; });
         } catch (e) {
-            // catch error messages for named error:TokenExpiredError and JsonWebTokenError
             res.status(401).send('please login');
         }
 

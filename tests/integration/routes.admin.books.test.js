@@ -110,7 +110,6 @@ describe('Book', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.have.property('token').not.be.empty;
-
                     let token = res.body['token'];
                     let loginCookie = res.headers['set-cookie'];
 
@@ -171,8 +170,6 @@ describe('Book', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.have.property('token').not.be.empty;
-
-
                     let token = res.body['token'];
                     let loginCookie = res.headers['set-cookie'];
 
@@ -200,8 +197,6 @@ describe('Book', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.have.property('token').not.be.empty;
-
-
                     let token = res.body['token'];
                     let loginCookie = res.headers['set-cookie'];
 

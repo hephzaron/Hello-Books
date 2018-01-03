@@ -4,7 +4,7 @@ const Books = require('../models').Book;
 const Crypto = require('crypto');
 
 function validPassword(password, userSalt, userHash) {
-    var hash = Crypto.pbkdf2Sync(password, userSalt, 1000, 64).toString('hex');
+    var hash = Crypto.pbkdf2Sync(password, userSalt, 1000, 64, 'SHA1').toString('hex');
     return userHash === hash;
 }
 

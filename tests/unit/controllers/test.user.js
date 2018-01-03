@@ -155,16 +155,10 @@ describe('SIGN-IN User', () => {
         });
         response.on('send', () => {});
 
-        // user should be passed to next middleware after login
-        userController.signIn(request, response, (err, user) => {
-            if (user) {
-                try {
-                    assert.equal(response._getStatusCode(), 200);
-                    assert.equal(response._getStatusMessage(), 'OK');
-                    assert.equal(user.username, localUser[0].username);
-                    done();
-                } catch (e) { console.log(e); }
-            }
+        //callback should run as next() is called
+        userController.signIn(request, response, (user) => {
+            assert.equal(user, null);
+            done();
         });
     });
 });

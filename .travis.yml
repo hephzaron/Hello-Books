@@ -23,6 +23,7 @@ notifications:
 services:
   - postgresql
 before_script:
+  - npm install
   - npm install -g codeclimate-test-reporter coveralls sequelize istanbul-combine
   - psql -c 'drop database if exists testdb;' -U postgres
   - psql -c 'create database testdb;' -U postgres

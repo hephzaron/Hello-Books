@@ -90,7 +90,7 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
     }).timeout(5000);
 });
 describe('BORROW AND RETURN BOOKS', () => {
-    it('it should borrow books', (done) => {
+    it('it should borrow first book', (done) => {
 
         try {
             //User with userId borrows two book with id equals 1 and id equals 2
@@ -103,27 +103,31 @@ describe('BORROW AND RETURN BOOKS', () => {
                     res.type.should.equal('application/json');
                     res.body.should.have.property('returned').to.be.equal(false);
                     res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
-
-                    //....borrow second book with id equals 2
-                    let bookId = 2;
-                    agent.post('/api/users/' + userId + '/books/' + bookId)
-                        .set({ 'authorization': token }, { 'cookies': loginCookie })
-                        .end((err, res) => {
-                            // it should be successful
-                            res.status.should.equals(201);
-                            res.type.should.equal('application/json');
-                            res.body.should.have.property('returned').to.be.equal(false);
-                            res.body.bookId.should.equal(2);
-                            res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
-                            //borrow second book with id equals 2
-                            done();
-
-                        });
+                    done();
                 });
 
         } catch (e) { console.log(e); }
 
-    }).timeout(34000);
+    }).timeout(17000);
+    it('it should borrow second book', (done) => {
+        try {
+            //....borrow second book with id equals 2
+            let bookId = 2;
+            agent.post('/api/users/' + userId + '/books/' + bookId)
+                .set({ 'authorization': token }, { 'cookies': loginCookie })
+                .end((err, res) => {
+                    // it should be successful
+                    res.status.should.equals(201);
+                    res.type.should.equal('application/json');
+                    res.body.should.have.property('returned').to.be.equal(false);
+                    res.body.bookId.should.equal(2);
+                    res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
+                    done();
+                });
+
+        } catch (e) { console.log(e); }
+
+    }).timeout(17000);
 
     it('it should get unreturned book by a user before return of any', (done) => {
         agent.get('/api/users/' + userId + '/books')

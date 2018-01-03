@@ -14,7 +14,14 @@
     },
     "nyc": {
         "exclude": [
-            "tests"
+            "tests/**/**.js",
+            "server/models/index.js",
+            "server/middlewares/index.js",
+            "server/email/**.js",
+            "server/email/template/**.js",
+            "server/migrations/**.js",
+            "server/seeders/**.js",
+            "server/config/config.js"
         ]
     },
     "cacheDirectories": [
@@ -38,6 +45,8 @@
     "dependencies": {
         "async-waterfall": "^0.1.5",
         "babel-cli": "^6.26.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
         "body-parser": "^1.17.2",
         "cookie-parser": "^1.4.3",
         "cookie-session": "^2.0.0-beta.3",

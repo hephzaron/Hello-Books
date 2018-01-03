@@ -2,7 +2,6 @@ node_modules/
 tmp/middlewares-test/
 check.js
 npm-debug.log
-credentials.js
 testauth.js
 testk.json
 author.test.js

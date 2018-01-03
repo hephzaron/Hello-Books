@@ -45,14 +45,13 @@ module.exports = {
                     try {
                         const verifyPassword = validPassword(req.body.password, user.salt, user.hash);
                         if (verifyPassword) {
-                            //res.status(202).send('You are logged in');
-                            next(null, user);
+                            next();
                         }
                         if (!verifyPassword) {
                             res.status(404).send('incorrect username or password');
                         }
                     } catch (e) {
-                        res.status(404).send('please provide a password');
+                        res.status(404).send('incorrect username or password');
                     }
                 }
 

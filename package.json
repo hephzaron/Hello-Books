@@ -11,7 +11,7 @@
         "test:db:migrate:undo": "sequelize db:migrate:undo:all --env test",
         "coveralls": "NODE_ENV=test nyc npm test && nyc report --reporter=lcov --reporter=text --reporter=json  && cd ./client && npm i && npm run coverage || coveralls",
         "build": "rm -rf server/dist && babel server/ --out-dir server/dist/",
-        "test:check": "mocha ./tests/unit/controllers/test.borrow.book.js"
+        "test:check": "mocha ./tests/integration/routes.admin.books.test.js"
     },
     "nyc": {
         "exclude": [

@@ -6,8 +6,6 @@
 //set env variable to test to access the test database
 process.env.NODE_ENV = 'test';
 const db = require('../../server/models');
-
-let Book = require('../../server/models').Book;
 let Author = require('../../server/models').Author;
 //Require the dev-dependencies
 let chai = require('chai');
@@ -16,6 +14,10 @@ let app = require('../../app');
 let should = chai.should();
 
 chai.use(chaiHttp);
+
+let agent = chai.request.agent(app); //admin route
+let token;
+let loginCookie;
 
 //Signup user admin and non admin for subsequent login and authorization
 describe('/POST users', () => {
@@ -101,15 +103,14 @@ describe('/POST Book category', () => {
         updatedAt: new Date()
     };
     it('it should add book category on admin login', (done) => {
-        let agent = chai.request.agent(app);
 
         agent.post('/api/users/signin')
             .send({ username: 'John Carther', password: 'admin' })
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.have.property('token').not.be.empty;
-                let token = res.body['token'];
-                let loginCookie = res.headers['set-cookie'];
+                token = res.body['token'];
+                loginCookie = res.headers['set-cookie'];
 
                 agent.post('/api/genre')
                     .set({ 'authorization': token }, { 'cookies': loginCookie })
@@ -188,8 +189,6 @@ describe('/POST book', () => {
     // Registered admin should signin and be able to create book
     it('it should signin and allow admin to create book', (done) => {
 
-        // follow up with log in
-        let agent = chai.request.agent(app);
         agent.post('/api/users/signin')
             .send({ username: 'John Carther', password: 'admin' })
             .end((err, res) => {
@@ -216,123 +215,106 @@ describe('/POST book', () => {
                         res.body.should.have.property('available').to.be.equal(book.quantity);
                         // all attributs of user should be generated
                         res.body.should.have.all.keys('id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'createdAt', 'updatedAt');
-
-                        // Test to ensure author credential is created by signed in admin
-                        describe('/POST Author', () => {
-                            //Let Admin be able to create Author list after login
-                            it('admin should be able to create authors after login', (done) => {
-                                let author = {
-                                    firstName: 'Nelkon',
-                                    lastName: 'Parker',
-                                    dateOfBirth: '1876-12-03',
-                                    dateOfDeath: '1994-10-15',
-                                    createdAt: new Date(),
-                                    updatedAt: new Date()
-
-                                };
-                                agent.post('/api/authors')
-                                    .set({ 'authorization': token }, { 'cookies': loginCookie })
-                                    .send(author)
-                                    .end((err, res) => {
-                                        res.should.have.status(200);
-                                        res.body.should.have.property('firstName').to.equal(author.firstName);
-                                        res.body.should.have.property('lastName').to.equal(author.lastName);
-                                        res.body.should.have.property('dateOfBirth').to.not.empty;
-                                        res.body.should.have.property('dateOfDeath').to.not.empty;
-                                        //ensure setter methods for full name and lifesapn work
-                                        res.body.fullName.should.not.be.empty;
-                                        res.body.should.have.property('lifeSpan').to.not.be.NaN;
-                                        done();
-                                    });
-                            }).timeout(5000);
-                        });
-
-                        Book.find({
-                                where: {
-                                    title: 'Java programming for beginners'
-                                }
-                            })
-                            .then((book) => {
-                                if (book) {
-
-                                    // Allow only admin to update book record
-                                    describe('PUT /api/books/:bookId', () => {
-                                        let updatedBook = {
-                                            genre_id: 1,
-                                            quantity: 3,
-                                            createdAt: new Date(),
-                                            updatedAt: new Date()
-                                        };
-
-                                        //get actual id of book present in database ofr test purposes
-                                        const bookId = book.id;
-
-                                        it('it should update book record in database', (done) => {
-                                            agent.put('/api/books/' + bookId)
-                                                .set({ 'authorization': token }, { 'cookies': loginCookie })
-                                                .send(updatedBook)
-                                                .end((err, res) => {
-                                                    res.should.have.status(200);
-                                                    should.not.exist(err);
-                                                    res.type.should.equal('application/json');
-                                                    //original record should retain value of unedited field
-                                                    res.body.should.have.property('title').to.equal(book.title);
-                                                    res.body.should.have.property('description').to.equal(book.description);
-                                                    res.body.should.have.property('ISBN').to.equal(book.ISBN);
-                                                    //edited field should be updated in the database
-                                                    res.body.should.have.property('genre_id').to.equal(updatedBook.genre_id);
-                                                    res.body.should.have.property('quantity').to.equal(updatedBook.quantity);
-                                                    done();
-                                                });
-                                        }).timeout(5000);
-
-                                        //Assign book to authors and vice-versa
-
-                                        it('it should assign book to author or vice versa', (done) => {
-
-                                            Author.find({
-                                                where: {
-                                                    firstName: 'Nelkon'
-                                                }
-                                            }).then((author) => {
-
-                                                let authorId = author.id;
-
-                                                agent.post('/api/authors/' + authorId + '/books/' + bookId)
-                                                    .set({ 'authorization': token }, { 'cookies': loginCookie })
-                                                    .end((err, res) => {
-                                                        res.should.have.status(200);
-                                                        should.not.exist(err);
-                                                        res.type.should.equal('application/json');
-                                                        //Intended book should be attached to the right author
-                                                        res.body.should.have.property('authorId').to.be.equal(authorId);
-                                                        res.body.should.have.property('bookId').to.be.equal(bookId);
-                                                        done();
-                                                    });
-
-                                            }).catch(err => { throw err; });
-
-                                        }).timeout(5000);
-
-                                        it('it should delete book from database', (done) => {
-                                            agent.del('/api/books/' + bookId)
-                                                .set({ 'authorization': token }, { 'cookies': loginCookie })
-                                                .end((err, res) => {
-
-                                                    res.should.have.status(200);
-                                                    should.not.exist(err);
-                                                    res.type.should.equal('text/html');
-                                                    res.text.should.equal('Book deleted');
-                                                    done();
-                                                });
-                                        }).timeout(5000);
-
-                                    });
-                                }
-                            })
-                            .catch(err => { console.log(err); });
                         done();
                     });
             });
     }).timeout(5000);
+});
+describe('/POST Author', () => {
+    //Let Admin be able to create Author list after login
+    it('admin should be able to create authors after login', (done) => {
+        let author = {
+            firstName: 'Nelkon',
+            lastName: 'Parker',
+            dateOfBirth: '1876-12-03',
+            dateOfDeath: '1994-10-15',
+            createdAt: new Date(),
+            updatedAt: new Date()
+
+        };
+        agent.post('/api/authors')
+            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .send(author)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.have.property('firstName').to.equal(author.firstName);
+                res.body.should.have.property('lastName').to.equal(author.lastName);
+                res.body.should.have.property('dateOfBirth').to.not.empty;
+                res.body.should.have.property('dateOfDeath').to.not.empty;
+                //ensure setter methods for full name and lifesapn work
+                res.body.fullName.should.not.be.empty;
+                res.body.should.have.property('lifeSpan').to.not.be.NaN;
+                done();
+            });
+    }).timeout(5000);
+});
+
+describe('PUT /api/books/:bookId', () => {
+    let updatedBook = {
+        genre_id: 1,
+        quantity: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    };
+    //get actual id of book present in database ofr test purposes
+    const bookId = 1;
+
+    it('it should update book record in database', (done) => {
+        agent.put('/api/books/' + bookId)
+            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .send(updatedBook)
+            .end((err, res) => {
+                res.should.have.status(200);
+                should.not.exist(err);
+                res.type.should.equal('application/json');
+                //original record should retain value of unedited field
+                res.body.should.have.property('title').to.equal('Java programming for beginners');
+                //edited field should be updated in the database
+                res.body.should.have.property('genre_id').to.equal(updatedBook.genre_id);
+                res.body.should.have.property('quantity').to.equal(updatedBook.quantity);
+                done();
+            });
+    }).timeout(5000);
+
+    //Assign book to authors and vice-versa
+
+    it('it should assign book to author or vice versa', (done) => {
+
+        Author.find({
+            where: {
+                firstName: 'Nelkon'
+            }
+        }).then((author) => {
+
+            let authorId = author.id;
+
+            agent.post('/api/authors/' + authorId + '/books/' + bookId)
+                .set({ 'authorization': token }, { 'cookies': loginCookie })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    should.not.exist(err);
+                    res.type.should.equal('application/json');
+                    //Intended book should be attached to the right author
+                    res.body.should.have.property('authorId').to.be.equal(authorId);
+                    res.body.should.have.property('bookId').to.be.equal(bookId);
+                    done();
+                });
+
+        }).catch(err => { throw err; });
+
+    }).timeout(5000);
+
+    it('it should delete book from database', (done) => {
+        agent.del('/api/books/' + bookId)
+            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .end((err, res) => {
+
+                res.should.have.status(200);
+                should.not.exist(err);
+                res.type.should.equal('text/html');
+                res.text.should.equal('Book deleted');
+                done();
+            });
+    }).timeout(5000);
+
 });

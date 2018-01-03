@@ -9,11 +9,7 @@ let Users = require('../../models').User;
 //load configuration file
 
 const configAuth = require('./auth');
-
-
-
 module.exports = (passport) => {
-
     //serialize user for session
     passport.serializeUser((user, done) => {
         return done(null, user.id);

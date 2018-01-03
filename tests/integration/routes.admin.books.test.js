@@ -103,7 +103,7 @@ describe('Book', () => {
             updatedAt: new Date()
         };
         it('it should add book category on admin login', (done) => {
-            var agent = chai.request.agent(app);
+            let agent = chai.request.agent(app);
 
             agent.post('/api/users/signin')
                 .send({ username: 'John Carther', password: 'admin' })
@@ -112,7 +112,6 @@ describe('Book', () => {
                     res.body.should.have.property('token').not.be.empty;
 
                     let token = res.body['token'];
-                    console.log(token);
                     let loginCookie = res.headers['set-cookie'];
 
                     agent.post('/api/genre')
@@ -166,7 +165,7 @@ describe('Book', () => {
         it('it should signin and disallow non admin from creating book', (done) => {
 
             // follow up with log in
-            var agent = chai.request.agent(app);
+            let agent = chai.request.agent(app);
             agent.post('/api/users/signin')
                 .send({ username: 'seundee', password: 'sunny' })
                 .end((err, res) => {
@@ -195,7 +194,7 @@ describe('Book', () => {
         it('it should signin and allow admin to create book', (done) => {
 
             // follow up with log in
-            var agent = chai.request.agent(app);
+            let agent = chai.request.agent(app);
             agent.post('/api/users/signin')
                 .send({ username: 'John Carther', password: 'admin' })
                 .end((err, res) => {

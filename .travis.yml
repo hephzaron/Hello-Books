@@ -29,6 +29,7 @@ before_script:
   - psql -c 'create database testdb;' -U postgres
   - psql -c "CREATE USER tobi WITH PASSWORD '1234';" -U postgres
   - NODE_ENV=test npm run test:db
+  - npm run build
 script:
   - npm run coveralls
 after_success:

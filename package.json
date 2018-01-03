@@ -1,102 +1,103 @@
 {
-  "name": "hello-books",
-  "version": "1.0.0",
-  "description": "Hello-Books is an E-Library application that helps manage the inflow and outflow of books, tracks and monitors user to ensure book is returned as at when due",
-  "main": "index.js",
-  "scripts": {
-    "start": "NODE_ENV=production node ./bin/www",
-    "start:dev": "nodemon ./bin/www",
-    "test": "cross-env NODE_ENV=test npm run test:db && mocha --compilers js:babel-register \"tests/**/**.js\" --timeout 100000",
-    "test:db": "npm run test:db:migrate:undo && sequelize db:migrate --env test",
-    "test:db:migrate:undo": "sequelize db:migrate:undo:all --env test",
-    "coveralls": "NODE_ENV=test nyc npm test && nyc report --reporter=lcov --reporter=text --reporter=json  && cd ./client && npm i && npm run coverage || coveralls",
-    "test:check": "mocha ./tests/unit/controllers/test.borrow.book.js"
-  },
-  "nyc": {
-    "exclude": [
-      "tests/**/**.js",
-      "server/models/index.js",
-      "server/middlewares/index.js",
-      "server/email/**.js",
-      "server/email/template/**.js",
-      "server/migrations/**.js",
-      "server/seeders/**.js",
-      "server/config/config.js"
-    ]
-  },
-  "cacheDirectories": [
-    "node_modules",
-    "client/node_modules"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hephzaron/Hello-Books.git"
-  },
-  "keywords": [
-    "TDD",
-    "Javascript"
-  ],
-  "author": "Daramola Tobi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hephzaron/Hello-Books/issues"
-  },
-  "homepage": "https://github.com/hephzaron/Hello-Books#readme",
-  "dependencies": {
-    "async-waterfall": "^0.1.5",
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "body-parser": "^1.17.2",
-    "cookie-parser": "^1.4.3",
-    "cookie-session": "^2.0.0-beta.3",
-    "crypto": "^1.0.1",
-    "dotenv": "^4.0.0",
-    "ejs": "^2.5.7",
-    "email-templates": "^3.1.7",
-    "events": "^1.1.1",
-    "express": "^4.15.3",
-    "express-api-versioning": "^2.0.0",
-    "express-jwt": "^5.3.0",
-    "express-session": "^1.15.6",
-    "js-yaml": "^3.10.0",
-    "jsonwebtoken": "^8.0.0",
-    "moment": "^2.20.1",
-    "moment-timezone": "^0.5.14",
-    "morgan": "^1.8.2",
-    "nodemailer": "^4.4.0",
-    "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1",
-    "passport-google-oauth": "^1.0.0",
-    "pg": "^7.0.2",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.4.2",
-    "socket.io": "^2.0.4",
-    "socket.io-client": "^2.0.4"
-  },
-  "devDependencies": {
-    "babel-eslint": "^8.1.2",
-    "babel-preset-env": "^1.6.0",
-    "babel-register": "^6.26.0",
-    "chai": "^4.1.0",
-    "chai-http": "^3.0.0",
-    "codeclimate-test-reporter": "^0.5.0",
-    "coveralls": "^3.0.0",
-    "cross-env": "^5.1.3",
-    "eslint": "^4.14.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1",
-    "jasmine-node": "^1.14.5",
-    "log-suppress": "^1.0.3",
-    "mocha": "^3.5.0",
-    "node-mocks-http": "^1.6.6",
-    "nodemon": "^1.11.0",
-    "nyc": "^11.4.1",
-    "sequelize-cli": "^2.7.0"
-  },
-  "directories": {
-    "test": "tests"
-  }
+    "name": "hello-books",
+    "version": "1.0.0",
+    "description": "Hello-Books is an E-Library application that helps manage the inflow and outflow of books, tracks and monitors user to ensure book is returned as at when due",
+    "main": "index.js",
+    "scripts": {
+        "start": "NODE_ENV=production node ./bin/www",
+        "start:dev": "nodemon ./bin/www",
+        "test": "cross-env NODE_ENV=test npm run test:db && mocha --compilers js:babel-register \"tests/**/**.js\" --timeout 100000",
+        "test:db": "npm run test:db:migrate:undo && sequelize db:migrate --env test",
+        "test:db:migrate:undo": "sequelize db:migrate:undo:all --env test",
+        "coveralls": "NODE_ENV=test nyc npm test && nyc report --reporter=lcov --reporter=text --reporter=json  && cd ./client && npm i && npm run coverage || coveralls",
+        "build": "rm -rf server/dist && babel server/ --out-dir server/dist/",
+        "test:check": "mocha ./tests/unit/controllers/test.borrow.book.js"
+    },
+    "nyc": {
+        "exclude": [
+            "tests/**/**.js",
+            "server/models/index.js",
+            "server/middlewares/index.js",
+            "server/email/**.js",
+            "server/email/template/**.js",
+            "server/migrations/**.js",
+            "server/seeders/**.js",
+            "server/config/config.js"
+        ]
+    },
+    "cacheDirectories": [
+        "node_modules",
+        "client/node_modules"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hephzaron/Hello-Books.git"
+    },
+    "keywords": [
+        "TDD",
+        "Javascript"
+    ],
+    "author": "Daramola Tobi",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/hephzaron/Hello-Books/issues"
+    },
+    "homepage": "https://github.com/hephzaron/Hello-Books#readme",
+    "dependencies": {
+        "async-waterfall": "^0.1.5",
+        "babel-cli": "^6.26.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
+        "body-parser": "^1.17.2",
+        "cookie-parser": "^1.4.3",
+        "cookie-session": "^2.0.0-beta.3",
+        "crypto": "^1.0.1",
+        "dotenv": "^4.0.0",
+        "ejs": "^2.5.7",
+        "email-templates": "^3.1.7",
+        "events": "^1.1.1",
+        "express": "^4.15.3",
+        "express-api-versioning": "^2.0.0",
+        "express-jwt": "^5.3.0",
+        "express-session": "^1.15.6",
+        "js-yaml": "^3.10.0",
+        "jsonwebtoken": "^8.0.0",
+        "moment": "^2.20.1",
+        "moment-timezone": "^0.5.14",
+        "morgan": "^1.8.2",
+        "nodemailer": "^4.4.0",
+        "passport": "^0.4.0",
+        "passport-facebook": "^2.1.1",
+        "passport-google-oauth": "^1.0.0",
+        "pg": "^7.0.2",
+        "pg-hstore": "^2.3.2",
+        "sequelize": "^4.4.2",
+        "socket.io": "^2.0.4",
+        "socket.io-client": "^2.0.4"
+    },
+    "devDependencies": {
+        "babel-eslint": "^8.1.2",
+        "babel-preset-env": "^1.6.0",
+        "babel-register": "^6.26.0",
+        "chai": "^4.1.0",
+        "chai-http": "^3.0.0",
+        "codeclimate-test-reporter": "^0.5.0",
+        "coveralls": "^3.0.0",
+        "cross-env": "^5.1.3",
+        "eslint": "^4.14.0",
+        "eslint-config-airbnb": "^16.1.0",
+        "eslint-plugin-import": "^2.8.0",
+        "eslint-plugin-jsx-a11y": "^6.0.3",
+        "eslint-plugin-react": "^7.5.1",
+        "jasmine-node": "^1.14.5",
+        "log-suppress": "^1.0.3",
+        "mocha": "^3.5.0",
+        "node-mocks-http": "^1.6.6",
+        "nodemon": "^1.11.0",
+        "nyc": "^11.4.1",
+        "sequelize-cli": "^2.7.0"
+    },
+    "directories": {
+        "test": "tests"
+    }
 }

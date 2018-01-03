@@ -2,13 +2,9 @@ node_modules/
 tmp/middlewares-test/
 check.js
 npm-debug.log
-server/seeders/
 credentials.js
 testauth.js
 testk.json
 author.test.js
 mock.js
-server/email/sendMail.js
-config
 views
-sendMail.js

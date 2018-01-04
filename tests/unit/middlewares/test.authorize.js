@@ -93,7 +93,7 @@ describe('PERFORM USER Authorization', () => {
 
     describe('VERIFY Token', () => {
         /**Expose token claims throughout test suite to serve as default parameters */
-        let expires = Math.floor(new Date().getTime() / 1000) + 1 * 60 * 60; //token expires in 1hr
+        let expires = Math.floor(new Date().getTime() / 1000) + (1 * 60 * 60); //token expires in 1hr
         let username = localUsers[1].username; // user 1 and 0 was persisted to database
         let admin = false; // set admin value to false
 

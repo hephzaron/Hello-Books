@@ -57,7 +57,7 @@ module.exports = {
                 next();
             }).catch(err => { throw err; });
         } catch (e) {
-            res.status(401).send('please login');
+            res.status(401).send(e.message);
         }
 
     },

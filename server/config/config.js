@@ -11,11 +11,11 @@ module.exports = {
 
     },
     test: {
-        username: 'tobi',
+        username: 'postgres',
         password: 1234,
         database: 'testdb',
         host: '127.0.0.1',
-        port: 5432,
+        port: 8000,
         dialect: 'postgres'
     },
     production: {

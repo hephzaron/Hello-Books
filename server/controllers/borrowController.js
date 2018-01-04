@@ -3,9 +3,15 @@ const User = require('../models').User;
 const Book = require('../models').Book;
 const Genre = require('../models').Genre;
 const mailAdmin = require('../email/notifyAdmin').mailAdmin;
+const EventEmitter = require('events');
+let userData;
 
+class MailEvent extends EventEmitter {}
+const mailEvent = new MailEvent();
+mailEvent.on('email', () => {
+    mailAdmin(userData);
+});
 module.exports = {
-
     //allow users to borrow book
     create(req, res) {
         return Borrowed
@@ -16,7 +22,6 @@ module.exports = {
             })
             //get details of book borrowed and notify admin
             .then(borrow => {
-
                 let userId = borrow.userId;
                 let bookId = borrow.bookId;
                 let date = borrow.createdAt;
@@ -31,22 +36,17 @@ module.exports = {
                             as: 'genre'
                         }
                     }).then(function(book) {
-                        //wait for borrow details to be fetched and sent to admin
-                        let timeout = 15000; //set a timeout of 10s
-                        this.setTimeout(() => {
-                            let bookTitle = book.title;
-                            let genre = book.genre;
-                            let userData = {
-                                username: username,
-                                email: userEmail,
-                                bookTitle: bookTitle,
-                                genre: genre,
-                                date: date
-                            };
-                            mailAdmin(userData);
-                            res.status(201).send(borrow);
-
-                        }, timeout);
+                        let bookTitle = book.title;
+                        let genre = book.genre;
+                        userData = {
+                            username: username,
+                            email: userEmail,
+                            bookTitle: bookTitle,
+                            genre: genre,
+                            date: date
+                        };
+                        res.status(201).send(borrow);
+                        mailEvent.emit('email');
                     });
                 });
             })
@@ -75,5 +75,4 @@ module.exports = {
             })
             .catch(err => res.status(400).send(err));
     }
-
 };

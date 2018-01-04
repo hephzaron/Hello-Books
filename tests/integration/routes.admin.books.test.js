@@ -153,7 +153,7 @@ describe('/POST book', () => {
                 res.body.should.be.empty;
                 // response should be a text bearing the error message
                 res.type.should.equal('text/html');
-                res.text.should.equal('please login');
+                res.text.should.equal('jwt must be provided');
                 done();
             });
     }).timeout(5000);

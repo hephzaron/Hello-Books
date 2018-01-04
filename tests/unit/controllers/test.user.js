@@ -166,7 +166,7 @@ describe('SIGN-IN User', () => {
                         return book.getBooks().then(function(userBooks) {
                             let userId = book.id;
                             assert.equal(userBooks.length, loop(userId).length);
-                            if (index === userData.length) {
+                            if (index === userData.length - 1) {
                                 done();
                             }
                         });

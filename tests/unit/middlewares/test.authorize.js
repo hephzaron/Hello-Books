@@ -333,7 +333,6 @@ describe('PERFORM USER Authorization', () => {
 
     describe('PROTECT Admin route', () => {
         it('it should restrict non-admin from accessing admin protected route', (done) => {
-            let nonAdminToken = token; //access non admn token from parent block
             let userAdmin;
             let request = httpMocks.createRequest({
                 method: 'POST',
@@ -366,7 +365,6 @@ describe('PERFORM USER Authorization', () => {
             let expires = Math.floor(new Date().getTime() / 1000) + (5 * 60); //token should expire in 5minutes ago
             let username = localUsers[0].username;
             let admin = true;
-            let userAdmin;
             let req = httpMocks.createRequest({
                 method: 'POST',
                 headers: {

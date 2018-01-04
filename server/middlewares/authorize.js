@@ -54,7 +54,7 @@ module.exports = {
                 if (!user) {
                     res.status(404).send('Token invalid or expired-user not found');
                 }
-                next();
+                next(user);
             }).catch(err => { throw err; });
         } catch (e) {
             res.status(401).send(e.message);
@@ -75,7 +75,7 @@ module.exports = {
             } else if (decoded.admin === false) {
                 res.status(401).send('You are not authorized to perform this action');
             } else if (decoded.admin === true) {
-                next();
+                next(decoded);
             }
         } catch (error) { res.status(400).send(error); }
     },

@@ -3,6 +3,7 @@
     "root": true,
     "extends": "airbnb",
     "rules": {
+        "max-len": [1, 100, 2],
         "semi": [2, "always"],
         "one-var": 0,
         "linebreak-style": 0,

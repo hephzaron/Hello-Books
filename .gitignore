@@ -1,5 +1,6 @@
 node_modules/
 tmp/middlewares-test/
+server/email/sendEMail.js
 check.js
 npm-debug.log
 testauth.js

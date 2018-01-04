@@ -161,12 +161,14 @@ describe('SIGN-IN User', () => {
             response.on('send', () => {
                 try {
                     assert.equal(response._getStatusCode(), 201);
-                    assert.equal(response._getData().length, userData.length)
-                    response._getData().map((book) => {
+                    assert.equal(response._getData().length, userData.length);
+                    response._getData().map((book, index) => {
                         return book.getBooks().then(function(userBooks) {
                             let userId = book.id;
                             assert.equal(userBooks.length, loop(userId).length);
-                            done();
+                            if (index === userData.length) {
+                                done();
+                            }
                         });
                     });
                 } catch (e) { console.log(e); }

@@ -307,7 +307,6 @@ describe('PERFORM USER Authorization', () => {
 
         /**user with valid token should be authorised */
         it('it should authorize user for valid token', (done) => {
-            let now = Math.floor(new Date().getTime() / 1000);
 
             let request = httpMocks.createRequest({
                 method: 'POST',
@@ -322,10 +321,8 @@ describe('PERFORM USER Authorization', () => {
             });
             response.on('send', () => {});
 
-            auth.verifyUser(request, response, (_decoded) => {
-                assert.equal(_decoded.username, localUsers[0].username); //check to ensure the right user credential is returned from token
-                assert.equal(_decoded.exp > now, true); //check to ensure token has not expired.
-                done();
+            auth.verifyUser(request, response, () => {
+                done(); //done is called when next() is called in middleware
             });
 
         });
@@ -390,10 +387,8 @@ describe('PERFORM USER Authorization', () => {
                 eventEmitter: EventEmitter
             });
             response.on('send', () => {});
-            auth.adminProtect(request, response, (user) => {
-                assert.equal(user.admin, true);
-                assert.equal(user.username, localUsers[0].username);
-                done();
+            auth.adminProtect(request, response, () => {
+                done(); //done is called when next() is called in middleware
             });
 
         });

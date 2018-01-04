@@ -18,11 +18,13 @@
             "tests/**/**.js",
             "server/models/index.js",
             "server/middlewares/index.js",
+            "server/controllers/index.js",
             "server/email/**.js",
             "server/email/template/**.js",
             "server/migrations/**.js",
             "server/seeders/**.js",
-            "server/config/config.js"
+            "server/config/config.js",
+            "server/oauth-login/config/**.js"
         ]
     },
     "cacheDirectories": [

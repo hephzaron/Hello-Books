@@ -11,11 +11,11 @@ module.exports = {
 
     },
     test: {
-        username: 'postgres',
-        password: 1234,
+        username: process.env.TEST_USER || 'postgres',
+        password: process.env.TEST_PASSWORD || 1234,
         database: 'testdb',
         host: '127.0.0.1',
-        port: 8000,
+        port: process.env.TEST_PORT || 8000,
         dialect: 'postgres'
     },
     production: {

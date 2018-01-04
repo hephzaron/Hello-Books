@@ -24,7 +24,10 @@
             "server/migrations/**.js",
             "server/seeders/**.js",
             "server/config/config.js",
-            "server/oauth-login/config/**.js"
+            "server/oauth-login/config/**.js",
+            "server/middlewares/membershipVal.js",
+            "server/middlewares/isLoggedIn.js",
+            "server/middlewares/bookCount.js"
         ]
     },
     "cacheDirectories": [

@@ -10,7 +10,7 @@ function verifyUser(req, res, next) {
     const token = req.headers['authorization'];
     jwt.verify(token, secret, function(err, decoded) {
         if (err) {
-            if (err.name == 'TokenExpiredError') {
+            if (err.name === 'TokenExpiredError') {
                 res.send('Token invalid or expired, please login'); //.redirect(303, '/');
             }
 

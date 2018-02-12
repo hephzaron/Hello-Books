@@ -4,14 +4,13 @@
     "description": "Hello-Books is an E-Library application that helps manage the inflow and outflow of books, tracks and monitors user to ensure book is returned as at when due",
     "main": "index.js",
     "scripts": {
-        "start": "NODE_ENV=production node ./bin/www",
+        "start": "node ./bin/www",
         "start:dev": "nodemon ./bin/www",
         "test": "cross-env NODE_ENV=test npm run test:db && mocha --compilers js:babel-register \"tests/**/**.js\" --timeout 100000",
         "test:db": "npm run test:db:migrate:undo && sequelize db:migrate --env test",
         "test:db:migrate:undo": "sequelize db:migrate:undo:all --env test",
         "coveralls": "NODE_ENV=test nyc npm test && nyc report --reporter=lcov --reporter=text --reporter=json",
-        "build": "rm -rf server/dist && babel server/ --out-dir server/dist/",
-        "test:check": "mocha ./tests/integration/routes.borrow.books.test.js"
+        "build": "rm -rf server/dist && babel server/ --out-dir server/dist/"
     },
     "nyc": {
         "exclude": [

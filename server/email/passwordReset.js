@@ -24,7 +24,7 @@ function forgotPassword(req, res) {
         let userEmail = user.email;
         let now = new Date();
         let resetToken = generateRandom();
-        let tokenExpire = Math.floor(new Date().getTime() / 1000) + 10 * 60; //token expire in 10minutes
+        let tokenExpire = Math.floor(new Date().getTime() / 1000) + (10 * 60); //token expire in 10minutes
         if (resetToken) {
             let data = {
                 username: user.username,

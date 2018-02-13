@@ -14,10 +14,9 @@ module.exports = function(sequelize, DataTypes) {
             lifeSpan() {
                 if (this.dateOfDeath == null) {
                     return 'alive';
-                } else {
-
-                    return this.getDataValue('dateOfDeath') - this.getDataValue('dateOfBirth');
                 }
+                return this.getDataValue('dateOfDeath') - this.getDataValue('dateOfBirth');
+
             }
         },
         setterMethods: {

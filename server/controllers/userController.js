@@ -10,7 +10,7 @@ function validPassword(password, userSalt, userHash) {
 
 module.exports = {
     // allow new users to register
-    create(req, res) {
+    create(req, res, next) {
         return LocalUsers
             .create({
                 username: req.body.username,
@@ -24,11 +24,13 @@ module.exports = {
                     email: localusers.email,
                     admin: localusers.admin,
                     username: localusers.username
-                }).then(() => {
-                    res.status(201).send(localusers);
+                }).then((user) => {
+                    if (user) {
+                        next();
+                    }
                 });
             })
-            .catch(err => res.status(401).send(err));
+            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
     },
     signIn(req, res, next) {
         LocalUsers.find({
@@ -38,7 +40,9 @@ module.exports = {
             })
             .then(user => {
                 if (!user) {
-                    res.status(404).send('incorrect username or password');
+                    res.status(404).send({
+                        message: 'incorrect username or password'
+                    });
                 }
                 // if user is found verify password
                 if (user) {
@@ -48,14 +52,20 @@ module.exports = {
                             next();
                         }
                         if (!verifyPassword) {
-                            res.status(404).send('incorrect username or password');
+                            res.status(404).send({
+                                message: 'incorrect username or password'
+                            });
                         }
                     } catch (e) {
-                        res.status(404).send('incorrect username or password');
+                        res.status(404).send({
+                            message: 'incorrect username or password'
+                        });
                     }
                 }
 
-            }).catch(err => res.status(401).send(err));
+            }).catch(() => res.status(500).send({
+                message: 'Internal Server Error'
+            }));
     },
     // get all books borrowed by all respective users
     userBooks(req, res) {
@@ -70,8 +80,10 @@ module.exports = {
                     }
                 }]
             })
-            .then(userBooks => res.status(201).send(userBooks))
-            .catch(err => res.status(400).send(err));
+            .then(userBooks => res.status(200).send({ userBooks }))
+            .catch(() => res.status(500).send({
+                message: 'Internal Server Error'
+            }));
 
     },
     // get list of books by a specific user
@@ -92,8 +104,33 @@ module.exports = {
                     }
                 }]
             })
-            .then(borrowedBooks => res.status(201).send(borrowedBooks))
-            .catch(err => res.status(400).send(err));
+            .then(borrowedBooks => res.status(200).send({ borrowedBooks }))
+            .catch(() => res.status(500).send({
+                message: 'Internal Server Error'
+            }));
+    },
+
+    getAllUser(req, res) {
+        return Users.findAll({}).then((allUsers) => {
+            return res.status(200).send({ allUsers });
+        }).catch(() => {
+            return res.status(500).send({
+                message: 'Internal Server Error'
+            });
+        });
+    },
+
+    getUser(req, res) {
+        const { userId } = req.params;
+        return Users.findOne({
+            where: {
+                id: userId
+            }
+        }).then(user => {
+            return res.status(200).send({ user });
+        }).catch(() => {
+            return res.status(500).send({ message: 'Internal Server Error' });
+        });
     }
 
 };

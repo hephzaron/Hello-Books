@@ -19,24 +19,32 @@ module.exports = {
                     }).then(userEmail => {
                         if (!userEmail) {
                             // if any user field is empty throw error
-                            if ((req.body.username && req.body.email && req.body.password) != '') {
+                            const {
+                                username,
+                                email,
+                                password,
+                                confirmPassword
+                            } = req.body;
+                            if (username == null || email == null || password == null || confirmPassword == null) {
+                                res.status(400).send({ message: 'Some fields are empty' });
+                            } else if (password !== confirmPassword) {
+                                res.status(400).send({ message: 'Password does not match' });
+                            } else {
                                 next();
-                            }
-                            // if any user field is empty throw error
-                            else if ((req.body.username && req.body.email && req.body.password) == '') {
-                                res.status(406).send('Some fields are empty');
                             }
                         }
                         if (userEmail) {
-                            res.status(406).send('This email is registered');
+                            res.status(409).send({ message: 'This email is registered' });
                         }
-                    }).catch(err => res.status(404).send(err));
+                    }).catch(() => res.status(500).send({ message: 'Internal Server Error' }));
 
                 }
                 if (user) {
-                    res.status(406).send('username already exist');
+                    res.status(409).send({ message: 'username already exist' });
                 }
             }
-        ).catch(err => res.status(404).send(err));
+        ).catch(() => res.status(500).send({ message: 'Internal Server Error' }));
+
     }
+
 };

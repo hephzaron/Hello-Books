@@ -10,7 +10,10 @@
         "test:db": "npm run test:db:migrate:undo && sequelize db:migrate --env test",
         "test:db:migrate:undo": "sequelize db:migrate:undo:all --env test",
         "coveralls": "NODE_ENV=test nyc npm test && nyc report --reporter=lcov --reporter=text --reporter=json",
-        "build": "rm -rf server/dist && babel server/ --out-dir server/dist/"
+        "build": "rm -rf server/dist && babel server/ --out-dir server/dist/",
+        "slate:build": "cd ./slate && deploy.sh",
+        "slate:install": "cd ./slate && bundle install",
+        "slate:start": "cd ./slate && bundle exec middleman server"
     },
     "nyc": {
         "exclude": [

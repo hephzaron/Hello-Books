@@ -7,8 +7,11 @@ module.exports = {
             .create({
                 name: req.body.name
             })
-            .then(genres => res.status(200).send(genres))
-            .catch(err => res.status(400).send(err));
+            .then(genre => res.status(201).send({
+                message: `${genre.name} have been added to category`,
+                genre
+            }))
+            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
     },
     list(req, res) {
         return Genres
@@ -18,7 +21,7 @@ module.exports = {
                     as: 'books'
                 }]
             })
-            .then(genres => res.status(200).send(genres))
-            .catch(err => res.status(400).send(err));
+            .then(genres => res.status(200).send({ genres }))
+            .catch(() => res.status(400).send({ message: 'Internal Server Error' }));
     }
 };

@@ -10,15 +10,17 @@ module.exports = {
                 dateOfBirth: req.body.dateOfBirth,
                 dateOfDeath: req.body.dateOfDeath
             })
-            .then(authors => {
-                return res.status(200).send(authors);
+            .then(author => {
+                return res.status(201).send({
+                    message: `${author.fullName}, successfully added`,
+                    author
+                });
             })
-            .catch(err => res.status(400).send(err));
+            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
     },
     authorBooks(req, res) {
         return Authors
             .findAll({
-                //attributes: ['name'],
                 include: [{
                     model: Books,
                     attributes: ['title', 'ISBN', 'description'],
@@ -27,8 +29,38 @@ module.exports = {
                     }
                 }]
             })
-            .then(authors => res.status(200).send(authors))
-            .catch(err => res.status(400).send(err));
+            .then(authors => res.status(200).send({
+                authors: authors
+            }))
+            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
+    },
+
+    update(req, res) {
+        return Authors
+            .find({
+                where: {
+                    id: req.params.authorId
+                }
+            })
+            .then(authors => {
+                if (!authors) {
+                    res.status(404).send({
+                        message: 'Author does not exist'
+                    });
+                }
+                authors.update({
+                        firstName: req.body.firstName || authors.firstName,
+                        lastName: req.body.lastName || authors.lastName,
+                        dateOfBirth: req.body.dateOfBirth || authors.dateOfBirth,
+                        dateOfDeath: req.body.dateOfDeath || authors.dateOfDeath
+                    })
+                    .then(updatedAuthor => res.status(200).send({
+                        message: `${updatedAuthor.fullName} record has been updated`,
+                        updatedAuthor
+                    }))
+                    .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
+            })
+            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
     },
     retrieveOne(req, res) {
         return Authors
@@ -44,7 +76,22 @@ module.exports = {
                     }
                 }]
             })
-            .then(authors => res.status(200).send(authors))
-            .catch(err => res.status(400).send(err));
+            .then(author => res.status(200).send({ author }))
+            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
+    },
+
+    delete(req, res) {
+        return Authors
+            .destroy({
+                where: { id: req.params.authorId }
+            }).then(authors => {
+                if (!authors) {
+                    res.status(404).send({ message: 'Author not found' });
+                }
+                if (authors) {
+                    res.status(200).send({ message: 'Author removed successfully' });
+                }
+            })
+            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
     }
 };

@@ -8,8 +8,13 @@ module.exports = {
                 authorId: req.params.authorId,
                 bookId: req.params.bookId
             })
-            .then(owners => res.status(200).send(owners))
-            .catch(err => res.status(400).send(err));
+            .then(authorBook => res.status(201).send({
+                message: 'Book have been assigned successfully',
+                authorBook
+            }))
+            .catch(() => res.status(500).send({
+                message: 'Internal Server Error'
+            }));
     }
 
 

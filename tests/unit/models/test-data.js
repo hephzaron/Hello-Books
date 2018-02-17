@@ -80,7 +80,7 @@ module.exports = {
     Books: [{
         title: 'Java programming for beginners',
         genre_id: 1,
-        description: 'Ths introduces readers to the basic of Obejct Oriented Programmng Language',
+        description: 'This introduces readers to the basic of Object Oriented Programmng Language',
         ISBN: '33332-143-2457',
         quantity: 7,
         available: 7,

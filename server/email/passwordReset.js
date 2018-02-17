@@ -19,28 +19,29 @@ function generateRandom() {
 function forgotPassword(req, res) {
     return User.findOne({ where: { email: req.body.email } }).then(user => {
         if (!user) {
-            res.status(404).send('User does not exist');
+            res.status(404).send({ message: 'User does not exist' });
         }
         let userEmail = user.email;
         let now = new Date();
         let resetToken = generateRandom();
         let tokenExpire = Math.floor(new Date().getTime() / 1000) + (10 * 60); //token expire in 10minutes
         if (resetToken) {
+            const baseURL = 'https://hi-lib.herokuapp.com/api/v1';
             let data = {
                 username: user.username,
-                url: 'http://localhost:5432/auth/reset_password?token=' + resetToken,
+                url: `${baseURL}/auth/reset_password?token=${resetToken}`,
                 date: now
             };
             return LocalUser.findOne({ where: { email: user.email } }).then((localuser) => {
                 if (!localuser) {
-                    res.status(404).send('User does not exist');
+                    res.status(404).send({ message: 'User does not exist' });
                 }
                 if (localuser) {
                     return LocalUser.update({
                         resetPasswordToken: resetToken,
                         resetPasswordExpires: tokenExpire
                     }).then(() => {
-                        res.status(200).send('Check your email for the reset link');
+                        res.status(200).send({ message: 'Check your email for the reset link' });
                         sendEmail(userEmail, tempdir, data, 'Reset your password');
                     }).catch(err => { throw err; });
                 }
@@ -51,20 +52,20 @@ function forgotPassword(req, res) {
 }
 
 function resetPassword(req, res, next) {
-    let token = req.query.token;
+    let resetToken = req.query.token;
     let now = Math.floor(new Date().getTime() / 1000);
-    if (!token) {
-        res.send('Token invalid or expired').redirect(303, '/login');
+    if (!resetToken) {
+        res.send('Token invalid or expired').redirect(303, '/signin');
     }
-    if (token) {
+    if (resetToken) {
         return LocalUser.findOne({
             where: {
-                resetPasswordToken: token,
+                resetPasswordToken: resetToken,
                 resetPasswordExpires: { $gte: now }
             }
         }).then((user) => {
             if (!user) {
-                res.status(401).send('Token invalid or expired');
+                res.status(401).send({ message: 'Token invalid or expired' });
             }
             if (user) {
                 let req = httpMocks.createRequest({
@@ -82,13 +83,12 @@ function resetPassword(req, res, next) {
                     if (token) {
                         next();
                     }
-                    //res.redirect(303, '/api/users/change_password');
                 });
                 generateJWT(req, res);
             }
 
-        }).catch(err => {
-            res.status(404).send(err);
+        }).catch(() => {
+            res.status(500).send({ message: 'Internal Server Error' });
         });
     }
 }

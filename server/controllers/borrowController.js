@@ -21,10 +21,10 @@ module.exports = {
                 returned: false
             })
             //get details of book borrowed and notify admin
-            .then(borrow => {
-                let userId = borrow.userId;
-                let bookId = borrow.bookId;
-                let date = borrow.createdAt;
+            .then(borrowedBook => {
+                let userId = borrowedBook.userId;
+                let bookId = borrowedBook.bookId;
+                let date = borrowedBook.createdAt;
                 //get complete user details from users table in the database
                 return User.findById(userId).then(user => {
                     let userEmail = user.email;
@@ -45,12 +45,17 @@ module.exports = {
                             genre: genre,
                             date: date
                         };
-                        res.status(201).send(borrow);
+                        res.status(201).send({
+                            message: 'You have successfully borrowed this book',
+                            borrowedBook
+                        });
                         mailEvent.emit('email');
                     });
                 });
             })
-            .catch(err => res.status(400).send(err));
+            .catch(() => res.status(500).send({
+                message: 'Internal Server Error'
+            }));
     },
     update(req, res) {
         return Borrowed
@@ -70,9 +75,16 @@ module.exports = {
                     .update({
                         returned: req.body.returned || books.returned
                     })
-                    .then(updatedBooks => res.status(200).send(updatedBooks))
-                    .catch(err => res.status(400).send(err));
+                    .then(returnedBook => res.status(200).send({
+                        message: 'You have succesfully returned this book',
+                        returnedBook
+                    }))
+                    .catch(() => res.status(500).send({
+                        message: 'Internal Server Error'
+                    }));
             })
-            .catch(err => res.status(400).send(err));
+            .catch(() => res.status(500).send({
+                message: 'Internal Server Error'
+            }));
     }
 };

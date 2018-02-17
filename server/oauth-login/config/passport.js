@@ -56,8 +56,9 @@ module.exports = (passport) => {
                                         username: newUser.username,
                                         email: newUser.email
                                     }).then((createUser) => {
-                                        if (createUser)
+                                        if (createUser) {
                                             return done(null, createUser);
+                                        }
                                     });
                                 }
                             });
@@ -67,9 +68,6 @@ module.exports = (passport) => {
 
         }
     ));
-
-
-
     //Facebook configuration
 
     passport.use(new FacebookStrategy({
@@ -104,8 +102,9 @@ module.exports = (passport) => {
                                         username: newUser.username,
                                         email: newUser.email
                                     }).then((createUser) => {
-                                        if (createUser)
+                                        if (createUser) {
                                             return done(null, createUser);
+                                        }
                                     });
                                 }
                             });

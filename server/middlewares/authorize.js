@@ -1,4 +1,5 @@
 const LocalUsers = require('../models').LocalUser;
+const Users = require('../models').User;
 const jwt = require('jsonwebtoken');
 const secret = process.env.JWT_SECRET || 'iloveprogramming';
 
@@ -8,56 +9,65 @@ function generateGUID() {
     var now = new Date().getTime();
     return now;
 }
-
 module.exports = {
 
     // generate token and send to user
     generateJWT: function(req, res) {
         return LocalUsers.find({
+            where: {
+                username: req.body.username
+            }
+        }).then(user => {
+            const GUID = generateGUID();
+
+            // By default, expire the token after 1hour
+            // NOTE: the value for 'exp' needs to be in seconds since
+            // the epoch as per the spec!
+            let expiresDefault = Math.floor(new Date().getTime() / 1000) + (24 * 60 * 60);
+            let payload = {
+                auth: GUID,
+                agent: req.headers['user-agent'],
+                exp: expiresDefault,
+                username: req.body.username,
+                admin: user.admin
+            };
+
+            let token = jwt.sign(payload, secret, { algorithm: 'HS256' });
+
+            return Users.find({
                 where: {
-                    username: req.body.username
+                    userId: user.uuid
                 }
-            }).then(user => {
-                const GUID = generateGUID();
-
-                // By default, expire the token after 1hour
-                // NOTE: the value for 'exp' needs to be in seconds since
-                // the epoch as per the spec!
-                var expiresDefault = Math.floor(new Date().getTime() / 1000) + (1 * 60 * 60);
-                var payload = {
-                    auth: GUID,
-                    agent: req.headers['user-agent'],
-                    exp: expiresDefault,
-                    username: req.body.username,
-                    admin: user.admin
-                };
-
-                var token = jwt.sign(payload, secret, { algorithm: 'HS256' });
-
-                res.cookie('loginCookie', token, {
-                    httpOnly: true,
-                    signed: false,
-                    maxAge: 1000 * 60 * 60 * 12
+            }).then(userProp => {
+                return res.status(200).send({
+                    message: 'Authentication successful',
+                    user: {
+                        username: userProp.username,
+                        token: token,
+                        userId: userProp.id,
+                        admin: userProp.admin
+                    }
                 });
-                res.status(200).send({ 'token': token, 'user': user });
-            })
-            .catch(err => res.status(404).send(err));
+            }).catch(() => res.status(500).send({ message: 'Internal Server Error' }));
+        });
 
     },
 
     verifyUser: function(req, res, next) {
         try {
-            let token = req.headers['authorization'];
+            let token = req.headers['x-access-token'];
             let decoded = jwt.verify(token, secret, { algorithm: 'HS256' });
 
             return LocalUsers.findOne({ where: { username: decoded.username } }).then((user) => {
                 if (!user) {
-                    res.status(404).send('Token invalid or expired-user not found');
+                    res.status(404).send({ message: 'Token invalid or expired-user not found' });
                 }
                 next();
-            }).catch(err => { throw err; });
+            }).catch(() => {
+                res.status(500).send({ message: 'Internal Server Error' });
+            });
         } catch (e) {
-            res.status(401).send(e.message);
+            res.status(401).send({ message: 'Token invalid or expired-user not found' });
         }
 
     },
@@ -66,18 +76,18 @@ module.exports = {
     adminProtect: function(req, res, next) {
         // check header  for token
         try {
-            let token = req.headers['authorization'];
+            let token = req.headers['x-access-token'];
 
             let decoded = jwt.decode(token, secret, { algorithm: 'HS256' });
             if (decoded === null) {
-                res.status(400).send('Token not provided');
+                res.status(401).send({ message: 'Your session has expired. Please try logging in again' });
 
             } else if (decoded.admin === false) {
-                res.status(401).send('You are not authorized to perform this action');
+                res.status(403).send({ message: 'You are not authorized to perform this action' });
             } else if (decoded.admin === true) {
                 next();
             }
-        } catch (error) { res.status(400).send(error); }
+        } catch (e) { res.status(500).send({ message: 'Internal Server Error' }); }
     },
 
     logout: function(req, res) {

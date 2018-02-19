@@ -1,0 +1,135 @@
+<h1 id='author-books'>Author Books</h1><h2 id='assign-book-s-to-author-s'>Assign book(s) to author(s)</h2>
+<blockquote>
+<p>Request body</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span> <span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response body (application/json)</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Book have been assigned successfully"</span><span class="p">,</span>
+  <span class="s2">"authorBook"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"ownerId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"authorId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"bookId"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2018-02-17T15:01:48.959Z"</span><span class="p">,</span>
+    <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2018-02-17T15:01:48.959Z"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<aside class="notice">
+  You can <code><i>assign multiple books to a single author</i></code>. You are also allowed to <code><i>assign a single book to multiple authors</i></code>
+</aside>
+
+<p>This endpoint assigned book(s) to author</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST /authors/:authorId/books/:bookId</code></p>
+<h3 id='http-response'>HTTP Response</h3>
+<p><code>201 Created</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>authorId</td>
+<td>The ID of the author</td>
+</tr>
+<tr>
+<td>bookId</td>
+<td>The ID of the book</td>
+</tr>
+</tbody></table>
+<h2 id='get-all-authors-and-book-s-assigned'>Get all authors and book(s) assigned</h2>
+<blockquote>
+<p>Request body</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span> <span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response body (application/json)</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"authors"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Nelkon Philip"</span><span class="p">,</span>
+      <span class="s2">"lifeSpan"</span><span class="p">:</span> <span class="mi">3742416000000</span><span class="p">,</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"Nelkon"</span><span class="p">,</span>
+      <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"Philip"</span><span class="p">,</span>
+      <span class="s2">"dateOfBirth"</span><span class="p">:</span> <span class="s2">"1876-03-12T00:00:00.000Z"</span><span class="p">,</span>
+      <span class="s2">"dateOfDeath"</span><span class="p">:</span> <span class="s2">"1994-10-15T00:00:00.000Z"</span><span class="p">,</span>
+      <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2018-02-17T14:55:22.156Z"</span><span class="p">,</span>
+      <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2018-02-17T14:55:22.156Z"</span><span class="p">,</span>
+      <span class="s2">"Books"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Java programming for beginners"</span><span class="p">,</span>
+          <span class="s2">"ISBN"</span><span class="p">:</span> <span class="s2">"1234-5678-90123"</span><span class="p">,</span>
+          <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"This introduces readers to the basic of Object Oriented Programmng Language"</span>
+        <span class="p">},</span>
+        <span class="p">...</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">...</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<p>This endpoint assigned book(s) to author</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p>`GET /authors/books</p>
+<h3 id='http-response-2'>HTTP Response</h3>
+<p><code>200 OK</code></p>
+<h2 id='get-all-book-s-assigned-to-a-single-author'>Get all book(s) assigned to a single author</h2>
+<blockquote>
+<p>Request body</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span> <span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response body (application/json)</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"author"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"fullName"</span><span class="p">:</span> <span class="s2">"Nelkon Philip"</span><span class="p">,</span>
+    <span class="s2">"lifeSpan"</span><span class="p">:</span> <span class="mi">3742416000000</span><span class="p">,</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"firstName"</span><span class="p">:</span> <span class="s2">"Nelkon"</span><span class="p">,</span>
+    <span class="s2">"lastName"</span><span class="p">:</span> <span class="s2">"Philip"</span><span class="p">,</span>
+    <span class="s2">"dateOfBirth"</span><span class="p">:</span> <span class="s2">"1876-03-12T00:00:00.000Z"</span><span class="p">,</span>
+    <span class="s2">"dateOfDeath"</span><span class="p">:</span> <span class="s2">"1994-10-15T00:00:00.000Z"</span><span class="p">,</span>
+    <span class="s2">"createdAt"</span><span class="p">:</span> <span class="s2">"2018-02-17T14:55:22.156Z"</span><span class="p">,</span>
+    <span class="s2">"updatedAt"</span><span class="p">:</span> <span class="s2">"2018-02-17T14:55:22.156Z"</span><span class="p">,</span>
+    <span class="s2">"Books"</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Java programming for beginners"</span><span class="p">,</span>
+        <span class="s2">"ISBN"</span><span class="p">:</span> <span class="s2">"1234-5678-90123"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"This introduces readers to the basic of Object Oriented Programmng Language"</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<aside class="notice">
+  Note the array of authors returned <code>on request for all</code> and the single author object returned <code>to retrieve the books of a single author</code>
+</aside>
+
+<p>This endpoint fetches all book(s) assigned to a single author</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p>`GET /authors/:authorId/books</p>
+<h3 id='http-response-3'>HTTP Response</h3>
+<p><code>200 OK</code></p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>authorId</td>
+<td>The ID of the author</td>
+</tr>
+</tbody></table>

@@ -29,7 +29,7 @@ describe('User', () => {
                 updatedAt: new Date()
             };
             chai.request(app)
-                .post('/api/users/register')
+                .post('/users/register')
                 .send(user)
                 .end((err, res) => {
                     // there should be a 201 status code
@@ -49,7 +49,7 @@ describe('User', () => {
 
         it('it should get all registered user', (done) => {
             chai.request(app)
-                .get('/api/users')
+                .get('/users')
                 .end((err, res) => {
                     res.type.should.equal('application/json');
                     res.should.have.status(200);
@@ -64,7 +64,7 @@ describe('User', () => {
         it('it should get a single registered user', (done) => {
             let userId = 1;
             chai.request(app)
-                .get('/api/users/' + userId)
+                .get('/users/' + userId)
                 .end((err, res) => {
                     res.type.should.equal('application/json');
                     res.should.have.status(200);
@@ -94,7 +94,7 @@ describe('User', () => {
                 updatedAt: new Date()
             };
             chai.request(app)
-                .post('/api/users/register')
+                .post('/users/register')
                 .send(user)
                 .end((err, res) => {
                     // there should be a 406 status code
@@ -118,7 +118,7 @@ describe('User', () => {
                 updatedAt: new Date()
             };
             chai.request(app)
-                .post('/api/users/register')
+                .post('/users/register')
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(409);
@@ -139,7 +139,7 @@ describe('User', () => {
                 updatedAt: new Date()
             };
             chai.request(app)
-                .post('/api/users/register')
+                .post('/users/register')
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(400);
@@ -150,14 +150,14 @@ describe('User', () => {
     });
 
     // Integraton test for user sign in
-    describe('/POST /api/users/signin', () => {
+    describe('/POST /users/signin', () => {
         it('it should generate and send token', (done) => {
             let user = {
                 username: 'John Doe',
                 password: 'synix123'
             };
             chai.request(app)
-                .post('/api/users/signin')
+                .post('/users/signin')
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(200);

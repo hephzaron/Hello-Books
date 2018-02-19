@@ -13,7 +13,8 @@
         "build": "rm -rf server/dist && babel server/ --out-dir server/dist/",
         "slate:build": "cd ./slate && deploy.sh",
         "slate:install": "cd ./slate && bundle install",
-        "slate:start": "cd ./slate && bundle exec middleman server"
+        "slate:start": "cd ./slate && bundle exec middleman server",
+        "client:install": "cd ./client && npm install"
     },
     "nyc": {
         "exclude": [

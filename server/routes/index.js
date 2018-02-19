@@ -79,102 +79,102 @@ module.exports = (app, passport) => {
             res.render('login.ejs', { message: 'test' });
         });
     //route to recover password
-    app.post('api/users/forgot_password',
+    app.post('/users/forgot_password',
         forgotPassword);
 
     // route for password reset link from user email with query ?token= user-token
     app.post('/auth/reset_password',
         resetPassword,
-        (req, res) => res.redirect('/api/users/change_password'));
+        (req, res) => res.redirect('/users/change_password'));
     //route for changing userPassword
-    app.put('/api/users/change_password',
+    app.put('/users/change_password',
         newPassword.verifyUser,
         newPassword.changePassword);
 
 
     // Api for users to create account and login to application
-    app.post('/api/users/register',
+    app.post('/users/register',
         userSignUp.signUp,
         userController.create,
         authorize.generateJWT);
 
-    app.post('/api/users/signin',
+    app.post('/users/signin',
         userController.signIn,
         authorize.generateJWT);
 
-    app.post('/api/logout',
+    app.post('/logout',
         authorize.logout);
 
     //Get all user
-    app.get('/api/users',
+    app.get('/users',
         userController.getAllUser);
 
     // Get a single user
-    app.get('/api/users/:userId',
+    app.get('/users/:userId',
         userController.getUser);
 
     // add book category
-    app.post('/api/genre',
+    app.post('/genre',
         authorize.verifyUser,
         authorize.adminProtect,
         genreController.create); //
 
     // add books to library
-    app.post('/api/books',
+    app.post('/books',
         authorize.verifyUser,
         authorize.adminProtect,
         bookController.create); //
 
     // allow users to modify book information
-    app.put('/api/books/:bookId',
+    app.put('/books/:bookId',
         authorize.verifyUser,
         authorize.adminProtect,
         bookController.update);
 
     //create author details
-    app.post('/api/authors',
+    app.post('/authors',
         authorize.verifyUser,
         authorize.adminProtect,
         authorController.create);
 
     //update author details
-    app.put('/api/authors/:authorId',
+    app.put('/authors/:authorId',
         authorize.verifyUser,
         authorize.adminProtect,
         authorController.update);
 
     // remove author
-    app.delete('/api/authors/:authorId',
+    app.delete('/authors/:authorId',
         authorize.verifyUser,
         authorize.adminProtect,
         authorController.delete);
 
     // allocate books to respective author
-    app.post('/api/authors/:authorId/books/:bookId',
+    app.post('/authors/:authorId/books/:bookId',
         authorize.verifyUser,
         authorize.adminProtect,
         ownerController.create);
 
     //List all authors with respective books written
-    app.get('/api/authors/books',
+    app.get('/authors/books',
         authorController.authorBooks);
 
     //view all books in library
-    app.get('/api/books',
+    app.get('/books',
         bookController.list);
 
     //view books by category
-    app.get('/api/genre/books',
+    app.get('/genre/books',
         genreController.list);
 
     //allow user to delete book record
-    app.delete('/api/books/:bookId',
+    app.delete('/books/:bookId',
         authorize.verifyUser,
         authorize.adminProtect,
         bookController.delete); //
 
     // allow users to borrow book
-    app.post('/api/users/:userId/books/:bookId',
+    app.post('/users/:userId/books/:bookId',
         authorize.verifyUser,
         membershipVal.memberVal,
         userCount.countUserBook,
@@ -182,22 +182,22 @@ module.exports = (app, passport) => {
         borrowController.create);
 
     // list all borrowed book by users
-    app.get('/api/books/users',
+    app.get('/books/users',
         authorize.verifyUser,
         userController.userBooks);
 
     // enable user to return a book set returned col to true
-    app.put('/api/users/:userId/books/:bookId',
+    app.put('/users/:userId/books/:bookId',
         authorize.verifyUser,
         borrowController.update);
 
     // allow users to view unreturned books Add ?returned=false to url
-    app.get('/api/users/:userId/books',
+    app.get('/users/:userId/books',
         authorize.verifyUser,
         userController.retrieveOne);
 
     //allow user to view all books written by same author
-    app.get('/api/authors/:authorId/books',
+    app.get('/authors/:authorId/books',
         authorController.retrieveOne);
 
 };

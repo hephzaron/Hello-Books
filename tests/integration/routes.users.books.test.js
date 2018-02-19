@@ -52,7 +52,7 @@ describe('GET BOOK', () => {
     //get  all books
     it('it should get all books in database', (done) => {
         chai.request(app)
-            .get('/api/books')
+            .get('/books')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
@@ -69,7 +69,7 @@ describe('GET BOOK', () => {
     it('it should get all authors with the books written', (done) => {
 
         chai.request(app)
-            .get('/api/authors/books')
+            .get('/authors/books')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
@@ -86,7 +86,7 @@ describe('GET BOOK', () => {
     //list books by category
     it('it should get books by categories', (done) => {
         chai.request(app)
-            .get('/api/genre/books')
+            .get('/genre/books')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
@@ -104,7 +104,7 @@ describe('GET BOOK', () => {
         let authorId = 2;
 
         chai.request(app)
-            .get('/api/authors/' + authorId + '/books')
+            .get('/authors/' + authorId + '/books')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);

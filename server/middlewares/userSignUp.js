@@ -5,14 +5,14 @@ const LocalUsers = require('../models').LocalUser;
 module.exports = {
     signUp: function(req, res, next) {
 
-        LocalUsers.find({
+        return LocalUsers.find({
             where: {
                 username: req.body.username
             }
         }).then(
             user => {
                 if (!user) {
-                    LocalUsers.find({
+                    return LocalUsers.find({
                         where: {
                             email: req.body.email
                         }
@@ -25,7 +25,7 @@ module.exports = {
                                 password,
                                 confirmPassword
                             } = req.body;
-                            if (username == null || email == null || password == null || confirmPassword == null) {
+                            if (username === (null || '') || email === (null || '') || password === (null || '') || confirmPassword === (null || '')) {
                                 res.status(400).send({ message: 'Some fields are empty' });
                             } else if (password !== confirmPassword) {
                                 res.status(400).send({ message: 'Password does not match' });

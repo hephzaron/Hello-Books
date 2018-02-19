@@ -61,9 +61,10 @@ describe('BORROW Books', () => {
             try {
                 assert.equal(response._getStatusCode(), 201);
                 assert.equal(response._getStatusMessage(), 'OK');
-                assert.equal(response._getData().dataValues.userId, borrowData[0].userId);
-                assert.equal(response._getData().dataValues.bookId, borrowData[0].bookId);
-                assert.equal(response._getData().dataValues.returned, false);
+                assert.equal(response._getData()['message'], 'You have successfully borrowed this book')
+                assert.equal(response._getData()['borrowedBook'].dataValues.userId, borrowData[0].userId);
+                assert.equal(response._getData()['borrowedBook'].dataValues.bookId, borrowData[0].bookId);
+                assert.equal(response._getData()['borrowedBook'].dataValues.returned, false);
                 done();
             } catch (e) { console.log(e); }
         });
@@ -92,9 +93,10 @@ describe('BORROW Books', () => {
             try {
                 assert.equal(response._getStatusCode(), 200);
                 assert.equal(response._getStatusMessage(), 'OK');
-                assert.equal(response._getData().dataValues.userId, borrowData[0].userId);
-                assert.equal(response._getData().dataValues.bookId, borrowData[0].bookId);
-                assert.equal(response._getData().dataValues.returned, true);
+                assert.equal(response._getData()['message'], 'You have succesfully returned this book')
+                assert.equal(response._getData()['returnedBook'].dataValues.userId, borrowData[0].userId);
+                assert.equal(response._getData()['returnedBook'].dataValues.bookId, borrowData[0].bookId);
+                assert.equal(response._getData()['returnedBook'].dataValues.returned, true);
                 done();
             } catch (e) { console.log(e); }
         });

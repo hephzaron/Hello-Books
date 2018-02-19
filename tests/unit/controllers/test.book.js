@@ -55,14 +55,15 @@ describe('BOOK', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 201);
-                assert.equal(response._getData().dataValues.title, bookData[0].title);
-                assert.equal(response._getData().dataValues.genre_id, bookData[0].genre_id);
-                assert.equal(response._getData().dataValues.description, bookData[0].description);
-                assert.equal(response._getData().dataValues.ISBN, bookData[0].ISBN);
-                assert.equal(response._getData().dataValues.quantity, bookData[0].quantity);
+                assert.equal(response._getData()['message'], `${bookData[0].title} have been added to library`);
+                assert.equal(response._getData()['book'].dataValues.title, bookData[0].title);
+                assert.equal(response._getData()['book'].dataValues.genre_id, bookData[0].genre_id);
+                assert.equal(response._getData()['book'].dataValues.description, bookData[0].description);
+                assert.equal(response._getData()['book'].dataValues.ISBN, bookData[0].ISBN);
+                assert.equal(response._getData()['book'].dataValues.quantity, bookData[0].quantity);
                 //ensure no of books available is initialised to the quantity posted
-                assert.equal(response._getData().dataValues.available, bookData[0].quantity);
-                assert.deepEqual(Object.keys(response._getData().dataValues), ['id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'updatedAt', 'createdAt']);
+                assert.equal(response._getData()['book'].dataValues.available, bookData[0].quantity);
+                assert.deepEqual(Object.keys(response._getData()['book'].dataValues), ['id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'updatedAt', 'createdAt']);
                 assert.deepEqual(typeof(response), 'object');
                 assert.equal(response._getStatusMessage(), 'OK');
                 done();
@@ -95,14 +96,15 @@ describe('BOOK', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 201);
-                assert.equal(response._getData().dataValues.title, bookData[1].title);
-                assert.equal(response._getData().dataValues.genre_id, bookData[1].genre_id);
-                assert.equal(response._getData().dataValues.description, bookData[1].description);
-                assert.equal(response._getData().dataValues.ISBN, bookData[1].ISBN);
-                assert.equal(response._getData().dataValues.quantity, bookData[1].quantity);
+                assert.equal(response._getData()['message'], `${bookData[1].title} have been added to library`);
+                assert.equal(response._getData()['book'].dataValues.title, bookData[1].title);
+                assert.equal(response._getData()['book'].dataValues.genre_id, bookData[1].genre_id);
+                assert.equal(response._getData()['book'].dataValues.description, bookData[1].description);
+                assert.equal(response._getData()['book'].dataValues.ISBN, bookData[1].ISBN);
+                assert.equal(response._getData()['book'].dataValues.quantity, bookData[1].quantity);
                 //ensure no of books available is initialised to the quantity posted
-                assert.equal(response._getData().dataValues.available, bookData[1].quantity);
-                assert.deepEqual(Object.keys(response._getData().dataValues), ['id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'updatedAt', 'createdAt']);
+                assert.equal(response._getData()['book'].dataValues.available, bookData[1].quantity);
+                assert.deepEqual(Object.keys(response._getData()['book'].dataValues), ['id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'updatedAt', 'createdAt']);
                 assert.deepEqual(typeof(response), 'object');
                 assert.equal(response._getStatusMessage(), 'OK');
                 done();
@@ -157,14 +159,15 @@ describe('BOOK', () => {
             try {
                 Owners.create(ownerData[0]);
                 assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData().dataValues.title, bookData[0].title);
-                assert.equal(response._getData().dataValues.genre_id, bookData[0].genre_id);
-                assert.equal(response._getData().dataValues.description, 'change book description of book 1');
-                assert.equal(response._getData().dataValues.ISBN, 'change book ISBN');
-                assert.equal(response._getData().dataValues.quantity, bookData[0].quantity);
+                assert.equal(response._getData()['message'], `${bookData[0].title} record have been updated`)
+                assert.equal(response._getData()['updatedBook'].dataValues.title, bookData[0].title);
+                assert.equal(response._getData()['updatedBook'].dataValues.genre_id, bookData[0].genre_id);
+                assert.equal(response._getData()['updatedBook'].dataValues.description, 'change book description of book 1');
+                assert.equal(response._getData()['updatedBook'].dataValues.ISBN, 'change book ISBN');
+                assert.equal(response._getData()['updatedBook'].dataValues.quantity, bookData[0].quantity);
                 //ensure no of books available is initialised to the quantity posted
-                assert.equal(response._getData().dataValues.available, bookData[0].quantity);
-                assert.deepEqual(Object.keys(response._getData().dataValues), ['id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'createdAt', 'updatedAt']);
+                assert.equal(response._getData()['updatedBook'].dataValues.available, bookData[0].quantity);
+                assert.deepEqual(Object.keys(response._getData()['updatedBook'].dataValues), ['id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'createdAt', 'updatedAt']);
                 assert.deepEqual(typeof(response), 'object');
                 done();
             } catch (e) { console.log(e); }
@@ -174,7 +177,7 @@ describe('BOOK', () => {
     });
 
     // it should return all books in database
-    it('it should return all books with its authors', (done) => {
+    it('it should get all books with its authors', (done) => {
         let request = httpMocks.createRequest({
             method: 'GET',
             params: {},
@@ -187,14 +190,14 @@ describe('BOOK', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData().length, 2); // expect a total of two books
+                assert.equal(response._getData()['books'].length, 2); // expect a total of two books
                 //carry out sample test on one of the returned book
-                assert.equal(response._getData()[0].dataValues.title, bookData[0].title);
-                assert.equal(response._getData()[0].dataValues.description, 'change book description of book 1');
-                assert.equal(response._getData()[0].dataValues.ISBN, 'change book ISBN');
-                assert.deepEqual(Object.keys(response._getData()[0].dataValues), ['id', 'title', 'ISBN', 'description', 'Authors']);
+                assert.equal(response._getData().books[0].dataValues.title, bookData[0].title);
+                assert.equal(response._getData().books[0].dataValues.description, 'change book description of book 1');
+                assert.equal(response._getData().books[0].dataValues.ISBN, 'change book ISBN');
+                assert.deepEqual(Object.keys(response._getData().books[0].dataValues), ['id', 'title', 'ISBN', 'description', 'Authors']);
                 assert.deepEqual(typeof(response), 'object');
-                return response._getData()[0].getAuthors().then(bookAuthor => { //get book and ensure it returns author 2              
+                return response._getData().books[0].getAuthors().then(bookAuthor => { //get book and ensure it returns author 2              
                     function check(bookId) {
                         return bookAuthor.filter((object) => {
                             return object.get().id === bookId;
@@ -230,7 +233,7 @@ describe('BOOK', () => {
             try {
                 assert.equal(response._getStatusCode(), 200);
                 assert.equal(response._getStatusMessage(), 'OK');
-                assert.deepEqual(response._getData(), 'Book deleted');
+                assert.deepEqual(response._getData()['message'], 'Book have been successfully deleted');
                 done();
             } catch (e) { console.log(e); }
 
@@ -252,7 +255,7 @@ describe('BOOK', () => {
             try {
                 assert.equal(response._getStatusCode(), 404);
                 assert.equal(response._getStatusMessage(), 'OK');
-                assert.deepEqual(response._getData(), 'Book not found');
+                assert.deepEqual(response._getData()['message'], 'Book not found');
                 done();
             } catch (e) { console.log(e); }
 

@@ -79,7 +79,7 @@ module.exports = (app, passport) => {
             res.render('login.ejs', { message: 'test' });
         });
     //route to recover password
-    app.post('users/forgot_password',
+    app.post('api/users/forgot_password',
         forgotPassword);
 
     // route for password reset link from user email with query ?token= user-token

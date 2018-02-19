@@ -17,12 +17,11 @@ chai.use(chaiHttp);
 
 let agent = chai.request.agent(app); //admin route
 let token;
-let loginCookie;
 
 //Signup user admin and non admin for subsequent login and authorization
 describe('/POST users', () => {
     before(function(done) {
-        this.timeout(5000);
+        this.timeout(7000);
         db.sequelize.sync({ force: true, logging: false }).then(() => {
             done();
         });
@@ -32,6 +31,7 @@ describe('/POST users', () => {
         username: 'seundee',
         email: 'seundaramola@gmail.com',
         password: 'sunny',
+        confirmPassword: 'sunny',
         admin: false,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -40,6 +40,7 @@ describe('/POST users', () => {
         username: 'John Carther',
         email: 'tobi_daramola@yahoo.com',
         password: 'admin',
+        confirmPassword: 'admin',
         admin: true,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -53,19 +54,17 @@ describe('/POST users', () => {
             .end((err, res) => {
                 // there should be a 201 status code
                 // (indicating that something was "created")
-                res.should.have.status(201);
+                res.should.have.status(200);
                 res.body.should.be.a('object');
                 // there should be no errors
                 should.not.exist(err);
                 // the response should be JSON
                 res.type.should.equal('application/json');
-                // setterPassword shpould be invoked to hash password
-                res.body.should.have.property('salt').not.be.empty;
-                res.body.should.have.property('hash').not.be.empty;
+                res.body['message'].should.equal('Authentication successful');
                 //admin property should be set to false
-                res.body.should.have.property('admin').to.be.false;
+                res.body['user'].should.have.property('admin').to.be.false;
                 // all attributs of user should be generated
-                res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'resetPasswordExpires', 'resetPasswordToken', 'salt', 'hash', 'admin', 'validPassword', 'userId', 'localUserId');
+                res.body['user'].should.have.all.keys('username', 'token', 'userId', 'admin');
 
                 //post admin credentals to database
                 chai.request(app)
@@ -74,19 +73,17 @@ describe('/POST users', () => {
                     .end((err, res) => {
                         // there should be a 201 status code
                         // (indicating that something was "created")
-                        res.should.have.status(201);
+                        res.should.have.status(200);
                         res.body.should.be.a('object');
                         // there should be no errors
                         should.not.exist(err);
                         // the response should be JSON
                         res.type.should.equal('application/json');
-                        // setterPassword shpould be invoked to hash password
-                        res.body.should.have.property('salt').not.be.empty;
-                        res.body.should.have.property('hash').not.be.empty;
+                        res.body['message'].should.equal('Authentication successful');
                         //admin property should be set to true
-                        res.body.should.have.property('admin').to.be.true;
+                        res.body['user'].should.have.property('admin').to.be.true;
                         // all attributs of user should be generated
-                        res.body.should.have.all.keys('id', 'uuid', 'username', 'email', 'createdAt', 'updatedAt', 'resetPasswordExpires', 'resetPasswordToken', 'salt', 'hash', 'admin', 'validPassword', 'userId', 'localUserId');
+                        res.body['user'].should.have.all.keys('username', 'token', 'userId', 'admin');
                         done();
                     });
 
@@ -108,17 +105,17 @@ describe('/POST Book category', () => {
             .send({ username: 'John Carther', password: 'admin' })
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.have.property('token').not.be.empty;
-                token = res.body['token'];
-                loginCookie = res.headers['set-cookie'];
+                res.body['user'].should.have.property('token').not.be.empty;
+                token = res.body['user'].token;
 
                 agent.post('/api/genre')
-                    .set({ 'authorization': token }, { 'cookies': loginCookie })
+                    .set({ 'x-access-token': token })
                     .send(category)
                     .end((err, res) => {
-                        res.should.have.status(200);
-                        res.body.should.have.property('name').to.be.equal(category.name);
-                        res.body.should.have.all.keys('id', 'name', 'createdAt', 'updatedAt');
+                        res.should.have.status(201);
+                        res.body['message'].should.equal(`${category.name} have been added to category`);
+                        res.body['genre'].should.have.property('name').to.be.equal(category.name);
+                        res.body['genre'].should.have.all.keys('id', 'name', 'createdAt', 'updatedAt');
                         done();
                     });
 
@@ -149,11 +146,9 @@ describe('/POST book', () => {
                 res.should.have.status(401);
                 // there should be errors
                 should.exist(err);
-                //body should be empty
-                res.body.should.be.empty;
                 // response should be a text bearing the error message
-                res.type.should.equal('text/html');
-                res.text.should.equal('jwt must be provided');
+                res.type.should.equal('application/json');
+                res.body['message'].should.equal('Token invalid or expired-user not found');
                 done();
             });
     }).timeout(5000);
@@ -168,19 +163,18 @@ describe('/POST book', () => {
             .send({ username: 'seundee', password: 'sunny' })
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.have.property('token').not.be.empty;
-                let token = res.body['token'];
-                let loginCookie = res.headers['set-cookie'];
+                res.body['user'].should.have.property('token').not.be.empty;
+                let token = res.body['user'].token;
 
                 // Unauthorised user:non-admin should not create book
                 agent.post('/api/books')
-                    .set({ 'authorization': token }, { 'cookies': loginCookie })
+                    .set({ 'x-access-token': token })
                     .send(book)
                     .end((err, res) => {
                         should.exist(err);
-                        res.type.should.equal('text/html');
-                        res.should.have.status(401);
-                        res.text.should.equal('You are not authorized to perform this action');
+                        res.type.should.equal('application/json');
+                        res.should.have.status(403);
+                        res.body['message'].should.equal('You are not authorized to perform this action');
                         done();
                     });
             });
@@ -193,13 +187,12 @@ describe('/POST book', () => {
             .send({ username: 'John Carther', password: 'admin' })
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.have.property('token').not.be.empty;
-                let token = res.body['token'];
-                let loginCookie = res.headers['set-cookie'];
+                res.body['user'].should.have.property('token').not.be.empty;
+                let token = res.body['user'].token;
 
                 // Unauthorised user:admin should  create book
                 agent.post('/api/books')
-                    .set({ 'authorization': token }, { 'cookies': loginCookie })
+                    .set({ 'x-access-token': token })
                     .send(book)
                     .end((err, res) => {
                         // should have a status code of 201
@@ -207,14 +200,14 @@ describe('/POST book', () => {
                         should.not.exist(err);
                         res.type.should.equal('application/json');
                         // the response should generate default membership value
-                        res.body.should.have.property('title').to.be.equal(book.title);
-                        res.body.should.have.property('genre_id').to.be.equal(book.genre_id);
-                        res.body.should.have.property('description').to.be.equal(book.description);
-                        res.body.should.have.property('ISBN').to.be.equal(book.ISBN);
-                        res.body.should.have.property('quantity').to.be.equal(book.quantity);
-                        res.body.should.have.property('available').to.be.equal(book.quantity);
+                        res.body['book'].should.have.property('title').to.be.equal(book.title);
+                        res.body['book'].should.have.property('genre_id').to.be.equal(book.genre_id);
+                        res.body['book'].should.have.property('description').to.be.equal(book.description);
+                        res.body['book'].should.have.property('ISBN').to.be.equal(book.ISBN);
+                        res.body['book'].should.have.property('quantity').to.be.equal(book.quantity);
+                        res.body['book'].should.have.property('available').to.be.equal(book.quantity);
                         // all attributs of user should be generated
-                        res.body.should.have.all.keys('id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'createdAt', 'updatedAt');
+                        res.body['book'].should.have.all.keys('id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'createdAt', 'updatedAt');
                         done();
                     });
             });
@@ -233,17 +226,18 @@ describe('/POST Author', () => {
 
         };
         agent.post('/api/authors')
-            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .set({ 'x-access-token': token })
             .send(author)
             .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.have.property('firstName').to.equal(author.firstName);
-                res.body.should.have.property('lastName').to.equal(author.lastName);
-                res.body.should.have.property('dateOfBirth').to.not.empty;
-                res.body.should.have.property('dateOfDeath').to.not.empty;
+                res.should.have.status(201);
+                res.body['message'].should.equal(`${author.firstName} ${author.lastName}, successfully added`);
+                res.body['author'].should.have.property('firstName').to.equal(author.firstName);
+                res.body['author'].should.have.property('lastName').to.equal(author.lastName);
+                res.body['author'].should.have.property('dateOfBirth').to.not.empty;
+                res.body['author'].should.have.property('dateOfDeath').to.not.empty;
                 //ensure setter methods for full name and lifesapn work
-                res.body.fullName.should.not.be.empty;
-                res.body.should.have.property('lifeSpan').to.not.be.NaN;
+                res.body['author'].fullName.should.not.be.empty;
+                res.body['author'].should.have.property('lifeSpan').to.not.be.NaN;
                 done();
             });
     }).timeout(5000);
@@ -252,6 +246,7 @@ describe('/POST Author', () => {
 describe('PUT /api/books/:bookId', () => {
     let updatedBook = {
         genre_id: 1,
+        title: 'Java programming for beginners',
         quantity: 3,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -261,17 +256,18 @@ describe('PUT /api/books/:bookId', () => {
 
     it('it should update book record in database', (done) => {
         agent.put('/api/books/' + bookId)
-            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .set({ 'x-access-token': token })
             .send(updatedBook)
             .end((err, res) => {
                 res.should.have.status(200);
                 should.not.exist(err);
                 res.type.should.equal('application/json');
                 //original record should retain value of unedited field
-                res.body.should.have.property('title').to.equal('Java programming for beginners');
+                res.body['message'].should.equal(`${updatedBook.title} record have been updated`);
+                res.body['updatedBook'].should.have.property('title').to.equal('Java programming for beginners');
                 //edited field should be updated in the database
-                res.body.should.have.property('genre_id').to.equal(updatedBook.genre_id);
-                res.body.should.have.property('quantity').to.equal(updatedBook.quantity);
+                res.body['updatedBook'].should.have.property('genre_id').to.equal(updatedBook.genre_id);
+                res.body['updatedBook'].should.have.property('quantity').to.equal(updatedBook.quantity);
                 done();
             });
     }).timeout(5000);
@@ -289,14 +285,15 @@ describe('PUT /api/books/:bookId', () => {
             let authorId = author.id;
 
             agent.post('/api/authors/' + authorId + '/books/' + bookId)
-                .set({ 'authorization': token }, { 'cookies': loginCookie })
+                .set({ 'x-access-token': token })
                 .end((err, res) => {
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     should.not.exist(err);
                     res.type.should.equal('application/json');
+                    res.body['message'].should.equal('Book have been assigned successfully');
                     //Intended book should be attached to the right author
-                    res.body.should.have.property('authorId').to.be.equal(authorId);
-                    res.body.should.have.property('bookId').to.be.equal(bookId);
+                    res.body['authorBook'].should.have.property('authorId').to.be.equal(authorId);
+                    res.body['authorBook'].should.have.property('bookId').to.be.equal(bookId);
                     done();
                 });
 
@@ -306,13 +303,13 @@ describe('PUT /api/books/:bookId', () => {
 
     it('it should delete book from database', (done) => {
         agent.del('/api/books/' + bookId)
-            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .set({ 'x-access-token': token })
             .end((err, res) => {
 
                 res.should.have.status(200);
                 should.not.exist(err);
-                res.type.should.equal('text/html');
-                res.text.should.equal('Book deleted');
+                res.type.should.equal('application/json');
+                res.body['message'].should.equal('Book have been successfully deleted');
                 done();
             });
     }).timeout(5000);

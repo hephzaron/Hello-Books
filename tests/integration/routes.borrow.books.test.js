@@ -18,7 +18,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-let token, loginCookie, userId;
+let token, userId;
 let agent = chai.request.agent(app);
 
 describe('REGISTER USER', () => {
@@ -27,6 +27,7 @@ describe('REGISTER USER', () => {
         username: 'Daramola',
         email: 'tobi_daramola@yahoo.com',
         password: 'admin',
+        confirmPassword: 'admin',
         admin: true,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -49,6 +50,7 @@ describe('REGISTER USER', () => {
         username: 'Philip',
         email: 'philip2017@gmail.com',
         password: 'phil17',
+        confirmPassword: 'phil17',
         createdAt: new Date(),
         updatedAt: new Date()
     };
@@ -57,10 +59,10 @@ describe('REGISTER USER', () => {
             .post('/api/users/register')
             .send(user)
             .end((err, res) => {
-                res.should.have.status(201);
+                res.should.have.status(200);
                 res.type.should.equal('application/json');
-                res.body.should.have.property('salt').not.be.empty;
-                res.body.should.have.property('hash').not.be.empty;
+                res.body.should.have.all.keys('message', 'user');
+                res.body['message'].should.equal('Authentication successful');
                 done();
 
             });
@@ -76,12 +78,11 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
             .end((err, res) => {
 
                 res.should.have.status(200);
-                res.body.should.have.property('token').not.be.empty;
+                res.body['user'].should.have.property('token').not.be.empty;
 
-                token = res.body['token'];
-                loginCookie = res.headers['set-cookie'];
+                token = res.body['user'].token;
                 // get user id from login
-                userId = res.body['user'].id;
+                userId = res.body['user'].userId;
 
                 done();
 
@@ -96,13 +97,14 @@ describe('BORROW AND RETURN BOOKS', () => {
             //User with userId borrows two book with id equals 1 and id equals 2
             let bookId = 1;
             agent.post('/api/users/' + userId + '/books/' + bookId)
-                .set({ 'authorization': token }, { 'cookies': loginCookie })
+                .set({ 'x-access-token': token })
                 .end((err, res) => {
                     // it should be successful
                     res.status.should.equals(201);
                     res.type.should.equal('application/json');
-                    res.body.should.have.property('returned').to.be.equal(false);
-                    res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
+                    res.body['message'].should.equals('You have successfully borrowed this book');
+                    res.body['borrowedBook'].should.have.property('returned').to.be.equal(false);
+                    res.body['borrowedBook'].should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
                     done();
                 });
 
@@ -114,14 +116,14 @@ describe('BORROW AND RETURN BOOKS', () => {
             //....borrow second book with id equals 2
             let bookId = 2;
             agent.post('/api/users/' + userId + '/books/' + bookId)
-                .set({ 'authorization': token }, { 'cookies': loginCookie })
+                .set({ 'x-access-token': token })
                 .end((err, res) => {
                     // it should be successful
                     res.status.should.equals(201);
                     res.type.should.equal('application/json');
-                    res.body.should.have.property('returned').to.be.equal(false);
-                    res.body.bookId.should.equal(2);
-                    res.body.should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
+                    res.body['borrowedBook'].should.have.property('returned').to.be.equal(false);
+                    res.body['borrowedBook'].bookId.should.equal(2);
+                    res.body['borrowedBook'].should.have.all.keys('borrowId', 'userId', 'bookId', 'createdAt', 'updatedAt', 'returned');
                     done();
                 });
 
@@ -131,16 +133,16 @@ describe('BORROW AND RETURN BOOKS', () => {
 
     it('it should get unreturned book by a user before return of any', (done) => {
         agent.get('/api/users/' + userId + '/books')
-            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .set({ 'x-access-token': token })
             .query('returned=false')
             .end((err, res) => {
-                res.should.have.status(201);
+                res.should.have.status(200);
                 should.not.exist(err);
                 res.type.should.equal('application/json');
                 res.body.should.be.a('object');
-                res.body.Books.should.be.a('array');
+                res.body['borrowedBooks'].Books.should.be.a('array');
                 //Two of the books yet to be returned
-                res.body.Books.length.should.be.eql(2);
+                res.body['borrowedBooks'].Books.length.should.be.eql(2);
                 done();
             });
 
@@ -154,14 +156,15 @@ describe('BORROW AND RETURN BOOKS', () => {
         };
         let bookId = 1;
         agent.put('/api/users/' + userId + '/books/' + bookId)
-            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .set({ 'x-access-token': token })
             .send(book)
             .end((err, res) => {
                 res.should.have.status(200);
                 should.not.exist(err);
                 res.type.should.equal('application/json');
                 res.body.should.be.a('object');
-                res.body.should.have.property('returned').to.be.equal(true);
+                res.body['message'].should.equal('You have succesfully returned this book');
+                res.body['returnedBook'].should.have.property('returned').to.be.equal(true);
                 done();
 
             });
@@ -169,16 +172,16 @@ describe('BORROW AND RETURN BOOKS', () => {
     });
     it('it should get unreturned book by a user', (done) => {
         agent.get('/api/users/' + userId + '/books')
-            .set({ 'authorization': token }, { 'cookies': loginCookie })
+            .set({ 'x-access-token': token })
             .query('returned=false')
             .end((err, res) => {
-                res.should.have.status(201);
+                res.should.have.status(200);
                 should.not.exist(err);
                 res.type.should.equal('application/json');
                 res.body.should.be.a('object');
-                res.body.Books.should.be.a('array');
+                res.body['borrowedBooks'].Books.should.be.a('array');
                 //one book has been returned from two borrowed
-                res.body.Books.length.should.be.equal(1);
+                res.body['borrowedBooks'].Books.length.should.be.equal(1);
                 done();
             });
 

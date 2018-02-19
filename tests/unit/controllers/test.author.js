@@ -4,7 +4,6 @@
  * while the book Model is also dependent on the Genre model.
  * Multiple objects are created to for better testing of controllers and ensure it returns the right values
  * the right way.  
- * //**HAPPY TESTING!!!!!! 
  */
 
 //set env variable to test to access the test database
@@ -60,10 +59,11 @@ describe('AUTHOR', function() {
         });
         response.on('send', () => {
             try {
-                assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData().dataValues.firstName, authorData[0].firstName);
-                assert.equal(response._getData().dataValues.lastName, authorData[0].lastName);
-                assert.deepEqual(Object.keys(response._getData().dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'updatedAt', 'createdAt']);
+                assert.equal(response._getStatusCode(), 201);
+                assert.equal(response._getData()['message'], `${authorData[0].firstName} ${authorData[0].lastName}, successfully added`);
+                assert.equal(response._getData()['author'].dataValues.firstName, authorData[0].firstName);
+                assert.equal(response._getData()['author'].dataValues.lastName, authorData[0].lastName);
+                assert.deepEqual(Object.keys(response._getData()['author'].dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'updatedAt', 'createdAt']);
                 assert.deepEqual(typeof(response), 'object');
                 assert.equal(response._getStatusMessage(), 'OK');
                 done();
@@ -93,10 +93,11 @@ describe('AUTHOR', function() {
         });
         response.on('send', () => {
             try {
-                assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData().dataValues.firstName, authorData[1].firstName);
-                assert.equal(response._getData().dataValues.lastName, authorData[1].lastName);
-                assert.deepEqual(Object.keys(response._getData().dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'updatedAt', 'createdAt']);
+                assert.equal(response._getStatusCode(), 201);
+                assert.equal(response._getData()['message'], `${authorData[1].firstName} ${authorData[1].lastName}, successfully added`);
+                assert.equal(response._getData()['author'].dataValues.firstName, authorData[1].firstName);
+                assert.equal(response._getData()['author'].dataValues.lastName, authorData[1].lastName);
+                assert.deepEqual(Object.keys(response._getData()['author'].dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'updatedAt', 'createdAt']);
                 assert.deepEqual(typeof(response), 'object');
                 assert.equal(response._getStatusMessage(), 'OK');
                 done();
@@ -127,10 +128,11 @@ describe('OWNERS', () => {
         });
         response.on('send', () => {
             try {
-                assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData().dataValues.authorId, 1);
-                assert.equal(response._getData().dataValues.bookId, 1);
-                assert.deepEqual(Object.keys(response._getData().dataValues), ['ownerId', 'authorId', 'bookId', 'updatedAt', 'createdAt']);
+                assert.equal(response._getStatusCode(), 201);
+                assert.equal(response._getData()['message'], 'Book have been assigned successfully');
+                assert.equal(response._getData()['authorBook'].dataValues.authorId, 1);
+                assert.equal(response._getData()['authorBook'].dataValues.bookId, 1);
+                assert.deepEqual(Object.keys(response._getData()['authorBook'].dataValues), ['ownerId', 'authorId', 'bookId', 'updatedAt', 'createdAt']);
                 assert.deepEqual(typeof(response), 'object');
                 assert.equal(response._getStatusMessage(), 'OK');
                 done();
@@ -156,10 +158,11 @@ describe('OWNERS', () => {
         });
         response.on('send', () => {
             try {
-                assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData().dataValues.authorId, 1);
-                assert.equal(response._getData().dataValues.bookId, 2);
-                assert.deepEqual(Object.keys(response._getData().dataValues), ['ownerId', 'authorId', 'bookId', 'updatedAt', 'createdAt']);
+                assert.equal(response._getStatusCode(), 201);
+                assert.equal(response._getData()['message'], 'Book have been assigned successfully');
+                assert.equal(response._getData()['authorBook'].dataValues.authorId, 1);
+                assert.equal(response._getData()['authorBook'].dataValues.bookId, 2);
+                assert.deepEqual(Object.keys(response._getData()['authorBook'].dataValues), ['ownerId', 'authorId', 'bookId', 'updatedAt', 'createdAt']);
                 assert.deepEqual(typeof(response), 'object');
                 assert.equal(response._getStatusMessage(), 'OK');
                 done();
@@ -173,7 +176,7 @@ describe('OWNERS', () => {
 });
 
 describe('FETCH Author Books', () => {
-    it('it should return all books written by same author', (done) => {
+    it('it should get all books written by same author', (done) => {
         let request = httpMocks.createRequest({
             method: 'GET'
         });
@@ -186,11 +189,11 @@ describe('FETCH Author Books', () => {
                 assert.equal(response._getStatusCode(), 200);
                 //return all releveant author details and books written
                 assert.deepEqual(typeof(response), 'object');
-                assert.equal(response._getData().length, 2); // only two authors were created on database
-                assert.deepEqual(Object.keys(response._getData()[1].dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'createdAt', 'updatedAt', 'Books']);
+                assert.equal(response._getData()['authors'].length, 2);
+                assert.deepEqual(Object.keys(response._getData().authors[1].dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'createdAt', 'updatedAt', 'Books']);
                 assert.equal(response._getStatusMessage(), 'OK');
                 //  console.log(response._getData());
-                return response._getData()[0].getBooks().then(authorBook => { //get list of books attached to author 1
+                return response._getData().authors[0].getBooks().then(authorBook => { //get list of books attached to author 1
                     //function to check for book with id 3 for author 1
                     let check = authorBook.filter((object) => {
                         return object.get().id === 3;
@@ -221,11 +224,11 @@ describe('FETCH Author Books', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData().dataValues.id, 1); //ensure its author with id 1 thats returned.
-                assert.deepEqual(Object.keys(response._getData().dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'createdAt', 'updatedAt', 'Books']);
+                assert.equal(response._getData()['author'].dataValues.id, 1); //ensure its author with id 1 thats returned.
+                assert.deepEqual(Object.keys(response._getData()['author'].dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'createdAt', 'updatedAt', 'Books']);
                 assert.deepEqual(typeof(response), 'object');
                 assert.equal(response._getStatusMessage(), 'OK');
-                return response._getData().getBooks().then(authorBook => { //get list of books attached to author 1
+                return response._getData()['author'].getBooks().then(authorBook => { //get list of books attached to author 1
                     //function to check that only author books whre returned
                     function check(bookId) {
                         return authorBook.filter((object) => {
@@ -241,7 +244,6 @@ describe('FETCH Author Books', () => {
                 });
             } catch (e) { console.log(e); }
         });
-
         setTimeout(() => { authorController.retrieveOne(request, response); }, 5000);
     }).timeout(7000);
 });

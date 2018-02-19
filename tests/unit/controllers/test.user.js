@@ -55,20 +55,12 @@ describe('REGISTER User', () => {
         let response = httpMocks.createResponse({
             eventEmitter: EventEmitter
         });
-        response.on('send', () => {
-            try {
-                assert.equal(response._getStatusCode(), 201);
-                assert.equal(response._getData().dataValues.username, localUser[0].username);
-                assert.equal(response._getData().dataValues.email, localUser[0].email);
-                assert.isNotEmpty(response._getData().dataValues.salt);
-                assert.isNotEmpty(response._getData().dataValues.hash);
-                done();
-            } catch (e) { console.log(e); }
-        });
-
         dropTable();
         setTimeout(() => {
-            userController.create(request, response);
+            userController.create(request, response, () => {
+                assert.equal(response._getStatusCode(), 200);
+                done();
+            });
         }, 10000);
     }).timeout(20000);
 });
@@ -89,7 +81,7 @@ describe('SIGN-IN User', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 404);
-                assert.equal(response._getData(), 'incorrect username or password');
+                assert.equal(response._getData()['message'], 'incorrect username or password');
                 done();
             } catch (e) { console.log(e); }
         });
@@ -111,7 +103,7 @@ describe('SIGN-IN User', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 404);
-                assert.equal(response._getData(), 'incorrect username or password');
+                assert.equal(response._getData()['message'], 'incorrect username or password');
                 done();
             } catch (e) { console.log(e); }
         });
@@ -132,7 +124,7 @@ describe('SIGN-IN User', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 404);
-                assert.equal(response._getData(), 'incorrect username or password');
+                assert.equal(response._getData()['message'], 'incorrect username or password');
                 done();
             } catch (e) { console.log(e); }
         });
@@ -160,9 +152,9 @@ describe('SIGN-IN User', () => {
 
             response.on('send', () => {
                 try {
-                    assert.equal(response._getStatusCode(), 201);
-                    assert.equal(response._getData().length, userData.length);
-                    response._getData().map((book, index) => {
+                    assert.equal(response._getStatusCode(), 200);
+                    assert.equal(response._getData()['userBooks'].length, userData.length);
+                    response._getData()['userBooks'].map((book, index) => {
                         return book.getBooks().then(function(userBooks) {
                             let userId = book.id;
                             assert.equal(userBooks.length, loop(userId).length);
@@ -195,9 +187,9 @@ describe('SIGN-IN User', () => {
 
             response.on('send', () => {
                 try {
-                    assert.equal(response._getStatusCode(), 201);
-                    assert.equal(response._getData().id, 1); // ensure user 1 is returned
-                    response._getData().getBooks().then(books => {
+                    assert.equal(response._getStatusCode(), 200);
+                    assert.equal(response._getData()['borrowedBooks'].id, 1); // ensure user 1 is returned
+                    response._getData()['borrowedBooks'].getBooks().then(books => {
                         assert.equal(books.length, 2); // return two books unreturned by user
                         done();
                     });

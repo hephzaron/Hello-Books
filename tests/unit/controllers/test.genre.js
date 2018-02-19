@@ -39,8 +39,8 @@ describe('BOOK Genre', () => {
         });
         response.on('send', () => {
             try {
-                assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData().dataValues.name, genreData[0].name);
+                assert.equal(response._getStatusCode(), 201);
+                assert.equal(response._getData()['genre'].dataValues.name, genreData[0].name);
                 done();
             } catch (e) { console.log(e); }
         });
@@ -62,11 +62,11 @@ describe('BOOK Genre', () => {
             try {
                 assert.equal(response._getStatusCode(), 200); //get status code
                 //ensure sent object is created
-                assert.equal(response._getData()[0].dataValues.name, genreData[0].name);
+                assert.equal(response._getData().genres[0].dataValues.name, genreData[0].name);
                 // object returned should include key-books as an attachment to book category
-                assert.deepEqual(Object.keys(response._getData()[0].dataValues), ['id', 'name', 'createdAt', 'updatedAt', 'books']);
-                response._getData()[0].getBooks().then(books => {
-                    const genreId = response._getData()[0].dataValues.id;
+                assert.deepEqual(Object.keys(response._getData().genres[0].dataValues), ['id', 'name', 'createdAt', 'updatedAt', 'books']);
+                response._getData().genres[0].getBooks().then(books => {
+                    const genreId = response._getData().genres[0].dataValues.id;
                     assert.equal(books.length, 1); // Number of books in category is 1
                     //book returned should bear its category id and it's own title
                     assert.equal(books[0].dataValues.genre_id === genreId, true);

@@ -36,7 +36,7 @@ module.exports = {
                             message: 'Book Not Found'
                         });
                     }
-                    books.update({
+                    return books.update({
                             title: req.body.title || books.title,
                             genre_id: req.body.genre_id || books.genre_id,
                             description: req.body.description || books.description,

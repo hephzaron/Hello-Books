@@ -13,7 +13,7 @@ module.exports = {
             }
         }).then(book => {
             if (!book) {
-                res.status(404).send('Book does not exist in library');
+                res.status(404).send({ message: 'Book not found' });
             }
             if (book) {
                 Borrowed.find({
@@ -29,13 +29,13 @@ module.exports = {
                         }
                         //If record of user exist for a book yet unreturned alert user and discontinue
                         if (user) {
-                            res.status(405).send('You are not allowed to borrow this book, yet to be returned')
+                            res.status(405).send({ message: 'You are not allowed to borrow this book, yet to be returned' });
                         }
                     })
-                    .catch(err => res.status(400).send(err));
+                    .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
 
             }
-        }).catch(err => res.status(400).send(err));
+        }).catch(() => res.status(500).send({ message: 'Internal Server Error' }));
 
     }
 };

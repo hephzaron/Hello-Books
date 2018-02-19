@@ -28,7 +28,8 @@ chai.use(chaiHttp);
 
 
 describe('GET BOOK', () => {
-    before((done) => {
+    before(function(done) {
+        this.timeout(5000);
         db.sequelize.sync({ force: true, logging: false }).then(() => {
             Genre.bulkCreate(genreData).then(() => {
                 Book.bulkCreate(bookData).then(() => {
@@ -51,14 +52,14 @@ describe('GET BOOK', () => {
     //get  all books
     it('it should get all books in database', (done) => {
         chai.request(app)
-            .get('/api/users/books')
+            .get('/api/books')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
                 should.not.exist(err);
-                res.body.should.be.a('array');
+                res.body['books'].should.be.a('array');
                 // Only three books have been seed to database
-                res.body.length.should.be.eql(3);
+                res.body['books'].length.should.be.eql(3);
                 done();
             });
 
@@ -74,9 +75,9 @@ describe('GET BOOK', () => {
                 res.should.have.status(200);
                 should.not.exist(err);
                 //Body should contain author object and the books published by each author
-                res.body.should.be.a('array');
+                res.body['authors'].should.be.a('array');
                 // Only two authors have been seed to database
-                res.body.length.should.be.eql(2);
+                res.body['authors'].length.should.be.eql(2);
                 done();
             });
 
@@ -90,9 +91,9 @@ describe('GET BOOK', () => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
                 should.not.exist(err);
-                res.body.should.be.a('array');
+                res.body['genres'].should.be.a('array');
                 // Only three categories have been seed to database
-                res.body.length.should.be.eql(3);
+                res.body['genres'].length.should.be.eql(3);
                 done();
             });
     });
@@ -110,9 +111,9 @@ describe('GET BOOK', () => {
                 should.not.exist(err);
                 res.body.should.be.a('object');
                 //res.body.length.should.be.eql(1);
-                res.body.should.have.property('Books');
+                res.body['author'].should.have.property('Books');
                 //only two books belongs to author with id equals 2
-                res.body.Books.length.should.be.equal(2);
+                res.body['author'].Books.length.should.be.equal(2);
 
                 done();
             });

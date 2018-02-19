@@ -18,6 +18,9 @@ module.exports = {
                 username: req.body.username
             }
         }).then(user => {
+            if (!user) {
+                return res.status(401).send({ message: 'Token invalid or expired-user not found' });
+            }
             const GUID = generateGUID();
 
             // By default, expire the token after 1hour
@@ -49,7 +52,7 @@ module.exports = {
                     }
                 });
             }).catch(() => res.status(500).send({ message: 'Internal Server Error' }));
-        });
+        }).catch(() => res.status(500).send({ message: 'Internal Server Error' }));
 
     },
 
@@ -60,7 +63,7 @@ module.exports = {
 
             return LocalUsers.findOne({ where: { username: decoded.username } }).then((user) => {
                 if (!user) {
-                    res.status(404).send({ message: 'Token invalid or expired-user not found' });
+                    res.status(401).send({ message: 'Token invalid or expired-user not found' });
                 }
                 next();
             }).catch(() => {

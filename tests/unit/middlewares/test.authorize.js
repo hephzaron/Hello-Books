@@ -17,12 +17,17 @@ let assert = require('chai').assert;
 // import model and test data
 const LocalUser = require('../../../server/models').LocalUser;
 const localUsers = require('../models/test-data').LocalUsers;
+const User = require('../../../server/models').User;
 
 // drop all tables and create new ones and insert test data 
 function createTest() {
     return db.sequelize.sync({ force: true, logging: false }).then(() => {
         return LocalUser.create(localUsers[0]).then((localuser) => {
-            return localuser;
+            return User.create({
+                userId: localuser.uuid,
+                username: localuser.username,
+                email: localuser.email
+            }).then(user => user);
         });
     });
 }
@@ -58,12 +63,11 @@ function TamperToken(expires, username, admin, req, _secret) {
 describe('PERFORM USER Authorization', () => {
     let token; // make generated token accessible to all aspects of code.
     /** test to ensure token is generated and sent as a cookie to user once user is found in the database*/
-    it('it should generate JWT, send to user and create a cookie', (done) => {
+    it('it should generate JWT, send to user ', (done) => {
         let request = httpMocks.createRequest({
             method: 'POST',
             headers: {
-                'user-agent': 'Mozilla/5.0',
-                'authorization': token
+                'user-agent': 'Mozilla/5.0'
             },
             body: {
                 username: localUsers[0].username
@@ -75,8 +79,9 @@ describe('PERFORM USER Authorization', () => {
         });
         response.on('send', () => {
             try {
-                token = response._getData()['token']; // retrieve user token to be used for further test
-                assert.equal(response._getData()['token'], response.cookies.loginCookie.value);
+                console.log(response._getData());
+                token = response._getData().user['token'];
+                assert.exists(response._getData().user['token']);
                 assert.equal(response._getStatusCode(), 200);
                 done();
 
@@ -117,7 +122,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': token
+                    'x-access-token': token
                 }
             });
 
@@ -126,8 +131,8 @@ describe('PERFORM USER Authorization', () => {
             });
             response.on('send', () => {
                 try {
-                    assert.equal(response._getStatusCode(), 404);
-                    assert.equal(response._getData(), 'Token invalid or expired-user not found');
+                    assert.equal(response._getStatusCode(), 401);
+                    assert.equal(response._getData()['message'], 'Token invalid or expired-user not found');
                     assert.equal(userToken, undefined); // it should not return user credentials
                     done();
                 } catch (e) { console.log(e); }
@@ -160,7 +165,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': token
+                    'x-access-token': token
                 }
             });
 
@@ -170,7 +175,7 @@ describe('PERFORM USER Authorization', () => {
             response.on('send', () => {
                 try {
                     assert.equal(response._getStatusCode(), 401);
-                    assert.equal(response._getData(), 'jwt expired');
+                    assert.equal(response._getData()['message'], 'Token invalid or expired-user not found');
                     assert.equal(userToken, undefined); //user credentials should not be returned
                     done();
                 } catch (e) { console.log(e); }
@@ -190,7 +195,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': unsignedToken
+                    'x-access-token': unsignedToken
                 }
             });
 
@@ -200,7 +205,7 @@ describe('PERFORM USER Authorization', () => {
             response.on('send', () => {
                 try {
                     assert.equal(response._getStatusCode(), 401);
-                    assert.equal(response._getData(), 'jwt malformed');
+                    assert.equal(response._getData()['message'], 'Token invalid or expired-user not found');
                     assert.equal(userToken, undefined);
                     done();
                 } catch (e) { console.log(e); }
@@ -222,7 +227,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': tamperToken
+                    'x-access-token': tamperToken
                 }
             });
 
@@ -232,7 +237,7 @@ describe('PERFORM USER Authorization', () => {
             response.on('send', () => {
                 try {
                     assert.equal(response._getStatusCode(), 401);
-                    assert.equal(response._getData(), 'Unexpected token � in JSON at position 0');
+                    assert.equal(response._getData()['message'], 'Token invalid or expired-user not found');
                     assert.equal(userToken, undefined);
                     done();
                 } catch (e) { console.log(e); }
@@ -254,7 +259,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': tamperTokenSignature
+                    'x-access-token': tamperTokenSignature
                 }
             });
 
@@ -264,7 +269,7 @@ describe('PERFORM USER Authorization', () => {
             response.on('send', () => {
                 try {
                     assert.equal(response._getStatusCode(), 401);
-                    assert.equal(response._getData(), 'invalid signature');
+                    assert.equal(response._getData()['message'], 'Token invalid or expired-user not found');
                     assert.equal(userToken, undefined);
                     done();
                 } catch (e) { console.log(e); }
@@ -283,7 +288,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': token
+                    'x-access-token': token
                 }
             });
 
@@ -293,7 +298,7 @@ describe('PERFORM USER Authorization', () => {
             response.on('send', () => {
                 try {
                     assert.equal(response._getStatusCode(), 401);
-                    assert.equal(response._getData(), 'jwt must be provided');
+                    assert.equal(response._getData()['message'], 'Token invalid or expired-user not found');
                     assert.equal(userToken, undefined);
                     done();
                 } catch (e) { console.log(e); }
@@ -312,7 +317,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': token
+                    'x-access-token': token
                 }
             });
 
@@ -335,7 +340,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': token
+                    'x-access-token': token
                 }
             });
             let response = httpMocks.createResponse({
@@ -343,8 +348,8 @@ describe('PERFORM USER Authorization', () => {
             });
             response.on('send', () => {
                 try {
-                    assert.equal(response._getStatusCode(), 401); //user not authorised
-                    assert.equal(response._getData(), 'You are not authorized to perform this action');
+                    assert.equal(response._getStatusCode(), 403); //user not authorised
+                    assert.equal(response._getData()['message'], 'You are not authorized to perform this action');
                     assert.equal(userAdmin, undefined);
                     done();
                 } catch (e) { console.log(e); }
@@ -379,7 +384,7 @@ describe('PERFORM USER Authorization', () => {
                 method: 'POST',
                 headers: {
                     'user-agent': 'Mozilla/5.0',
-                    'authorization': token
+                    'x-access-token': token
                 }
             });
 

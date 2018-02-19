@@ -8,19 +8,23 @@ const Borrowed = require('../models').Borrowed;
 module.exports = {
     memberVal: function(req, res, next) {
         //This compute how long a user have been active on platform
-        Users.find({
+        return Users.find({
             where: {
                 id: req.params.userId
             }
         }).then(users => {
-            if (!users) { res.status(403).send('User not found'); }
+            if (!users) {
+                return res.status(404).send({
+                    message: 'User not found'
+                });
+            }
             if (users) {
                 //Time since user registered
                 let now = new Date();
                 let createdAt = users.createdAt;
                 let duration = (now - createdAt) / (60 * 60 * 1000 * 24 * 30);
                 // find avergarage book return time
-                Borrowed.findAndCountAll({
+                return Borrowed.findAndCountAll({
                     where: {
                         userId: req.params.userId,
                         returned: true
@@ -42,7 +46,7 @@ module.exports = {
                         } else { memVal = 0; }
 
                         // Get the total number of books yet to be returned by the user
-                        Borrowed.findAndCountAll({
+                        return Borrowed.findAndCountAll({
                             where: {
                                 userId: req.params.userId,
                                 returned: false
@@ -56,28 +60,46 @@ module.exports = {
                                     });
                                     if (userCount.count <= 1) {
                                         next();
-                                    } else { res.status(403).send('You are not allowed to borrow more than 1 book'); }
+                                    } else {
+                                        res.status(403).send({
+                                            message: 'You are not allowed to borrow more than 1 book'
+                                        });
+                                    }
                                 } else if (memVal > 0.35 && memVal < 0.7) {
                                     users.update({
                                         memValue: 'silver'
                                     });
                                     if (userCount.count <= 2) {
                                         next();
-                                    } else { res.status(403).send('You are not allowed to borrow more than 2 books'); }
+                                    } else {
+                                        res.status(403).send({
+                                            message: 'You are not allowed to borrow more than 2 books'
+                                        });
+                                    }
                                 } else if (memVal >= 0.7) {
                                     users.update({
                                         memValue: 'gold'
                                     });
                                     if (userCount.count <= 3) {
                                         next();
-                                    } else { res.status(403).send('You are not allowed to borrow more than 3 books'); }
+                                    } else {
+                                        res.status(403).send({
+                                            message: 'You are not allowed to borrow more than 3 books'
+                                        });
+                                    }
                                 }
                             }
-                        }).catch(err => res.status(404).send(err));
+                        }).catch(() => res.status(500).send({
+                            message: 'Internal Server Error'
+                        }));
                     }
-                }).catch(err => res.status(404).send(err));
+                }).catch(() => res.status(500).send({
+                    message: 'Internal Server Error'
+                }));
             }
-        }).catch(err => res.status(404).send(err));
+        }).catch(() => res.status(500).send({
+            message: 'Internal Server Error'
+        }));
 
     }
 };

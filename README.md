@@ -12,6 +12,7 @@ Hello-Books is an E-Library application that helps manage the inflow and outflow
 
 * [Installation and Setup](#installation-and-setup)
 * [Authentication](#authentication)
+* [API Documentation](#api-documentation)
 * [Testing](#testing)
 * [License](#license)
 * [Author](#author)
@@ -69,6 +70,15 @@ Visit `http://localhost:5432/api`  to access the `api` endpoint.
 - Token is perpetually verified to check the state of the user if logged in or not.
 - Admin role and ordinary users are assigned on login for subsequent access to authorised routes.
 - It also supports user-authorisation depending on user role(admn or non admin)
+
+## API Documentation
+
+> Ensure Ruby is installed on your PC then run gem install bundler in your terminal
+
+- cd slate from the root directory
+- Install Slate dependencies by running `npm slate:install`
+- To deploy generated files into your application run `npm run slate:build`
+- To start slate run `npm run slate:start`
 
 ## Testing
 

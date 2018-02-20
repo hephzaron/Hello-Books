@@ -14,7 +14,8 @@
         "slate:build": "cd ./slate && deploy.sh",
         "slate:install": "cd ./slate && bundle install",
         "slate:start": "cd ./slate && bundle exec middleman server",
-        "client:install": "cd ./client && npm install"
+        "client:install": "cd ./client && npm install",
+        "client:webpack": "cd ./client && npm run webpack"
     },
     "nyc": {
         "exclude": [

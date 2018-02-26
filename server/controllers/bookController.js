@@ -60,7 +60,6 @@ module.exports = {
                 attributes: ['id', 'title', 'ISBN', 'description'],
                 include: [{
                     model: Authors,
-                    //attributes: ['name'],
                     through: {
                         attributes: []
                     }

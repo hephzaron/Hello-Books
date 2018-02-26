@@ -23,7 +23,6 @@ module.exports = {
             .findAll({
                 include: [{
                     model: Books,
-                    attributes: ['title', 'ISBN', 'description'],
                     through: {
                         attributes: []
                     }
@@ -70,7 +69,6 @@ module.exports = {
                 },
                 include: [{
                     model: Books,
-                    attributes: ['title', 'ISBN', 'description'],
                     through: {
                         attributes: []
                     }

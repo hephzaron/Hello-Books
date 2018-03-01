@@ -218,8 +218,46 @@ describe('BOOK', () => {
 
         });
 
-        setTimeout(() => { bookController.list(request, response); }, 5000);
+        setTimeout(() => { bookController.getBooks(request, response); }, 5000);
 
+    }).timeout(7000);
+
+    //Retrieve a single book and contributing authors
+    it('it should get a single book and contributing authors', (done) => {
+        let request = httpMocks.createRequest({
+            method: 'GET',
+            params: {
+                bookId: 1
+            }
+        });
+
+        let response = httpMocks.createResponse({
+            eventEmitter: EventEmitter
+        });
+        response.on('send', () => {
+            try {
+                assert.equal(response._getStatusCode(), 200);
+                assert.equal(response._getData().book[0].dataValues.id, 1); //ensure its book with id 3 thats returned.
+                assert.deepEqual(Object.keys(response._getData().book[0].dataValues), ['id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'documentURL', 'coverPhotoURL', 'createdAt', 'updatedAt', 'Authors']);
+                assert.deepEqual(typeof(response), 'object');
+                assert.equal(response._getStatusMessage(), 'OK');
+                return response._getData().book[0].getAuthors().then(author => { //get list of authors attached to book 3
+                    //function to check that only contributing authors where returned
+                    function check(authorId) {
+                        return author.filter((object) => {
+                            return object.get().id === authorId;
+                        });
+
+                    }
+                    assert.equal(author.length, 1); //book has one contributing authors
+                    assert.deepEqual(check(1), []); //author Id 1 should not be present
+                    assert.notEqual(check(2), []); //author Id 2 should be present
+                    assert.deepEqual(check(3), []); //author Id 3 should not be present
+                    done();
+                });
+            } catch (e) { console.log(e); }
+        });
+        setTimeout(() => { bookController.getBooks(request, response); }, 5000);
     }).timeout(7000);
 
     // user should be able to delete a book

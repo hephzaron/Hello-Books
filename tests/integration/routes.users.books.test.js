@@ -69,7 +69,7 @@ describe('GET BOOK', () => {
     it('it should get all authors with the books written', (done) => {
 
         chai.request(app)
-            .get('/authors/books')
+            .get('/authors')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
@@ -104,17 +104,19 @@ describe('GET BOOK', () => {
         let authorId = 2;
 
         chai.request(app)
-            .get('/authors/' + authorId + '/books')
+            .get(`/authors/${authorId}`)
             .end((err, res) => {
+                const { author } = res.body;
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
                 should.not.exist(err);
                 res.body.should.be.a('object');
                 //res.body.length.should.be.eql(1);
-                res.body['author'].should.have.property('Books');
+                author[0].should.have.property('Books');
                 //only two books belongs to author with id equals 2
-                res.body['author'].Books.length.should.be.equal(2);
-
+                author[0].Books.length.should.be.equal(2);
+                //array of length 1 for a single author should be returned
+                author.length.should.be.equal(1);
                 done();
             });
     });

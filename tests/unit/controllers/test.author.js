@@ -206,7 +206,7 @@ describe('FETCH Author Books', () => {
             } catch (e) { console.log(e); }
         });
 
-        setTimeout(() => { authorController.authorBooks(request, response); }, 5000);
+        setTimeout(() => { authorController.getAuthors(request, response); }, 5000);
     }).timeout(7000);
 
     //Retrieve all books by a single author
@@ -224,11 +224,11 @@ describe('FETCH Author Books', () => {
         response.on('send', () => {
             try {
                 assert.equal(response._getStatusCode(), 200);
-                assert.equal(response._getData()['author'].dataValues.id, 1); //ensure its author with id 1 thats returned.
-                assert.deepEqual(Object.keys(response._getData()['author'].dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'createdAt', 'updatedAt', 'Books']);
+                assert.equal(response._getData().author[0].dataValues.id, 1); //ensure its author with id 1 thats returned.
+                assert.deepEqual(Object.keys(response._getData().author[0].dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'createdAt', 'updatedAt', 'Books']);
                 assert.deepEqual(typeof(response), 'object');
                 assert.equal(response._getStatusMessage(), 'OK');
-                return response._getData()['author'].getBooks().then(authorBook => { //get list of books attached to author 1
+                return response._getData().author[0].getBooks().then(authorBook => { //get list of books attached to author 1
                     //function to check that only author books whre returned
                     function check(bookId) {
                         return authorBook.filter((object) => {
@@ -244,6 +244,6 @@ describe('FETCH Author Books', () => {
                 });
             } catch (e) { console.log(e); }
         });
-        setTimeout(() => { authorController.retrieveOne(request, response); }, 5000);
+        setTimeout(() => { authorController.getAuthors(request, response); }, 5000);
     }).timeout(7000);
 });

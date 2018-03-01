@@ -222,8 +222,6 @@ describe('BOOK MODEL', () => {
                 assert.equal(typeof(books), 'object'); // type returned should be an object
                 assert.equal(books.length, 3); //all book object should persist to database
                 let [, ...otherKeys] = Object.keys(books[0].dataValues); // destructure book object to remove id
-                console.log(otherKeys);
-                console.log(Object.keys(bookData[0]));
                 assert.deepEqual(otherKeys, Object.keys(bookData[0])); // Ensure all book keys persist to database
                 done();
             });

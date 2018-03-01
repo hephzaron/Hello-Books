@@ -13,6 +13,7 @@ process.env.NODE_ENV = 'test';
 const db = require('../../../server/models');
 let authorController = require('../../../server/controllers').authorController;
 let ownerController = require('../../../server/controllers').ownerController;
+let searchController = require('../../../server/controllers').searchController;
 
 let httpMocks = require('node-mocks-http');
 let EventEmitter = require('events').EventEmitter;
@@ -246,4 +247,30 @@ describe('FETCH Author Books', () => {
         });
         setTimeout(() => { authorController.getAuthors(request, response); }, 5000);
     }).timeout(7000);
+
+    it('it should search for author', (done) => {
+        let word = 'nelkon'
+        let request = httpMocks.createRequest({
+            method: 'GET',
+            query: {
+                q: word,
+                type: 'authors'
+            }
+        });
+        let response = httpMocks.createResponse({
+            eventEmitter: EventEmitter
+        });
+        response.on('send', () => {
+            try {
+                assert.equal(response._getStatusCode(), 200);
+                assert.equal(response._getData()['message'], `Author found`);
+                assert.equal(response._getData()['author'].length, 1);
+                assert.equal(/nelkon/i.test(response._getData().author[0].dataValues.firstName), true);
+                done();
+            } catch (e) {
+                console.log(e)
+            }
+        });
+        searchController.getSearchResult(request, response);
+    });
 });

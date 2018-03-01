@@ -120,4 +120,32 @@ describe('GET BOOK', () => {
                 done();
             });
     });
+    it('it should search for book', (done) => {
+        let title = 'data';
+        chai.request(app)
+            .get(`/search`)
+            .query(`q=${title}&type=books`)
+            .end((err, res) => {
+                let re = /data/i // string 'data' should be present in returned books
+                res.body['message'].should.equal('Book found');
+                res.body['books'].length.should.equal(2);
+                re.test(res.body.books[0].title).should.equal(true);
+                re.test(res.body.books[1].title).should.equal(true);
+                done();
+            })
+    });
+
+    it('it should search for author', (done) => {
+        let name = 'nelkon';
+        chai.request(app)
+            .get(`/search`)
+            .query(`q=${name}&type=authors`)
+            .end((err, res) => {
+                let re = /nelkon/i // string 'nelkon' should be present in returned authors
+                res.body['message'].should.equal('Author found');
+                res.body['author'].length.should.equal(1);
+                re.test(res.body.author[0].fullName).should.equal(true);
+                done();
+            })
+    });
 });

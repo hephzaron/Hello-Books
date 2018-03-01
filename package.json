@@ -16,7 +16,7 @@
         "slate:start": "cd ./slate && bundle exec middleman server",
         "client:install": "cd ./client && npm install",
         "client:webpack": "cd ./client && npm run webpack",
-        "test:single": "mocha ./tests/unit/controllers/test.book.js"
+        "test:single": "mocha ./tests/integration/routes.users.books.test.js"
     },
     "nyc": {
         "exclude": [

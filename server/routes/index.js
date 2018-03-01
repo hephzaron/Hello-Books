@@ -118,13 +118,13 @@ module.exports = (app, passport) => {
     app.post('/genre',
         authorize.verifyUser,
         authorize.adminProtect,
-        genreController.create); //
+        genreController.create);
 
     // add books to library
     app.post('/books',
         authorize.verifyUser,
         authorize.adminProtect,
-        bookController.create); //
+        bookController.create);
 
     // allow users to modify book information
     app.put('/books/:bookId',
@@ -167,11 +167,9 @@ module.exports = (app, passport) => {
     //Get a single author
     app.get('/authors/:authorId',
         authorController.getAuthors);
-
     //view books by category
     app.get('/genre/books',
         genreController.list);
-
     //allow user to delete book record
     app.delete('/books/:bookId',
         authorize.verifyUser,
@@ -200,7 +198,6 @@ module.exports = (app, passport) => {
     app.get('/users/:userId/books',
         authorize.verifyUser,
         userController.retrieveOne);
-
     //allow user to search for book(s)/author(s) ?q=title&type=books||type=authors`
     app.get(`/search`, searchController.getSearchResult);
 };

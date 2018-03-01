@@ -4,6 +4,7 @@ process.env.NODE_ENV = 'test';
 // require database
 const db = require('../../../server/models');
 let bookController = require('../../../server/controllers').bookController;
+let searchController = require('../../../server/controllers').searchController;
 
 let httpMocks = require('node-mocks-http');
 let EventEmitter = require('events').EventEmitter;
@@ -14,6 +15,7 @@ let setTimeout = require('timers').setTimeout;
 //import models
 const Genre = require('../../../server/models').Genre;
 const Authors = require('../../../server/models').Author;
+const Books = require('../../../server/models').Book;
 const Owners = require('../../../server/models').Ownership;
 
 
@@ -28,7 +30,7 @@ function dropTable() {
     db.sequelize.sync({ force: true, logging: true }).then(() => {
         //create realted data in database
         return Genre.bulkCreate(genreData).then(() => {
-            Authors.bulkCreate(authorData);
+            Authors.bulkCreate(authorData)
         });
     });
 }
@@ -78,7 +80,7 @@ describe('BOOK', () => {
     }).timeout(7000);
 
     // create a second book for test purposes
-    it('it should create book a second book', (done) => {
+    it('it should create a second book', (done) => {
         let request = httpMocks.createRequest({
             method: 'POST',
             params: {},
@@ -117,7 +119,6 @@ describe('BOOK', () => {
         bookController.create(request, response);
 
     });
-
     // it should return error for uncreated book
     it('it should return error 404, book not found', (done) => {
         let request = httpMocks.createRequest({
@@ -303,6 +304,97 @@ describe('BOOK', () => {
 
         });
         bookController.delete(request, response);
+    });
+
+    it('it should search for book', (done) => {
+        let word = 'data'
+        let request = httpMocks.createRequest({
+            method: 'GET',
+            query: {
+                q: word,
+                type: 'books'
+            }
+        });
+        let response = httpMocks.createResponse({
+            eventEmitter: EventEmitter
+        });
+        response.on('send', () => {
+            try {
+                assert.equal(response._getStatusCode(), 200);
+                assert.equal(response._getData()['message'], `Book found`);
+                assert.equal(response._getData()['books'].length, 2);
+                assert.equal(/data/i.test(response._getData().books[0].dataValues.title), true);
+                assert.equal(/data/i.test(response._getData().books[1].dataValues.title), true);
+                done();
+            } catch (e) {
+                console.log(e)
+            }
+        });
+        Books.create(bookData[2]).then(() => {
+            searchController.getSearchResult(request, response);
+        })
+    });
+
+    it('it should get first page of paginated searched result with limit 1', (done) => {
+        let word = 'data'
+        let request = httpMocks.createRequest({
+            method: 'GET',
+            query: {
+                q: word,
+                type: 'books',
+                count: 1,
+                page: 1
+            }
+        });
+        let response = httpMocks.createResponse({
+            eventEmitter: EventEmitter
+        });
+        response.on('send', () => {
+            try {
+                assert.equal(response._getStatusCode(), 200);
+                assert.equal(response._getData()['message'], `Book found`);
+                assert.equal(response._getData()['book'].length, 1);
+                assert.equal(/data/i.test(response._getData().book[0].dataValues.title), true);
+                //ascertain first matched record was returned
+                assert.equal(response._getData().book[0].dataValues.title, bookData[1].title)
+                assert.equal(response._getData().book[1], undefined);
+                done();
+            } catch (e) {
+                console.log(e)
+            }
+        });
+        searchController.getSearchResult(request, response);
+    });
+
+    it('it should get second page of paginated searched result with limit 1', (done) => {
+        let word = 'data'
+        let request = httpMocks.createRequest({
+            method: 'GET',
+            query: {
+                q: word,
+                type: 'books',
+                count: 1,
+                page: 2
+            }
+        });
+        let response = httpMocks.createResponse({
+            eventEmitter: EventEmitter
+        });
+        response.on('send', () => {
+            try {
+                assert.equal(response._getStatusCode(), 200);
+                assert.equal(response._getData()['message'], `Book found`);
+                assert.equal(response._getData()['book'].length, 1);
+                assert.equal(/data/i.test(response._getData().book[0].dataValues.title), true);
+                //ascertain second matched record was returned
+                assert.equal(response._getData().book[0].dataValues.title, bookData[2].title)
+                assert.equal(response._getData().book[1], undefined);
+                done();
+            } catch (e) {
+                console.log(e)
+            }
+        });
+        searchController.getSearchResult(request, response);
     });
 
 });

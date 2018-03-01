@@ -14,7 +14,9 @@ module.exports = {
                     quantity: 7,
                     available: 7,
                     createdAt: new Date(),
-                    updatedAt: new Date()
+                    updatedAt: new Date(),
+                    documentURL: 'req.body.documentURL',
+                    coverPhotoURL: 'req.body.coverPhotoURL'
 
                 }, {
                     title: 'Fundamentals of Statistics for Data Scientist',
@@ -24,7 +26,9 @@ module.exports = {
                     quantity: 3,
                     available: 3,
                     createdAt: new Date(),
-                    updatedAt: new Date()
+                    updatedAt: new Date(),
+                    documentURL: 'req.body.documentURL',
+                    coverPhotoURL: 'req.body.coverPhotoURL'
                 }, {
                     title: 'R - the tool for data science',
                     genre_id: 3,
@@ -33,7 +37,9 @@ module.exports = {
                     quantity: 5,
                     available: 5,
                     createdAt: new Date(),
-                    updatedAt: new Date()
+                    updatedAt: new Date(),
+                    documentURL: 'req.body.documentURL',
+                    coverPhotoURL: 'req.body.coverPhotoURL'
                 }], {});
             });
 

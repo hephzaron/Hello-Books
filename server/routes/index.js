@@ -4,6 +4,7 @@ const genreController = require('../controllers').genreController;
 const authorController = require('../controllers').authorController;
 const ownerController = require('../controllers').ownerController;
 const borrowController = require('../controllers').borrowController;
+const searchController = require('../controllers').searchController;
 const bookCount = require('../middlewares').bookCount;
 const userCount = require('../middlewares').userCount;
 const userSignUp = require('../middlewares').userSignUp;
@@ -154,14 +155,18 @@ module.exports = (app, passport) => {
         authorize.verifyUser,
         authorize.adminProtect,
         ownerController.create);
-
-    //List all authors with respective books written
-    app.get('/authors/books',
-        authorController.authorBooks);
-
-    //view all books in library
+    //Get all books in library
     app.get('/books',
-        bookController.list);
+        bookController.getBooks);
+    //Get a single book
+    app.get('/books/:bookId',
+        bookController.getBooks);
+    //Get all authors in library
+    app.get('/authors',
+        authorController.getAuthors);
+    //Get a single author
+    app.get('/authors/:authorId',
+        authorController.getAuthors);
 
     //view books by category
     app.get('/genre/books',
@@ -196,8 +201,6 @@ module.exports = (app, passport) => {
         authorize.verifyUser,
         userController.retrieveOne);
 
-    //allow user to view all books written by same author
-    app.get('/authors/:authorId/books',
-        authorController.retrieveOne);
-
+    //allow user to search for book(s)/author(s) ?q=title&type=books||type=authors`
+    app.get(`/search`, searchController.getSearchResult);
 };

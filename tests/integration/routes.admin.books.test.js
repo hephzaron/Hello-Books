@@ -132,6 +132,8 @@ describe('/POST book', () => {
         description: 'This introduces readers to the basic of Obejct Oriented Programmng Language',
         ISBN: '33332-143-2457',
         quantity: 7,
+        documentURL: 'documentURL',
+        coverPhotoURL: 'coverPhotoURL',
         createdAt: new Date(),
         updatedAt: new Date()
     };
@@ -207,7 +209,7 @@ describe('/POST book', () => {
                         res.body['book'].should.have.property('quantity').to.be.equal(book.quantity);
                         res.body['book'].should.have.property('available').to.be.equal(book.quantity);
                         // all attributs of user should be generated
-                        res.body['book'].should.have.all.keys('id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'createdAt', 'updatedAt');
+                        res.body['book'].should.have.all.keys('id', 'title', 'genre_id', 'description', 'ISBN', 'quantity', 'available', 'documentURL', 'coverPhotoURL', 'createdAt', 'updatedAt');
                         done();
                     });
             });

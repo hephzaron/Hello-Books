@@ -1,6 +1,7 @@
 const Books = require('../models').Book;
 const Authors = require('../models').Author;
-
+const paginate = require('./paginate').paginate;
+const returnObject = require('./paginate').returnObject;
 
 module.exports = {
     // add book to library
@@ -12,7 +13,9 @@ module.exports = {
                 description: req.body.description,
                 ISBN: req.body.ISBN,
                 quantity: req.body.quantity,
-                available: req.body.quantity
+                available: req.body.quantity,
+                documentURL: req.body.documentURL,
+                coverPhotoURL: req.body.coverPhotoURL
 
             })
             .then(book => res.status(201).send({
@@ -42,7 +45,9 @@ module.exports = {
                             description: req.body.description || books.description,
                             ISBN: req.body.ISBN || books.ISBN,
                             quantity: req.body.quantity || books.quantity,
-                            available: req.body.available || books.quantity
+                            available: req.body.available || books.quantity,
+                            documentURL: req.body.documentURL || books.documentURL,
+                            coverPhotoURL: req.body.coverPhotoURL || books.coverPhotoURL
                         })
                         .then(updatedBook => res.status(200).send({
                             message: `${updatedBook.title} record have been updated`,
@@ -54,22 +59,39 @@ module.exports = {
         }
     },
 
-    list(req, res) {
-        return Books
-            .findAll({
-                attributes: ['id', 'title', 'ISBN', 'description'],
-                include: [{
-                    model: Authors,
-                    through: {
-                        attributes: []
-                    }
-                }]
-            })
-            .then(books => res.status(200).send({ books }))
-            .catch(() => res.status(500).send({
+    getBooks(req, res) {
+        const { count, page } = req.query;
+        const { bookId } = req.params;
+        let { limit, offset } = paginate(page, count)
+        return Books.findAll({
+            where: (
+                bookId ? { id: bookId } : {}
+            ),
+            limit: limit,
+            offset: offset,
+            order: [
+                ['id', 'ASC']
+            ],
+            include: [{
+                model: Authors,
+                through: {
+                    attributes: ['id', 'fullName', 'dateOfBirth', 'dateOfDeath', 'lifeSpan']
+                }
+            }]
+        }).then((books) => {
+            if (!books || books.length === 0) {
+                return res.status(200).send({
+                    message: 'Oops! No books exists in this section'
+                });
+            }
+            return res.status(200).send(returnObject(books, 'books'))
+        }).catch(() => {
+            return res.status(500).send({
                 message: 'Internal Server Error'
-            }));
+            });
+        });
     },
+
     delete(req, res) {
         return Books
             .destroy({

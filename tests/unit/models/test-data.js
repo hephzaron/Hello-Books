@@ -84,6 +84,8 @@ module.exports = {
         ISBN: '33332-143-2457',
         quantity: 7,
         available: 7,
+        documentURL: 'req.body.documentURL',
+        coverPhotoURL: 'req.body.coverPhotoURL',
         createdAt: new Date(),
         updatedAt: new Date()
 
@@ -94,6 +96,8 @@ module.exports = {
         ISBN: '12-70-894-53',
         quantity: 3,
         available: 3,
+        documentURL: 'req.body.documentURL',
+        coverPhotoURL: 'req.body.coverPhotoURL',
         createdAt: new Date(),
         updatedAt: new Date()
     }, {
@@ -103,6 +107,8 @@ module.exports = {
         ISBN: '102-70-8934-5757',
         quantity: 5,
         available: 5,
+        documentURL: 'req.body.documentURL',
+        coverPhotoURL: 'req.body.coverPhotoURL',
         createdAt: new Date(),
         updatedAt: new Date()
     }],

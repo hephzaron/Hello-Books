@@ -1,17 +1,30 @@
 const Books = require('../models').Book;
 const Authors = require('../models').Author;
+const paginate = require('./paginate').paginate;
+const returnObject = require('./paginate').returnObject;
 
 const searchAuthors = (req, res) => {
+    const { count, page } = req.query;
+    let { limit, offset } = paginate(page, count);
     return Authors
         .findAll({
+            limit,
+            offset,
+            order: [
+                ['id', 'ASC']
+            ],
             where: {
-                fullName: {
-                    $iLike: `${req.query.q}%`
-                }
+                $or: [{
+                    firstName: {
+                        $iLike: `%${req.query.q}%`
+                    }
+                }, {
+                    lastName: {
+                        $iLike: `%${req.query.q}%`
+                    }
+                }]
             },
-            include: [{
-                model: Books
-            }]
+            include: [{ model: Books }]
         })
         .then((authors) => {
             if (!authors && authors.length === 0) {
@@ -19,10 +32,9 @@ const searchAuthors = (req, res) => {
                     message: 'Author not found'
                 });
             }
-            return res.status(200).send({
-                message: 'Author found',
-                authors
-            });
+            return res.status(200).send(
+                Object.assign({}, { message: 'Author found' },
+                    returnObject(authors, 'authors')));
         })
         .catch(() => {
             return res.status(500).send({
@@ -31,13 +43,27 @@ const searchAuthors = (req, res) => {
         });
 };
 const searchBooks = (req, res) => {
+    const { count, page } = req.query;
+    let { limit, offset } = paginate(page, count);
     return Books
         .findAll({
+            limit,
+            offset,
+            order: [
+                ['id', 'ASC']
+            ],
             where: {
-                title: {
-                    $iLike: `${req.query.q}%`
-                }
-            }
+                $or: [{
+                    title: {
+                        $iLike: `%${req.query.q}%`
+                    }
+                }, {
+                    description: {
+                        $iLike: `%${req.query.q}%`
+                    }
+                }]
+            },
+            include: [{ model: Authors }]
         })
         .then((books) => {
             if (!books && books.length === 0) {
@@ -45,10 +71,9 @@ const searchBooks = (req, res) => {
                     message: 'Book not found'
                 });
             }
-            return res.status(200).send({
-                message: 'Book found',
-                books
-            });
+            return res.status(200).send(
+                Object.assign({}, { message: 'Book found' },
+                    returnObject(books, 'books')));
         })
         .catch(() => {
             return res.status(500).send({
@@ -57,20 +82,20 @@ const searchBooks = (req, res) => {
         });
 };
 
-const getSearchResult = (req, res) => {
-    const { type } = req.query;
-    switch (type) {
-        case 'books':
-            searchAuthors(req, res);
-            break;
-        case 'authors':
-            searchBooks(req, res);
-            break;
-        default:
-            return res.status(400).send({
-                message: 'Specify a search type'
-            });
+module.exports = {
+    getSearchResult(req, res) {
+        const { type } = req.query;
+        switch (type) {
+            case 'authors':
+                searchAuthors(req, res);
+                break;
+            case 'books':
+                searchBooks(req, res);
+                break;
+            default:
+                return res.status(400).send({
+                    message: 'Specify a search type'
+                });
+        }
     }
-};
-
-export default { getSearchResult };
+}

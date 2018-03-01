@@ -1,5 +1,7 @@
 const Authors = require('../models').Author;
 const Books = require('../models').Book;
+const paginate = require('./paginate').paginate;
+const returnObject = require('./paginate').returnObject;
 
 module.exports = {
     create(req, res) {
@@ -18,20 +20,34 @@ module.exports = {
             })
             .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
     },
-    authorBooks(req, res) {
-        return Authors
-            .findAll({
-                include: [{
-                    model: Books,
-                    through: {
-                        attributes: []
-                    }
-                }]
-            })
-            .then(authors => res.status(200).send({
-                authors: authors
-            }))
-            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
+    getAuthors(req, res) {
+        const { count, page } = req.query;
+        const { authorId } = req.params
+        let { limit, offset } = paginate(page, count);
+        return Authors.findAll({
+            where: (
+                authorId ? { id: authorId } : {}
+            ),
+            limit,
+            offset,
+            order: [
+                ['id', 'ASC']
+            ],
+            include: {
+                model: Books
+            }
+        }).then((authors) => {
+            if (!authors || authors.length === 0) {
+                return res.status(200).send({
+                    message: 'Oops! No author exists in this collection'
+                });
+            }
+            return res.status(200).send(returnObject(authors, 'authors'))
+        }).catch(() => {
+            return res.status(500).send({
+                message: 'Internal Server Error'
+            });
+        });
     },
 
     update(req, res) {
@@ -61,23 +77,6 @@ module.exports = {
             })
             .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
     },
-    retrieveOne(req, res) {
-        return Authors
-            .find({
-                where: {
-                    id: req.params.authorId
-                },
-                include: [{
-                    model: Books,
-                    through: {
-                        attributes: []
-                    }
-                }]
-            })
-            .then(author => res.status(200).send({ author }))
-            .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
-    },
-
     delete(req, res) {
         return Authors
             .destroy({

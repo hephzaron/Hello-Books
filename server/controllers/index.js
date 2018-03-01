@@ -4,6 +4,7 @@ const genreController = require('./genreController');
 const authorController = require('./authorController');
 const ownerController = require('./ownerController');
 const borrowController = require('./borrowController');
+const searchController = require('./searchController');
 
 module.exports = {
     userController,
@@ -11,5 +12,6 @@ module.exports = {
     genreController,
     authorController,
     ownerController,
-    borrowController
+    borrowController,
+    searchController
 };

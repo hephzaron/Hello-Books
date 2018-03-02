@@ -176,5 +176,6 @@ module.exports = (app, passport) => {
         authorize.verifyUser,
         userController.retrieveOne);
     //allow user to search for book(s)/author(s) ?q=title&type=books||type=authors`
-    app.get(`/search`, searchController.getSearchResult);
+    app.get(`/search`,
+        searchController.getSearchResult);
 };

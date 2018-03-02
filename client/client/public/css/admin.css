@@ -1,0 +1,33 @@
+body {
+    background-color: -webkit-gradient(linear, left top, left bottom, from(#9CB071), to(#2B547E));
+    background-image: -webkit-linear-gradient(top, #9CB071, #2B547E);
+    background-image: -moz-linear-gradient(top, #9CB071, #2B547E);
+    background-image: linear-gradient(to bottom, #9CB071, #2B547E);
+}
+
+.img-icon {
+    height: 34px
+}
+
+.btn {
+    background-color: #737CA1;
+    color: white
+}
+
+.btn:hover {
+    background-color: #737CA1;
+    color: white
+}
+
+.form-control,
+.btn {
+    height: 40px
+}
+
+.row {
+    margin-top: 50px
+}
+
+#form-admin p {
+    display: inline-block
+}

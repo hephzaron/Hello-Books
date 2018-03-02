@@ -1,0 +1,6 @@
+{
+    "eslint.enable": true,
+    "eslint.run": "onType",
+    "tslint.enable": false,
+    "eslint.autoFixOnSave": true
+}

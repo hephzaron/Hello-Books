@@ -1,0 +1,172 @@
+h3 {
+    inline-size: 200px;
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder
+}
+
+.navbar {
+    background-color: #657383;
+    padding-bottom: 0px;
+    margin-bottom: 2px
+}
+
+.navbar #mem-val,
+.navbar #name-user,
+.navbar h3,
+.navbar h4 {
+    color: white
+}
+
+.dropdown-menu {
+    background-color: #657383
+}
+
+.navbar h4 {
+    border: 10px
+}
+
+.navbar #name-user:hover,
+.navbar h4:hover {
+    background-color: white;
+    color: #657383
+}
+
+.badge {
+    background-color: gold;
+    color: black
+}
+
+a {
+    font-size: 15px;
+    font-style: italic;
+}
+
+.img-icon {
+    height: 34px
+}
+
+.btn {
+    background-color: #737CA1;
+    color: white
+}
+
+.btn:hover {
+    background-color: #737CA1;
+    color: white
+}
+
+.form-control,
+.btn {
+    height: 40px
+}
+
+
+/* custom style for junmbotron elements*/
+
+.jumbotron {
+    padding-top: 70px;
+    padding-bottom: 5px;
+    margin-bottom: 0px
+}
+
+.jumbotron .badge {
+    background-color: #E77471
+}
+
+.jumbotron p {
+    font-size: 18px;
+    font-style: italic;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.jumbotron a {
+    margin-left: 40%;
+}
+
+.blue {
+    color: blue;
+    padding-left: 3px;
+    padding-top: 0px
+}
+
+.row .row-title,
+.row .row-author,
+.row .row-description {
+    border-bottom: 3px solid burlywood;
+    margin-left: 0px;
+}
+
+.col-md-1,
+.col-md-7 {
+    padding: 40px;
+    height: 200px;
+    background-color: blue
+}
+
+.col-md-4 h2 {
+    text-align: center
+}
+
+.col-md-4 .btn {
+    margin-left: 25%;
+}
+
+.col-md-4 {
+    margin-top: 0px;
+    margin-right: 0px;
+    border-right: 3px solid burlywood;
+    border-left: 3px solid burlywood;
+    border-bottom: 3px solid burlywood;
+    height: 500px;
+    background-color: white;
+    max-width: 400px;
+    min-width: 200px;
+    overflow-y: scroll;
+    padding-left: 0px;
+    padding-right: 0px
+}
+
+.just-padding {
+    padding: 15px;
+}
+
+.list-group.list-group-root {
+    padding: 0;
+    overflow: hidden;
+}
+
+.list-group.list-group-root .list-group {
+    margin-bottom: 0;
+}
+
+.list-group.list-group-root .list-group-item {
+    border-radius: 0;
+    border-width: 1px 0 0 0;
+}
+
+.list-group.list-group-root>.list-group-item:first-child {
+    border-top-width: 0;
+}
+
+.list-group.list-group-root>.list-group>.list-group-item {
+    padding-left: 30px;
+}
+
+.list-group.list-group-root>.list-group>.list-group>.list-group-item {
+    padding-left: 45px;
+}
+
+.list-group-item .glyphicon {
+    margin-right: 5px;
+}
+
+hr {
+    margin-top: 50px;
+}
+
+footer {
+    position: 100%
+}

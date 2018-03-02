@@ -1,0 +1,350 @@
+$font-stack: Cambria,
+Palatino,
+'Palatino Linotype',
+'Palatino LT STD',
+Georgia,
+serif;
+$font-size: 15px;
+$display: inline-block;
+$font-weight: bold;
+$border-radius: 0 0 5px 5px;
+$header-color: #342D7E;
+$border-color: rgba(0, 0, 0, 0.2);
+$border-size-before: 7px solid;
+$border-size-after: 6px solid;
+$before-triangle-height: -7px;
+$before-triangle-width: 9px;
+$after-triangle-width: -6px;
+$after-triangle-height: 10px;
+body {
+    font-family: $font-stack;
+    font-weight: 400;
+    background-image: url(../images/background.jpg);
+    font-size: $font-size;
+}
+
+%dropdown-menu-triangle-shared {
+    display: $display;
+    position: absolute;
+    content: '';
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin dropdown-menu-triangle-before($direction, $border-size) {
+    @extend %dropdown-menu-triangle-shared;
+    @if $direction=='up' {
+        bottom: $before-triangle-height;
+        right: $before-triangle-width;
+        border-top: $border-size #ccc;
+        border-left: $border-size transparent;
+        border-right: $border-size transparent;
+        border-bottom-color: $border-color;
+    }
+    @if $direction=='down' {
+        top: $before-triangle-height;
+        left: $before-triangle-width;
+        border-bottom: $border-size #ccc;
+        border-left: $border-size transparent;
+        border-right: $border-size transparent;
+        border-top-color: $border-color;
+    }
+    @if $direction=='right' {
+        left: $before-triangle-height;
+        bottom: $before-triangle-width;
+        border-right: $border-size #ccc;
+        border-bottom: $border-size transparent;
+        border-top: $border-size transparent;
+        border-left-color: $border-color;
+    }
+    @if $direction=='left' {
+        right: $before-triangle-height;
+        bottom: $before-triangle-width;
+        border-left: $border-size #ccc;
+        border-bottom: $border-size transparent;
+        border-top: $border-size transparent;
+        border-left-color: $border-color;
+    }
+}
+
+@mixin dropdown-menu-triangle-after($direction, $border-size) {
+    @extend %dropdown-menu-triangle-shared;
+    @if $direction=='up' {
+        bottom: $after-triangle-width;
+        right: $after-triangle-height;
+        border-top: $border-size #fff;
+        border-left: $border-size transparent;
+        border-right: $border-size transparent
+    }
+    @if $direction=='down' {
+        top: $after-triangle-width;
+        left: $after-triangle-height;
+        border-bottom: $border-size #fff;
+        border-left: $border-size transparent;
+        border-right: $border-size transparent
+    }
+    @if $direction=='right' {
+        left: $after-triangle-width;
+        bottom: $after-triangle-height;
+        border-right: $border-size #fff;
+        border-bottom: $border-size transparent;
+        border-top: $border-size transparent
+    }
+    @if $direction=='left' {
+        right: $after-triangle-width;
+        bottom: $after-triangle-height;
+        border-left: $border-size #fff;
+        border-bottom: $border-size transparent;
+        border-top: $border-size transparent
+    }
+}
+
+@each $direction in up,
+down,
+left,
+right {
+    .dropdown-menu-triangle-b-#{str-slice($direction,1,1)} {
+        &:before {
+            @include dropdown-menu-triangle-before($direction, $border-size-before);
+        }
+        &:after {
+            @include dropdown-menu-triangle-after($direction, $border-size-after);
+        }
+    }
+}
+
+.dropdown-menu-triangle-b-d {
+    &:before {
+        @include dropdown-menu-triangle-before('down', $border-size-before);
+    }
+    &:after {
+        @include dropdown-menu-triangle-after('down', $border-size-after);
+    }
+}
+
+form {
+    @include border-radius($border-radius);
+    font-family: $font-stack;
+    font-weight: 400;
+    font-size: $font-size;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: $border-radius rgb(130, 130, 233);
+    padding: 40px 10px 80px 10px;
+    background: white;
+    height: auto;
+}
+
+
+/*custom styling applicable to navigation bar and login/signup forms*/
+
+.navbar {
+    @include border-radius($border-radius);
+    color: rgb(127, 124, 124);
+    font-size: $font-size;
+    padding-bottom: 0px;
+    padding-top: 7px;
+    text-align: center;
+    border-top: 1px solid rgb(219, 229, 232);
+    background: rgb(225, 234, 235);
+    background: repeating-linear-gradient(-45deg, rgb(247, 247, 247), rgb(247, 247, 247) 15px, rgb(225, 234, 235) 15px, rgb(225, 234, 235) 30px, rgb(247, 247, 247) 30px);
+}
+
+.navbar-right {
+    margin-right: 20px;
+    margin-bottom: 0px
+}
+
+%header {
+    font-weight: $font-weight;
+    color: $header-color
+}
+
+h2 {
+    @extend %header;
+    text-align: center
+}
+
+h4 {
+    @extend %header;
+    font-size: 20px
+}
+
+.sr-only,
+.form-control {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: $font-size
+}
+
+
+/*custom styles for user home-page*/
+
+.row {
+    background-color: #6F4E37;
+    padding-bottom: 10px
+}
+
+.row p {
+    color: white
+}
+
+.route-container {
+    padding-top: 5%
+}
+
+.glyphicon-chevron-right {
+    font-size: $font-size
+}
+
+
+/**Custom style for statement component*/
+
+.statement {
+    background-color: blue;
+    height: 100%;
+    padding: 0px
+}
+
+.logo-crop {
+    background-color: white;
+    margin: 50px 50px 50px 10px;
+    padding: 20px;
+    color: blue
+}
+
+.header {
+    background-color: red;
+    margin: 10px 20% 10px 0px;
+    padding: 30px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: white
+}
+
+.statement-content {
+    padding-bottom: 100px
+}
+
+.header-1 {
+    float: right;
+    font-weight: $font-weight
+}
+
+.header-2 {
+    float: right;
+    color: black;
+    font-style: italic;
+    font-weight: $font-weight
+}
+
+.childrenClass {
+    padding: 10px;
+    margin: 0;
+    background-color: #6F4E37
+}
+
+
+/*Styling for custom list*/
+
+.list-item {
+    &:hover {
+        background-color: rgb(71, 68, 214);
+        color: white
+    }
+}
+
+
+/* Custom styling for modal component*/
+
+$height: 100%;
+$width: 100%;
+$border-radius: 4px;
+@mixin modal-common-div($zIndex) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: $zIndex;
+}
+
+.modal-content-div {
+    @include modal-common-div(10000);
+    &:after {
+        vertical-align: middle;
+        display: $display;
+        height: $height;
+        margin-left: -0.05em;
+        content: ' ';
+    }
+    overflow: auto;
+    text-align: center;
+    padding: 4px;
+    cursor: pointer
+}
+
+.modal-overlay-div {
+    @include modal-common-div(1000);
+    height: $height;
+    width: $width;
+    background-color: rgba(0, 0, 0, 0.65)
+}
+
+.modal-dialog-div {
+    text-align: left;
+    position: relative;
+    outline: 0;
+    width: auto;
+    display: $display;
+    vertical-align: middle;
+    box-sizing: border-box;
+    max-width: auto;
+    cursor: default;
+    border-radius: $border-radius;
+}
+
+.glyphicon-remove {
+    &:hover {
+        color: white;
+        background-color: rgba(39, 38, 38, 0.65);
+        padding: 2px;
+        border-radius: $width/2
+    }
+    float: right;
+    margin-top: 7px;
+    margin-right: 7px;
+}
+
+.inputfile {
+    opacity: 0;
+    &-box {
+        position: relative;
+        display: $display;
+        width: $width
+    }
+}
+
+#file {
+    float: left;
+    width: 0px;
+}
+
+.preview {
+    width: $width;
+    display: $display;
+    margin-bottom: 4px;
+    padding-bottom: 0px;
+    border: 2px solid rgb(151, 190, 223);
+    p {
+        float: right;
+        width: $width*0.7;
+        margin: 7px 10px 0px 2px
+    }
+}

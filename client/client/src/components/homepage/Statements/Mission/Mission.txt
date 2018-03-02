@@ -1,0 +1,8 @@
+<p id="p1">The Library�s mission is to provide comprehensive resources and services n support of research, teaching and learning. To fulfil this mission we are committed to:
+* Understand the research and learning need of the student;
+* Build all collections and create tools to support research, teaching and learning;
+* Provide access to and promote the discovery and use of local and external information ;resources;
+* Ensure the preservation of long lasting availability of Library collections and resources;
+* Collaborate with members to enrich the reading and learning community;
+* Advance local, national and international library and information initiatives;
+</p>

@@ -1,7 +1,13 @@
 module.exports = {
     paginate(page, count) {
-        let limit = count ? count : null
-        let offset = page ? (page - 1) * limit : 0
+        let re = /^[0-9]*$/;
+        if ((re.test(page) && re.test(count)) !== true) {
+            return {
+                errors: 'Invalid page or count'
+            }
+        }
+        let limit = count
+        let offset = (page - 1) * limit
         return {
             limit,
             offset

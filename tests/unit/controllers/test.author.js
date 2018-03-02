@@ -273,4 +273,77 @@ describe('FETCH Author Books', () => {
         });
         searchController.getSearchResult(request, response);
     });
+
+    //this should update author record
+    it('it should update author record', (done) => {
+        let request = httpMocks.createRequest({
+            method: 'POST',
+            params: { authorId: 1 },
+            body: {
+                firstName: 'Michael'
+            }
+        });
+
+        let response = httpMocks.createResponse({
+            eventEmitter: EventEmitter
+        });
+        response.on('send', () => {
+            try {
+                assert.equal(response._getStatusCode(), 200);
+                assert.equal(response._getData()['message'], `Michael ${authorData[0].lastName} record have been updated`)
+                assert.equal(response._getData()['updatedAuthor'].dataValues.firstName, 'Michael');
+                assert.equal(response._getData()['updatedAuthor'].dataValues.lastName, authorData[0].lastName);
+                assert.deepEqual(Object.keys(response._getData()['updatedAuthor'].dataValues), ['id', 'firstName', 'lastName', 'dateOfBirth', 'dateOfDeath', 'createdAt', 'updatedAt']);
+                assert.deepEqual(typeof(response), 'object');
+                done();
+            } catch (e) { console.log(e); }
+        });
+        authorController.update(request, response);
+    });
+
+    // it should delete author record
+    it('it should delete author', (done) => {
+        let request = httpMocks.createRequest({
+            method: 'DELETE',
+            params: { authorId: 1 },
+            body: {}
+        });
+
+        let response = httpMocks.createResponse({
+            eventEmitter: EventEmitter
+        });
+        response.on('send', () => {
+            try {
+                assert.equal(response._getStatusCode(), 200);
+                assert.equal(response._getStatusMessage(), 'OK');
+                assert.deepEqual(response._getData()['message'], 'Author removed successfully');
+                done();
+            } catch (e) { console.log(e); }
+
+        });
+        authorController.delete(request, response);
+    });
+    //attept to delete book the second time should throw an error author not found
+    it('it should throw an error on second delete-Author not found', (done) => {
+        let request = httpMocks.createRequest({
+            method: 'DELETE',
+            params: { authorId: 1 },
+            body: {}
+        });
+
+        let response = httpMocks.createResponse({
+            eventEmitter: EventEmitter
+        });
+        response.on('send', () => {
+            try {
+                assert.equal(response._getStatusCode(), 404);
+                assert.equal(response._getStatusMessage(), 'OK');
+                assert.deepEqual(response._getData()['message'], 'Author not found');
+                done();
+            } catch (e) { console.log(e); }
+
+        });
+        authorController.delete(request, response);
+    });
+
 });

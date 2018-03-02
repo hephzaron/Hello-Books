@@ -215,7 +215,7 @@ describe('/POST book', () => {
             });
     }).timeout(5000);
 });
-describe('/POST Author', () => {
+describe('/POST, /PUT Author', () => {
     //Let Admin be able to create Author list after login
     it('admin should be able to create authors after login', (done) => {
         let author = {
@@ -240,6 +240,28 @@ describe('/POST Author', () => {
                 //ensure setter methods for full name and lifesapn work
                 res.body['author'].fullName.should.not.be.empty;
                 res.body['author'].should.have.property('lifeSpan').to.not.be.NaN;
+                done();
+            });
+    }).timeout(5000);
+
+    let updatedAuthor = {
+        firstName: 'Phileo',
+        dateOfDeath: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+    };
+    const authorId = 1;
+
+    it('it should update author record in database', (done) => {
+        agent.put(`/authors/${authorId}`)
+            .set({ 'x-access-token': token })
+            .send(updatedAuthor)
+            .end((err, res) => {
+                console.log(res.body)
+                res.should.have.status(200);
+                should.not.exist(err);
+                res.type.should.equal('application/json');
+                res.body['message'].should.equal(`${updatedAuthor.firstName} Parker record have been updated`);
                 done();
             });
     }).timeout(5000);
@@ -280,7 +302,7 @@ describe('PUT /books/:bookId', () => {
 
         Author.find({
             where: {
-                firstName: 'Nelkon'
+                lastName: 'Parker'
             }
         }).then((author) => {
 
@@ -317,3 +339,19 @@ describe('PUT /books/:bookId', () => {
     }).timeout(5000);
 
 });
+
+describe('DELETE Author', () => {
+    let authorId = 1
+    it('it should delete author from database', (done) => {
+        agent.del(`/authors/${authorId}`)
+            .set({ 'x-access-token': token })
+            .end((err, res) => {
+
+                res.should.have.status(200);
+                should.not.exist(err);
+                res.type.should.equal('application/json');
+                res.body['message'].should.equal('Author removed successfully');
+                done();
+            });
+    }).timeout(5000);
+})

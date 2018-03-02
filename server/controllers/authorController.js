@@ -63,14 +63,14 @@ module.exports = {
                         message: 'Author does not exist'
                     });
                 }
-                authors.update({
+                return authors.update({
                         firstName: req.body.firstName || authors.firstName,
                         lastName: req.body.lastName || authors.lastName,
                         dateOfBirth: req.body.dateOfBirth || authors.dateOfBirth,
                         dateOfDeath: req.body.dateOfDeath || authors.dateOfDeath
                     })
                     .then(updatedAuthor => res.status(200).send({
-                        message: `${updatedAuthor.fullName} record has been updated`,
+                        message: `${updatedAuthor.fullName} record have been updated`,
                         updatedAuthor
                     }))
                     .catch(() => res.status(500).send({ message: 'Internal Server Error' }));

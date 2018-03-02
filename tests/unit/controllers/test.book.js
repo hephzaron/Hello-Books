@@ -264,7 +264,7 @@ describe('BOOK', () => {
     // user should be able to delete a book
     it('it should delete book', (done) => {
         let request = httpMocks.createRequest({
-            method: 'GET',
+            method: 'DELETE',
             params: { bookId: 1 },
             body: {}
         });
@@ -286,7 +286,7 @@ describe('BOOK', () => {
     //attept to delete book the second tie should throw an error book not found
     it('it should throw an error on second delete-Book not found', (done) => {
         let request = httpMocks.createRequest({
-            method: 'GET',
+            method: 'DELETE',
             params: { bookId: 1 },
             body: {}
         });

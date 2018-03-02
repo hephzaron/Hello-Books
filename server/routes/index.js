@@ -23,23 +23,6 @@ module.exports = (app, passport) => {
         function(req, res) {
             res.render('index.ejs'); // load the index.ejs file
         });
-
-    // route for showing the profile page
-    app.get('/profile',
-        isLoggedIn.isLoggedIn,
-        function(req, res) {
-            res.render('profile.ejs', {
-                user: req.user // get the user out of session and pass to template
-            });
-        });
-
-    // route for logging out
-    app.get('/logout',
-        function(req, res) {
-            req.logout();
-            res.redirect('/');
-        });
-
     // =====================================
     // GOOGLE ROUTES =======================
     // =====================================
@@ -73,12 +56,6 @@ module.exports = (app, passport) => {
             failureRedirect: '/'
         }));
 
-
-    // get login page
-    app.get('/login',
-        function(req, res) {
-            res.render('login.ejs', { message: 'test' });
-        });
     //route to recover password
     app.post('/users/forgot_password',
         forgotPassword);

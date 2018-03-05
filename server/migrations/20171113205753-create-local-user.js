@@ -5,8 +5,10 @@ module.exports = {
             id: {
                 allowNull: false,
                 autoIncrement: true,
-                primaryKey: true,
                 type: Sequelize.INTEGER
+            },
+            uuid: {
+                type: Sequelize.UUID
             },
             username: {
                 type: Sequelize.STRING,
@@ -32,6 +34,14 @@ module.exports = {
             hash: {
                 type: Sequelize.STRING,
                 allowNull: false
+            },
+            resetPasswordToken: {
+                type: Sequelize.STRING,
+                allowNull: true
+            },
+            resetPasswordExpires: {
+                type: Sequelize.INTEGER,
+                allowNull: true
             },
             createdAt: {
                 allowNull: false,

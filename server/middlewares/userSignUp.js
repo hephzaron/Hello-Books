@@ -43,7 +43,7 @@ module.exports = {
                     res.status(409).send({ message: 'username already exist' });
                 }
             }
-        ).catch(() => res.status(500).send({ message: 'Internal Server Error' }));
+        ).catch((errors) => res.status(500).send({ message: 'Internal Server Error', errors }));
 
     }
 

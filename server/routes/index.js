@@ -62,8 +62,7 @@ module.exports = (app, passport) => {
 
     // route for password reset link from user email with query ?token= user-token
     app.post('/auth/reset_password',
-        resetPassword,
-        (req, res) => res.redirect('/users/change_password'));
+        resetPassword);
     //route for changing userPassword
     app.put('/users/change_password',
         newPassword.verifyUser,

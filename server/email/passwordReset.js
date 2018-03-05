@@ -7,55 +7,80 @@ const LocalUser = require('../models').LocalUser;
 const generateJWT = require('../middlewares/authorize').generateJWT;
 let httpMocks = require('node-mocks-http');
 let EventEmitter = require('events').EventEmitter;
+let random;
 
 function generateRandom() {
     return crypto.randomBytes(20, (err, buffer) => {
-        let random = buffer.toString('hex');
-        return random;
+        random = buffer.toString('hex');
     });
-
 }
 
 function forgotPassword(req, res) {
-    return User.findOne({ where: { email: req.body.email } }).then(user => {
+    return User.findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(user => {
         if (!user) {
-            res.status(404).send({ message: 'User does not exist' });
+            res.status(404).send({
+                message: 'User does not exist'
+            });
         }
         let userEmail = user.email;
-        let now = new Date();
-        let resetToken = generateRandom();
-        let tokenExpire = Math.floor(new Date().getTime() / 1000) + (10 * 60); //token expire in 10minutes
+        const resetToken = generateRandom();
+        const tokenExpire = Math.floor(new Date().getTime() / 1000) + (15 * 60); //token expire in 10minutes
         if (resetToken) {
             const baseURL = 'https://hi-lib.herokuapp.com/api/v1';
             let data = {
                 username: user.username,
-                url: `${baseURL}/auth/reset_password?token=${resetToken}`,
-                date: now
+                url: `${baseURL}/auth/reset_password?token=${random}`,
+                date: Date()
             };
-            return LocalUser.findOne({ where: { email: user.email } }).then((localuser) => {
+            return LocalUser.findOne({
+                where: {
+                    email: user.email
+                }
+            }).then((localuser) => {
                 if (!localuser) {
-                    res.status(404).send({ message: 'User does not exist' });
+                    res.status(404).send({
+                        message: 'User does not exist'
+                    });
                 }
-                if (localuser) {
-                    return LocalUser.update({
-                        resetPasswordToken: resetToken,
-                        resetPasswordExpires: tokenExpire
-                    }).then(() => {
-                        res.status(200).send({ message: 'Check your email for the reset link' });
-                        sendEmail(userEmail, tempdir, data, 'Reset your password');
-                    }).catch(err => { throw err; });
-                }
-            });
+                return localuser.update({
+                    resetPasswordToken: random,
+                    resetPasswordExpires: tokenExpire
+                }).then(() => {
+                    sendEmail(userEmail, tempdir, data, 'Reset your password');
+                    console.log(Math.floor(new Date().getTime() / 1000) + (15 * 60))
+                    return res.status(200).send({
+                        message: `Password reset link sent to ${userEmail}`
+                    });
+                }).catch(() => {
+                    res.status(500).send({
+                        message: 'Internal Server Error '
+                    })
+                });
+            }).catch(() => {
+                res.status(500).send({
+                    message: 'Internal Server Error'
+                })
+            })
         }
-    });
+    }).catch(() => {
+        res.status(500).send({
+            message: 'Internal Server Error'
+        })
+    })
 
 }
 
-function resetPassword(req, res, next) {
+function resetPassword(req, res) {
     let resetToken = req.query.token;
-    let now = Math.floor(new Date().getTime() / 1000);
+    let now = Math.floor(new Date().getTime() / 1000)
     if (!resetToken) {
-        res.send('Token invalid or expired').redirect(303, '/signin');
+        return res.status(403).send({
+            message: 'You are not authorize to perform this action'
+        })
     }
     if (resetToken) {
         return LocalUser.findOne({
@@ -65,33 +90,47 @@ function resetPassword(req, res, next) {
             }
         }).then((user) => {
             if (!user) {
-                res.status(401).send({ message: 'Token invalid or expired' });
+                return res.status(401).send({
+                    message: 'Token invalid or expired'
+                });
             }
             if (user) {
-                let req = httpMocks.createRequest({
+                let request = httpMocks.createRequest({
                     method: 'POST',
                     params: {},
                     body: {
                         username: user.username
                     }
                 });
-                let res = httpMocks.createResponse({
+                let response = httpMocks.createResponse({
                     eventEmitter: EventEmitter
                 });
-                res.once('send', () => {
-                    let token = res._getData().token;
-                    if (token) {
-                        next();
+                response.once('send', () => {
+                    try {
+                        let user = response._getData()['user'];
+                        if (user) {
+                            return res.status(200).send({
+                                message: 'Password reset successful, you can now change your password',
+                                user
+                            });
+                        }
+
+                    } catch (e) {
+                        return res.status(200).send({
+                            message: 'Token invalid or expired'
+                        });
                     }
                 });
-                generateJWT(req, res);
+                generateJWT(request, response);
             }
-
         }).catch(() => {
-            res.status(500).send({ message: 'Internal Server Error' });
-        });
+            return res.status(500).send({
+                message: 'Internal Server Error'
+            })
+        })
     }
 }
+
 
 exports.forgotPassword = forgotPassword;
 exports.resetPassword = resetPassword;

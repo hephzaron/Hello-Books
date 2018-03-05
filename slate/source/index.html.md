@@ -13,6 +13,7 @@ includes:
   - genres
   - authors
   - books
+  - paginate
   - borrowedBook
   - authorBook
   - errors

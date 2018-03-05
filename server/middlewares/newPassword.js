@@ -25,13 +25,14 @@ function changePassword(req, res) {
     let username = decoded.username;
     return LocalUsers.findOne({ where: { username: username } }).then(user => {
         if (!user) {
-            res.redirect(303, '/signin');
+            return res.status(404).send({
+                message: 'User does not exist'
+            });
         } else if (user) {
             let newPassword = req.body.newPassword;
             let confirmPassword = req.body.confirmPassword;
 
             if (newPassword === confirmPassword) {
-                console.log(confirmPassword);
                 return user.update({
                     setPassword: confirmPassword
                 }).then(() => {

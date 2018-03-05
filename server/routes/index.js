@@ -161,7 +161,7 @@ module.exports = (app, passport) => {
         borrowController.create);
 
     // list all borrowed book by users
-    app.get('/books/users',
+    app.get('/borrowed-books/users',
         authorize.verifyUser,
         userController.userBooks);
 

@@ -63,14 +63,14 @@ module.exports = {
 
             return LocalUsers.findOne({ where: { username: decoded.username } }).then((user) => {
                 if (!user) {
-                    res.status(401).send({ message: 'Token invalid or expired-user not found' });
+                    return res.status(401).send({ message: 'Token invalid or expired-user not found' });
                 }
                 next();
             }).catch(() => {
-                res.status(500).send({ message: 'Internal Server Error' });
+                return res.status(500).send({ message: 'Internal Server Error' });
             });
         } catch (e) {
-            res.status(401).send({ message: 'Token invalid or expired-user not found' });
+            return res.status(401).send({ message: 'Token invalid or expired-user not found' });
         }
 
     },
@@ -83,14 +83,14 @@ module.exports = {
 
             let decoded = jwt.decode(token, secret, { algorithm: 'HS256' });
             if (decoded === null) {
-                res.status(401).send({ message: 'Your session has expired. Please try logging in again' });
+                return res.status(401).send({ message: 'Your session has expired. Please try logging in again' });
 
             } else if (decoded.admin === false) {
-                res.status(403).send({ message: 'You are not authorized to perform this action' });
+                return res.status(403).send({ message: 'You are not authorized to perform this action' });
             } else if (decoded.admin === true) {
                 next();
             }
-        } catch (e) { res.status(500).send({ message: 'Internal Server Error' }); }
+        } catch (e) { return res.status(500).send({ message: 'Internal Server Error' }); }
     },
 
     logout: function(req, res) {

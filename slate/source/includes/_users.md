@@ -58,51 +58,61 @@ This endpoint sends a reset password link to the user associated with the provid
 
 ### HTTP Request
 
-`POST '/users/forgot_password'`
+`POST /users/forgot_password`
 
 ### HTTP Response
 
 `200 OK`
 
-## Change password on reset
+## Validate reset link
 
 > Request body
 
 ```javascript
-{
-  "email": "johndoe@email.com",
-  "password": "new password",
-  "confirmPassword": "new password",
-  "validationKey": "dfghjkhg32ft4678u9dihbrfvbi3r"
-}
+{}
 ```
 
 > Response body (application/json)
 
 ```javascript
 {
-  "message": "Password successfully changed. Please login to your account."
+  "message": "Password reset successful, you can now change your password",
+  "user": {
+    "username": "username12",
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "userId": 1,
+    "admin": false
+  }
 }
 ```
 
-This endpoint changes a user's password after the user has click on the reset password link
+This endpoint validates the reset link after the user has click on the reset password link and redirects user to change password
 
 ### HTTP Request
 
-`POST /users/reset-password/verify`
+`POST /auth/reset-password/`
 
 ### HTTP Response
 
 `200 OK`
 
-## Change password in profile
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+token | undefined | The reset token sent to user email
+
+<aside class="notice">
+The query parameter<code>token=ab653dbf704d6f70ec466a8b4395d4d8220dd...</code> is a randomly generates number
+</aside>
+
+## Change password 
 
 > Request body
 
 ```javascript
 {
-  "oldPassword": "old password",
-  "password": "new password",
+  "newPassword": "new password",
   "confirmPassword": "new password"
 }
 ```
@@ -111,15 +121,15 @@ This endpoint changes a user's password after the user has click on the reset pa
 
 ```javascript
 {
-  "message": "Your password has been changed successfully"
+  "message": "Password change successful, please login to your account"
 }
 ```
 
-This endpoint is for authenticated users to changes their password
+This endpoint is for authenticated users to change their password
 
 ### HTTP Request
 
-`PUT /users/:userId`
+`PUT /users/change_password`
 
 ### HTTP Response
 
@@ -137,24 +147,63 @@ This endpoint is for authenticated users to changes their password
 
 ```javascript
 {
-  "users": [
+  "allUsers": [
     {
-      "createdAt": "2017-12-11T16:27:39.497Z"
-      "email": "johndoe@email.com"
-      "id": 1
-      "name": "John Doe"
-      "updatedAt": "2017-12-11T16:27:39.497Z"
-      "userRank": "beginner"
-    }
+      "id": 1,
+      "userId": "aeeb4adc-d1aa-4cc4-8941-d4f2425b00b1",
+      "username": "username",
+      "email": "myemail@email.com",
+      "admin": false,
+      "memValue": "platinum",
+      "createdAt": "2018-03-04T15:38:11.476Z",
+      "updatedAt": "2018-03-04T15:38:11.476Z"
+    },
+    ...
   ]
 }
 ```
 
-This endpoint gets all users or a particular user by id
+This endpoint gets all users 
 
 ### HTTP Request
 
-`GET /users/[,:userId]`
+`GET /users`
+
+### HTTP Response
+
+`200 OK`
+
+
+## Get a single user
+
+> Request body
+
+```javascript
+{ }
+```
+
+> Response body (application/json)
+
+```javascript
+{
+  "user": {
+    "id": 1,
+    "userId": "aeeb4adc-d1aa-4cc4-8941-d4f2425b00b1",
+    "username": "username",
+    "email": "myemail@email.com",
+    "admin": false,
+    "memValue": "platinum",
+    "createdAt": "2018-03-04T15:38:11.476Z",
+    "updatedAt": "2018-03-04T15:38:11.476Z"
+  }
+}
+```
+
+This endpoint gets a single user 
+
+### HTTP Request
+
+`GET /users/:userId`
 
 ### HTTP Response
 

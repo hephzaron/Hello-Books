@@ -22,7 +22,7 @@ function forgotPassword(req, res) {
         }
     }).then(user => {
         if (!user) {
-            res.status(404).send({
+            return res.status(404).send({
                 message: 'User does not exist'
             });
         }
@@ -42,7 +42,7 @@ function forgotPassword(req, res) {
                 }
             }).then((localuser) => {
                 if (!localuser) {
-                    res.status(404).send({
+                    return res.status(404).send({
                         message: 'User does not exist'
                     });
                 }
@@ -51,23 +51,22 @@ function forgotPassword(req, res) {
                     resetPasswordExpires: tokenExpire
                 }).then(() => {
                     sendEmail(userEmail, tempdir, data, 'Reset your password');
-                    console.log(Math.floor(new Date().getTime() / 1000) + (15 * 60))
                     return res.status(200).send({
                         message: `Password reset link sent to ${userEmail}`
                     });
                 }).catch(() => {
-                    res.status(500).send({
+                    return res.status(500).send({
                         message: 'Internal Server Error '
                     })
                 });
             }).catch(() => {
-                res.status(500).send({
+                return res.status(500).send({
                     message: 'Internal Server Error'
                 })
             })
         }
     }).catch(() => {
-        res.status(500).send({
+        return res.status(500).send({
             message: 'Internal Server Error'
         })
     })
@@ -76,7 +75,7 @@ function forgotPassword(req, res) {
 
 function resetPassword(req, res) {
     let resetToken = req.query.token;
-    let now = Math.floor(new Date().getTime() / 1000)
+    let now = Math.floor(new Date().getTime() / 1000) - (60 * 60)
     if (!resetToken) {
         return res.status(403).send({
             message: 'You are not authorize to perform this action'

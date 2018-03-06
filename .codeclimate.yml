@@ -37,3 +37,5 @@ exclude_paths:
 - "server/dist/"
 - "server/migrations/"
 - "server/seeders/"
+- "slate"
+- "client"

@@ -1,7 +1,8 @@
-This can be applied to 
-- Search api <code>`GET /search`</code>
-- Get books api <code>`GET /books`</code>
-- Get authors api <code>`GET /authors`</code>
+This can be applied to:
+
+*Search api <code>`GET /search`</code>*
+*Get books api <code>`GET /books`</code>*
+*Get authors api <code>`GET /authors`</code>*
 
 <aside class="notice">
  This offers user the flexibility of <code>fetching or searching books/authors</code> record in batches

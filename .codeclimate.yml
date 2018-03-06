@@ -38,4 +38,6 @@ exclude_paths:
 - "server/migrations/"
 - "server/seeders/"
 - "slate"
+- "tmp"
+- "views"
 - "client"

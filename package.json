@@ -33,7 +33,9 @@
             "server/middlewares/membershipVal.js",
             "server/middlewares/isLoggedIn.js",
             "server/middlewares/bookCount.js",
-            "server/middlewares/newPassword.js"
+            "server/middlewares/newPassword.js",
+            "client/**/**.js",
+            "slate/**/**.js"
         ]
     },
     "cacheDirectories": [

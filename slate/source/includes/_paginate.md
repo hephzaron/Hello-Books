@@ -1,3 +1,5 @@
+# Paginate
+
 This can be applied to:
 
 *Search api <code>`GET /search`</code>*

@@ -6,6 +6,8 @@ This can be applied to:
 *Get books api <code>`GET /books`</code>*
 *Get authors api <code>`GET /authors`</code>*
 
+## Paginate book records
+
 <aside class="notice">
  This offers user the flexibility of <code>fetching or searching books/authors</code> record in batches
 </aside>

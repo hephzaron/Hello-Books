@@ -64,7 +64,7 @@ export const bookDeleted = (book) => ({
  * @returns  {object} action creator
  */
 export const booksSearched = result => ({
-    type: 'BOOKS_SERACHED',
+    type: 'BOOKS_SEARCHED',
     result
 })
 
@@ -299,9 +299,9 @@ export const uploadBookAssets = (bookAssets) => (
         Promise.reject(error.message));
 )
 
-export const searchBooks = title =>
+export const searchBooks = (title, page) =>
     dispatch =>
-    axios.get(`/search?q=${encodeURIComponent(title)}&type=books`)
+    axios.get(`/search?q=${encodeURIComponent(title)}&type=books&count=20&page=${page}`)
     .then(response => {
         dispatch(booksSearched(response.data.books));
         return response;

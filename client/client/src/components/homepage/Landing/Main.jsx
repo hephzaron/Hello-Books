@@ -17,7 +17,8 @@ import ChangePassword from 'HomePage/ChangePassword/ChangePasswordForm';
 import ResetPassword from 'HomePage/ResetPassword/ResetPasswordForm';
 import ServiceDropdown from './DropdownMenu';
 import  ModalContainer  from 'Components/Modal';
-import logo from 'Public/images/logo.png'
+import logo from 'Public/images/logo.png';
+import Header from 'General/Header'
 
 /**
  * @description Renders the Landing page on user visit to site
@@ -67,31 +68,8 @@ class Main extends Component {
     return(
       <Router>
         <div>
-          <nav className="navbar navbar-default">
-            <div className= "container-fluid">
-              <div  className="navbar-header">
-                <button type="button" className="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar">
-                  <span className="sr-only">Toggle navigation</span>
-                  <span className="icon-bar"></span>
-                  <span className="icon-bar"></span>
-                  <span className="icon-bar"></span>
-                </button>
-              </div>
-              <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-l">
-              <div className="navbar-left">
-              {/**<div style={{
-                width:'50px', 
-                height:'50px',
-                margin:'0px',
-                float:'left',
-                overflow:'hidden'}}>
-                <img src={logo} width="130px" height="100px" />
-              </div>    **/}
-                <h4 style={{float:'right'}}>
-                  {`Welcome to HiLib  `}
-                  <span style= {{marginLeft:'100px'}}></span>
-                </h4>
-              </div>
+          <Header 
+              heading= "Welcome to HiLIB">
                 <ServiceDropdown/>
                 <ul className="nav navbar-right navbar-nav " id="navbar">
                   <li><NavLink exact to = "/" activeStyle={selected} > Home</NavLink></li>
@@ -99,9 +77,7 @@ class Main extends Component {
                   <li><NavLink exact to = "/register" activeStyle={selected}>Register</NavLink></li>
                   <li><NavLink exact to = "/api-docs" activeStyle={selected}>API Docs</NavLink></li>
                 </ul>
-              </div>
-            </div>
-          </nav>
+           </Header>
           <Route exact path="/" component= {this.MyHomePage} />
           <div className="route-container">
           <Route exact path="/signin" component= {Signin}/>

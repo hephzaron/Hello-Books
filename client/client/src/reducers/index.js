@@ -7,6 +7,7 @@ import authors from './authors';
 import books from './books';
 import borrowedReturn from './borrowedReturn';
 import genres from './genres';
+import centerPage from './centerPage';
 
 const reducers = combineReducers({
     flashMessage,
@@ -16,7 +17,8 @@ const reducers = combineReducers({
     authors,
     books,
     genres,
-    borrowedReturn
+    borrowedReturn,
+    centerPage
 });
 
 export default reducers;

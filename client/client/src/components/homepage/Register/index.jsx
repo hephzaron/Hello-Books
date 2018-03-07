@@ -71,7 +71,7 @@ class Register extends Component {
   }
 
   /**
-   * @description This submiits user form on valid entries
+   * @description This submits user form on valid entries
    * @param {object} event - event handler
    * @returns {undefined}
    * @memberof Register

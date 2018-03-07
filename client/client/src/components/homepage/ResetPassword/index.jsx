@@ -52,7 +52,6 @@ class PasswordResetModal extends Component {
     if(!this.isFormValid()){
       return;
     }
-    alert(this.state.user.email);
     this.setState({isLoading:true});
     this.props.resetPasswordAction(this.state.user).then(
       (data) => {

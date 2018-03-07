@@ -27,6 +27,9 @@ export const initialBorrowedReturnState = {
     userBooks: [],
     returnedBooks: []
 }
+export const initialCenterPageState = {
+    pageType: null
+}
 
 export default {
     initialAuthState,

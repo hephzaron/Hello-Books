@@ -26,6 +26,12 @@ const SingleInput = (props) => (
       onChange={props.onChange}
       value = {props.value}
     />
+    {
+      props.iconClass &&
+    <span 
+      className={classnames(`btn btn-default glyphicon ${props.iconClass}`)}
+      onClick = {props.onIconClick}></span>
+    }
   </div>
 );
 
@@ -36,7 +42,8 @@ SingleInput.propTypes = {
   label: PropTypes.string,
   onChange: PropTypes.func,
   containerClass: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  iconClass: PropTypes.string
 };
 
 SingleInput.defaultProps = {

@@ -71,25 +71,25 @@ export const fetchPage = (page, items, onPageChange) => (
     }
 )
 
-export const getPager = (totalItems, currentPage = 1, pageSize = 10) => {
+export const getPager = (totalItems, currentPage = 1, pageSize = 5) => {
     //calculate total pages
     let totalPages = Math.ceil(totalItems / pageSize);
     let startPage, endPage;
-    if (totalPages <= 10) {
-        //less than 10 total pages show all
+    if (totalPages <= 5) {
+        //less than 5 total pages show all
         startPage = 1;
         endPage = totalPages;
     } else {
-        //more than 10 total pages, calculate start and end pages
-        if (currentPage <= 6) {
+        //more than 5 total pages, calculate start and end pages
+        if (currentPage <= 3) {
             startPage = 1;
-            endPage = 10;
-        } else if (currentPage + 4 >= totalPages) {
-            startPage = totalPages - 9;
-            endPage = currentPage + 4;
+            endPage = 5;
+        } else if (currentPage + 2 >= totalPages) {
+            startPage = totalPages - 4;
+            endPage = currentPage + 2;
         } else {
-            startPage = currentPage - 5;
-            endPage = currentPage + 4
+            startPage = currentPage - 2;
+            endPage = currentPage + 2
         }
     }
 

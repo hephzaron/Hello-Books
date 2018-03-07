@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Pagination from '../general/Pagination';
+import Card from '../Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-class Paginate extends Component {
-    constructor() {
-        super();
- 
-        // an example array of items to be paged
-        const exampleItems = _.range(1, 151).map(i => { return { id: i, name: 'Item ' + i }; });
- 
+class SearchPage extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
-            exampleItems: exampleItems,
             pageOfItems: []
-        };
- 
+        }
+
         this.onPageChange = this.onPageChange.bind(this);
     }
  
@@ -23,28 +20,37 @@ class Paginate extends Component {
     }
  
     render() {
+      const { books } = this.props
         return (
             <div>
                 <div className="container">
                     <div className="text-center">
-                        <h1>React - Pagination Example with logic like Google</h1>
-                        {this.state.pageOfItems.map(item =>
-                            <div key={item.id}>{item.name}</div>
+                        <h1>Search results</h1>
+                        {
+                            this.state.pageOfItems.map(item =>
+                            <MuiThemeProvider>
+                                <Card book = { item }/>
+                            </MuiThemeProvider>
                         )}
                         <Pagination 
-                            items={this.state.exampleItems} 
+                            items={ books } 
                             onPageChange={this.onPageChange} />
                     </div>
                 </div>
                 <hr />
                 <div className="credits text-center">
                     <p>
-                        <a href="http://jasonwatmore.com" target="_top">JasonWatmore.com</a>
+                     {`${books.length >= 1 ? books.length : 'No'} books found`}
                     </p>
                 </div>
             </div>
         );
     }
 }
- 
-export default Paginate;
+
+const mapStateToProps = (state) => ({
+  books: state.books['books']
+});
+
+export { SearchPage }
+export default connect(mapStateToProps)(SearchPage)

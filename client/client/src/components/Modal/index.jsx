@@ -35,7 +35,6 @@ const propTypes = {
  */
 class ModalContainer extends Component {
   render(){
-    console.log(this.props.modalType);
       if(!this.props.modalType){
         return null
       }

@@ -142,5 +142,8 @@ module.exports = {
         contentBase: '/client/public',
         port: PORT
     },
+    node: {
+        fs: "empty"
+    },
     devtool: setDevTool()
 }

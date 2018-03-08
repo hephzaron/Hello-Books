@@ -14,9 +14,7 @@ class Search extends Component {
   constructor(props){
     super(props);
     this.state = {
-      items:{
-        search:''
-      },
+      searchItem: '',
       isLoading: false
     }
 
@@ -48,7 +46,7 @@ class Search extends Component {
     return(
       <CustomSearch
         onChange = { this.onChange }
-        search = { this.state.search }
+        searchItem = { this.state.searchItem }
         onIconClick = { this.onIconClick }/>
     )
   }

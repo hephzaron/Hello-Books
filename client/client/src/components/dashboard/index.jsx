@@ -9,7 +9,7 @@ import $ from 'jquery';
 import PropTypes from 'prop-types';
 import Header from 'General/Header';
 import CenterPage from './CenterPage';
-//import Search from './Search';
+import Search from './Search';
 import Sidebar from './Sidebar';
 
 /**
@@ -38,7 +38,7 @@ class Dashboard extends Component {
         <div>
           <Header 
               heading= "HiLIB Administrator">
-              {/**<Search/>**/}
+              <Search/>
            </Header>
            <Sidebar/>
            <CenterPage/>

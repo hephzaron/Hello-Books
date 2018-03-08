@@ -21,7 +21,7 @@ const SingleInput = (props) => (
       id={props.identifier}
       type={props.type}
       name = {props.name}
-      className={classnames('form-control')}
+      className={classnames(`form-control ${props.inputClass}`)}
       placeholder={props.placeholder}
       onChange={props.onChange}
       value = {props.value}
@@ -43,7 +43,8 @@ SingleInput.propTypes = {
   onChange: PropTypes.func,
   containerClass: PropTypes.string,
   value: PropTypes.string,
-  iconClass: PropTypes.string
+  iconClass: PropTypes.string,
+  inputClass: PropTypes.string
 };
 
 SingleInput.defaultProps = {

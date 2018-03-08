@@ -1,4 +1,9 @@
 node_modules/
+package.json
+package-lock.json
+client/node_modules
+client/package.json
+client/package-lock.json
 tmp/middlewares-test/
 server/email/sendEMail.js
 check.js

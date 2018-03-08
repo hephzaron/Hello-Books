@@ -13,6 +13,24 @@ class Sidebar extends Component {
     $(".admin-sidebar btn").removeClass("dropdown-menu")
   }
 
+  componentWillMount(){
+  }
+  componentDidMount(){
+    $(".btn-l").click(()=>{
+      if($(".btn-r").hasClass("active")&&!$(".btn-l").hasClass("active")){
+        $(".btn-r").removeClass('active');
+        $(".btn-l").addClass("active")
+      }
+    });
+    
+    $(".btn-r").click(()=>{
+      if($(".btn-l").hasClass('active')&&!$(".btn-r").hasClass("active")){
+        $(".btn-l").removeClass('active');
+        $(".btn-r").addClass("active")
+      }
+    })
+  }
+
   onClickCreate(event){
     alert('you click me')
   }

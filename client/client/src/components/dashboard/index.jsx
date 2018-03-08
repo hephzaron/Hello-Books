@@ -28,15 +28,7 @@ class Dashboard extends Component {
     }
   }
 
-  componentDidMount(){  
-    $(".dropdown-toggle").hover(()=>{
-        $(".dropdown-menu").show()
-    },(event)=>{
-      let target = $(event.target);
-      if(target.is(".dropdwown-menu")){
-        $(".dropdown-menu").hide()
-      }
-    })
+  componentDidMount(){ 
     this.setState({isLoading:false})
   }
   render(){
@@ -46,6 +38,7 @@ class Dashboard extends Component {
         <div>
           <Header 
               heading= "HiLIB Administrator">
+              {/**<Search/>**/}
            </Header>
            <Sidebar/>
            <CenterPage/>

@@ -11,7 +11,7 @@ const CustomSidebar = (props) => (
     <div id="wrapper">
       <div className="scrollbar" id="style-default">
         <div className="sidebar-toggle-button">
-          <span className="btn btn-default btn-l">Books</span>
+          <span className="btn btn-default btn-l active">Books</span>
           <span className="btn btn-default btn-r">Borrowed Books</span>
         </div>
         <div className="force-overflow"></div>

@@ -19,19 +19,18 @@ $button-width: 40%;
     width: 100%;
     .btn {
         @extend %btn-style-shared;
-        &:hover,
-        &:active {
-            background-color: rgb(244, 247, 250);
-            color: #64419C;
-            box-shadow: 0px 2px #64419C;
-        }
         &-l {
             width: $button-width
         }
         &-r {
-            width: 100%-$button-width
+            width: 100%-$button-width;
         }
     }
+}
+
+.active {
+    color: #2D0C37 !important;
+    background-color: #967DBD !important;
 }
 
 hr {

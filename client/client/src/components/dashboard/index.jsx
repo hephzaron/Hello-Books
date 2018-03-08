@@ -9,7 +9,8 @@ import $ from 'jquery';
 import PropTypes from 'prop-types';
 import Header from 'General/Header';
 import CenterPage from './CenterPage';
-import Search from './Search';
+//import Search from './Search';
+import Sidebar from './Sidebar';
 
 /**
  * @description Renders the dashboard on successful authentication
@@ -46,7 +47,7 @@ class Dashboard extends Component {
           <Header 
               heading= "HiLIB Administrator">
            </Header>
-           <div className="col-md-4"></div>
+           <Sidebar/>
            <CenterPage/>
            <div className="col-md-2"></div>
         </div>

@@ -21,14 +21,6 @@ const Header = (props)=> (
               </div>
               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-l">
               <div className="navbar-left">
-              {/**<div style={{
-                width:'50px', 
-                height:'50px',
-                margin:'0px',
-                float:'left',
-                overflow:'hidden'}}>
-                <img src={logo} width="130px" height="100px" />
-              </div>    **/}
                 <h4 style={{float:'right'}}>
                   {props.heading}
                   <span style= {{marginLeft:'100px'}}></span>

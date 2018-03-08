@@ -56,7 +56,7 @@ body {
     }
     @if $direction=='right' {
         left: $before-triangle-height;
-        bottom: $before-triangle-width;
+        top: $before-triangle-width;
         border-right: $border-size #ccc;
         border-bottom: $border-size transparent;
         border-top: $border-size transparent;
@@ -90,7 +90,7 @@ body {
     }
     @if $direction=='right' {
         left: $after-triangle-width;
-        bottom: $after-triangle-height;
+        top: $after-triangle-height;
         border-right: $border-size #fff;
         border-bottom: $border-size transparent;
         border-top: $border-size transparent
@@ -149,6 +149,7 @@ form {
     color: rgb(127, 124, 124);
     font-size: $font-size;
     padding-bottom: 0px;
+    margin-bottom: 0px;
     padding-top: 7px;
     text-align: center;
     border-top: 1px solid rgb(219, 229, 232);

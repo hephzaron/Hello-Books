@@ -1,0 +1,81 @@
+$font-size: 15px;
+$display: inline-block;
+$font-weight: bold;
+$button-width: 40%;
+%btn-style-shared {
+    color: rgb(244, 247, 250);
+    background-color: #64419C;
+    font-size: 15px;
+    font-weight: $font-weight;
+    padding-right: 25px;
+    padding-left: 25px;
+    border: 0;
+    border-radius: 0;
+}
+
+.sidebar-toggle-button {
+    display: $display;
+    padding: 5px 0 0 0;
+    width: 100%;
+    .btn {
+        @extend %btn-style-shared;
+        &:hover,
+        &:active {
+            background-color: rgb(244, 247, 250);
+            color: #64419C;
+            box-shadow: 0px 2px #64419C;
+        }
+        &-l {
+            width: $button-width
+        }
+        &-r {
+            width: 100%-$button-width
+        }
+    }
+}
+
+hr {
+    margin: 4px 0px 4px 0px
+}
+
+.admin-sidebar {
+    text-align: center;
+    border: 0;
+    padding: 10px 0px 0px 0px;
+    background-color: #B3B3B3;
+    height: 700px;
+    &>.btn {
+        width: 200px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: $font-weight;
+        font-size: 20px;
+        background-color: #3075A5;
+        color: white;
+        &:hover,
+        &:active {
+            background-color: white;
+            color: #3075A5;
+        }
+    }
+    .scrollbar {
+        float: left;
+        height: 500px;
+        width: 100%;
+        background: #F5F5F5;
+        overflow-y: scroll;
+        margin-bottom: 25px
+    }
+    .force-overflow {
+        min-height: 550px
+    }
+    #wrapper {
+        text-align: center;
+        width: 100%;
+        margin: auto;
+        padding: 4px
+    }
+}
+
+.dropdown {
+    float: right;
+}

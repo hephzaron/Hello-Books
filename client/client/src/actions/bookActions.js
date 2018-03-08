@@ -2,7 +2,7 @@ import axios from 'axios';
 import types from './types';
 import { addFlashMessage } from './flashMessage';
 import cloudinary from 'cloudinary';
-import '../config/clodinary';
+import '../config/cloudinary';
 
 const {
     SET_BOOKS,
@@ -88,7 +88,7 @@ export const getBooks = () => (
                 text: errors.response.data.message
             }));
             return errors
-        });
+        })
     )
 )
 
@@ -170,9 +170,9 @@ export const editBook = (bookDetails) => {
             dispatch(addFlashMessage({
                 type: 'error',
                 text: errors.response.data.message
-            }))
-            return errors
-        });
+            }));
+            return errors;
+        })
     )
 }
 
@@ -184,7 +184,7 @@ export const editBook = (bookDetails) => {
  */
 
 export const updateBookAssets = bookDetails => (
-    axios.put(`/books/${book.id}`, bookDetails);
+    axios.put(`/books/${book.id}`, bookDetails)
 );
 
 /**
@@ -269,7 +269,7 @@ export const deleteCoverPhoto = (publicId) => {
         return cloudinary.v2.uploader.destroy(
             publicId, (error, result) => {
                 error ? Promise.reject(new Error('Oops! Could not delete photo')) : null
-                result ? Promise.resolve(result)
+                result ? Promise.resolve(result) : null
             }
         )
     }
@@ -296,7 +296,7 @@ export const uploadBookAssets = (bookAssets) => (
         .catch(error =>
             Promise.reject(error.message))
     ).catch(error =>
-        Promise.reject(error.message));
+        Promise.reject(error.message))
 )
 
 export const searchBooks = (title, page) =>
@@ -311,4 +311,4 @@ export const searchBooks = (title, page) =>
             type: 'error',
             text: errors.response.data.message
         }));
-    });
+    })

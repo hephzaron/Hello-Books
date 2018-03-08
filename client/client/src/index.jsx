@@ -10,9 +10,9 @@ import { setCurrentUser, logoutUser } from 'Actions/userAuth';
 import setAuthToken from 'Utils/setAuthToken';
 import  Routes  from 'Routes';
 import 'Public/css/bootstrap.min.css';
-{/**import 'font-awesome/css/font-awesome.css'**/};
 import 'Public/scss/home.scss';
-import Main from 'HomePage/Landing/Main'
+import Main from 'HomePage/Landing/Main';
+import Dashboard from 'Components/dashboard';
 
 
 /**
@@ -58,7 +58,8 @@ if (localStorage.authToken) {
 
 render( 
     <Provider store = { store } >
-        <Main/>
+       {/**<Main/>**/} 
+       <Dashboard/>
     </Provider>,
     document.getElementById('app')
 );

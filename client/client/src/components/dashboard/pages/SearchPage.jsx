@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Pagination from '../general/Pagination';
+import Pagination from 'General/Pagination';
 import Card from '../Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 

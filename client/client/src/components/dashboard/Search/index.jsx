@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Search from './Search';
+import CustomSearch from './CustomSearch';
 import { searchBooks } from 'Actions/bookActions';
 import { loadPage, showPage, hidePage } from 'Actions/centerPage';
 import pageTypes from '../CenterPage/pageTypes';
@@ -23,10 +23,6 @@ class Search extends Component {
     this.onChange = this.onChange.bind(this);
     this.onIconClick = this.onIconClick.bind(this);
   }
-  static propTypes {
-        
-  }
-
   onChange(event){
     this.setState({
       items: {
@@ -50,7 +46,7 @@ class Search extends Component {
   }
   render(){
     return(
-      <Search
+      <CustomSearch
         onChange = { this.onChange }
         search = { this.state.search }
         onIconClick = { this.onIconClick }/>

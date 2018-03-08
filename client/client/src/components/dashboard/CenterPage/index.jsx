@@ -6,7 +6,7 @@ import FlashMessageList from 'Components/FlashMessageList';
 
 {/* import page custom components*/}
 
-import SearchPage from 'Dashboard/pages/SearchPage'
+import SearchPage from '../pages/SearchPage'
 
 const CENTER_PAGE_COMPONENTS = {
   SEARCH_PAGE: SearchPage
@@ -27,7 +27,7 @@ class CenterPageContainer extends Component {
       }
       const SpecificPage = CENTER_PAGE_COMPONENTS[this.props.pageType]; 
         return(
-          <div className="col-md-4">
+          <div className="col-md-6">
             <FlashMessageList />
             <SpecificPage/>
           </div>

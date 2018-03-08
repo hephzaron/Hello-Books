@@ -55,3 +55,5 @@ const books = (state = initialBookState, action = {}) => {
 
     }
 }
+
+export default books

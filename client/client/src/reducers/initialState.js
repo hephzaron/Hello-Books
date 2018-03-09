@@ -1,7 +1,10 @@
 export const initialAuthState = {
-    isAuthenticated: false,
+    isAuthenticated: true,
     user: {
-        userId: 0
+        userId: 0,
+        username: 'username',
+        email: 'email@email.com',
+        memValue: 'platinum'
     },
 };
 

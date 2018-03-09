@@ -19,6 +19,9 @@ $button-width: 40%;
     margin-left: 0;
 }
 
+
+/**Custome styling for sidebar component*/
+
 .sidebar-toggle-button {
     display: $display;
     padding: 5px 0 0 0;
@@ -85,6 +88,9 @@ hr {
     float: right;
 }
 
+
+/**Custom styles for search component*/
+
 .search-container {
     float: left;
     min-width: 200px;
@@ -107,4 +113,46 @@ hr {
     border-radius: 5px 0 0 5px;
     width: 70%;
     float: left
+}
+
+@mixin badge ($membership-value) {
+    @if $membership-value=='platinum' {
+        background-color: whitesmoke
+    }
+    @if $membership-value=='silver' {
+        background-color: silver
+    }
+    @if $membership-value=='gold' {
+        background-color: gold
+    }
+}
+
+@each $membership-value in platinum,
+silver,
+gold {
+    .badge-#{str($membership-value)} {
+        @include badge($membership-value)
+    }
+}
+
+%center-vertically {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.user-avatar {
+    float: right;
+    text-align: center;
+    display: table;
+    img {
+        @extend %center-vertically;
+        float: left;
+        margin-right: 5px;
+    }
+    span {
+        @extend %center-vertically;
+        font-size: 18px;
+        color: #206581;
+        height: 50px
+    }
 }

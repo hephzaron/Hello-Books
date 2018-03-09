@@ -19,7 +19,8 @@ const propTypes = {
   identifier: PropTypes.string.isRequired,
   listDirection: PropTypes.string.isRequired,
   listContent:PropTypes.array.isRequired,
-  rest: PropTypes.obejct
+  rest: PropTypes.obejct,
+  children: PropTypes.node
 }
 
 class CustomList extends Component{
@@ -83,6 +84,9 @@ class CustomList extends Component{
           `dropdown-menu dropdown-menu-triangle-b-${pos}`
         )}
         {...rest}>
+        {this.props.children && 
+          <li>{this.props.children}</li>
+        }
         {listItems}
       </ul>
     );

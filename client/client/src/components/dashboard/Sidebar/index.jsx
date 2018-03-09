@@ -32,7 +32,6 @@ class Sidebar extends Component {
   }
 
   onClickCreate(event){
-    alert('you click me')
   }
   render(){
     return(

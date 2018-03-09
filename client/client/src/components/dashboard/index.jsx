@@ -11,6 +11,9 @@ import Header from 'General/Header';
 import CenterPage from './CenterPage';
 import Search from './Search';
 import Sidebar from './Sidebar';
+import CustomBadge from './UserMenu/CustomBadge';
+import UserMenu from './UserMenu';
+import { connect } from 'react-redux';
 
 /**
  * @description Renders the dashboard on successful authentication
@@ -38,6 +41,9 @@ class Dashboard extends Component {
         <div>
           <Header 
               heading= "HiLIB Administrator">
+              <CustomBadge
+                user={this.props.user}/>
+              <UserMenu/>
               <Search/>
            </Header>
            <Sidebar/>
@@ -49,5 +55,9 @@ class Dashboard extends Component {
     )}
   }
 
+const mapStateToProps = (state) => ({
+ user: state.auth.user
+})
 
-export default Dashboard;
+export { Dashboard }
+export default connect(mapStateToProps)(Dashboard)

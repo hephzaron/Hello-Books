@@ -27,9 +27,10 @@ const listContent = [
 const CreateOptions = () => (
   <div className = "btn-group dropdown">
     <CustomList
-      identifier={'#create-options'}
+      identifier={'create-options'}
       listDirection={'right'}
-      listContent={listContent}/>
+      listContent={listContent}
+      dropdownInitiator={'dropdown-create-options'}/>
   </div>
 )
 

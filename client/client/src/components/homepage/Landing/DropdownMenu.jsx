@@ -40,10 +40,9 @@ const ServiceDropdown = () => (
         {`Our services`}<span className="caret"></span>
     </h5>
     <CustomList
-      identifier={'#services'}
+      identifier={'services'}
       listDirection={'down'}
-      listContent={listContent}
-    />
+      listContent={listContent}/>
 
   </div>
 )

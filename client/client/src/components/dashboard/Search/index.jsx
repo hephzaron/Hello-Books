@@ -23,15 +23,12 @@ class Search extends Component {
   }
   onChange(event){
     this.setState({
-      items: {
-        ...this.state.items,
         [event.target.name]: event.target.value
-      }
     })
   }
   onIconClick(event){
     event.preventDefault();
-    this.props.searchBooks(this.state.items['search'])
+    this.props.searchBooks(this.state.searchItem)
     .then((data)=>{
       if(data.response && data.response.status >= 400){
         this.setState({
@@ -61,7 +58,9 @@ class Search extends Component {
 const actionCreators = {
   loadPage, 
   showPage, 
-  hidePage
+  hidePage,
+  searchBooks,
+  addFlashMessage
 }
 
 

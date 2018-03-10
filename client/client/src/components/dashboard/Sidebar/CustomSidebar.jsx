@@ -5,7 +5,7 @@ import CreateOptions from './CreateOptions';
 
 const CustomSidebar = (props) => (
   <div className={classnames(`${props.sidebarClass} col-md-3`)}>
-    <div className="btn btn-default dropdown-toggle" onClick={props.onClickCreate}>Create</div>
+    <div className="btn btn-default dropdown-create-options" onClick={props.onClickCreate}>Create</div>
     <CreateOptions/>
     <hr/>
     <div id="wrapper">

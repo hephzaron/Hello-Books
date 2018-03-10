@@ -32,7 +32,8 @@ class CustomBadge extends Component{
           src={require('Public/images/user-profile.png')}
           width={50} 
           height={50}
-          mode='fit'/>
+          mode='fit'
+          className={'dropdown-user-options'}/>
           <span>{username}</span>
           <MuiThemeProvider>
             <IconButton

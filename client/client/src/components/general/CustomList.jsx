@@ -20,22 +20,23 @@ const propTypes = {
   listDirection: PropTypes.string.isRequired,
   listContent:PropTypes.array.isRequired,
   rest: PropTypes.obejct,
-  children: PropTypes.node
+  children: PropTypes.node,
+  dropdownInitiator: PropTypes.string.isRequired
 }
 
 class CustomList extends Component{
   componentDidMount(){
     
-    $(".dropdown-toggle").click(()=>{
-      $(".dropdown-menu").toggle()
+    $(`.${this.props.dropdownInitiator}`).click(()=>{
+      $(`#${this.props.identifier}`).toggle()
     });
     $(".navbar-toggle").click(()=>{
       $("#bs-example-navbar-collapse-l").toggle()
     });
     $(document).click((event)=>{
       let target = $(event.target);
-      if(!target.is(".dropdown-toggle")&&!target.is(".dropdwown-menu")){
-        $(".dropdown-menu").hide()
+      if(!target.is(`.${this.props.dropdownInitiator}`)&&!target.is(`#${this.props.identifier}`)){
+        $(`#${this.props.identifier}`).hide()
       }
     });
   }

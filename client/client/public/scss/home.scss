@@ -48,7 +48,7 @@ body {
     }
     @if $direction=='down' {
         top: $before-triangle-height;
-        left: $before-triangle-width;
+        left: $before-triangle-width+30px;
         border-bottom: $border-size #ccc;
         border-left: $border-size transparent;
         border-right: $border-size transparent;
@@ -83,7 +83,7 @@ body {
     }
     @if $direction=='down' {
         top: $after-triangle-width;
-        left: $after-triangle-height;
+        left: $after-triangle-height+30px;
         border-bottom: $border-size #fff;
         border-left: $border-size transparent;
         border-right: $border-size transparent

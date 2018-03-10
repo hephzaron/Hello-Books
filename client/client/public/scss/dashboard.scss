@@ -82,10 +82,13 @@ hr {
         margin: auto;
         padding: 4px
     }
-}
-
-.dropdown {
-    float: right;
+    .dropdown {
+        float: right;
+        a:hover {
+            color: white;
+            background-color: rgb(9, 60, 83);
+        }
+    }
 }
 
 
@@ -140,19 +143,66 @@ gold {
     vertical-align: middle;
 }
 
-.user-avatar {
-    float: right;
-    text-align: center;
+%img-common-style {
+    @extend %center-vertically;
+    float: left;
+    margin-right: 5px;
+}
+
+%span-common-style {
+    @extend %center-vertically;
+    font-size: 18px;
+    color: #206581;
+    height: 50px
+}
+
+@mixin align($align) {
     display: table;
+    text-align: $align
+}
+
+.user-avatar {
+    @include align(center);
+    float: right;
     img {
-        @extend %center-vertically;
-        float: left;
-        margin-right: 5px;
+        @extend %img-common-style
     }
     span {
-        @extend %center-vertically;
-        font-size: 18px;
-        color: #206581;
-        height: 50px
+        @extend %span-common-style
+    }
+}
+
+#user-options {
+    &>li {
+        @include align(left);
+        padding: 0;
+        margin: 2px 0 2px 0;
+        width: 100%;
+        &>a {
+            font-weight: bold;
+            &:hover {
+                color: white;
+                background-color: rgb(9, 60, 83);
+            }
+        }
+        img {
+            @extend %img-common-style;
+            margin-left: 7px
+        }
+        span {
+            @extend %span-common-style;
+            font-style: italic;
+            padding: 0 9px 12px 7px;
+            p {
+                margin: 0;
+                padding: 0
+            }
+        }
+    }
+}
+
+.navbar {
+    .dropdown {
+        margin-top: 27px
     }
 }

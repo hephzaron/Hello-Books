@@ -6,7 +6,7 @@ const Search = (props) => (
   <SingleInput 
     identifier = "search"
     placeholder = "Find authors and books"
-    name = "search"
+    name = "searchItem"
     onChange = {props.onChange}
     value = {props.searchItem}
     iconClass = "glyphicon-search"
@@ -18,7 +18,7 @@ const Search = (props) => (
 
 Search.propTypes = {
   onChange: PropTypes.func,
-  searchItem: PropTypes.object,
+  searchItem: PropTypes.string,
   onIconClick: PropTypes.func
 }
 

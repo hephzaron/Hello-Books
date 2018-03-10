@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import CreateOptions from './CreateOptions';
+import SidebarViews from './SidebarViews';
 
 const CustomSidebar = (props) => (
   <div className={classnames(`${props.sidebarClass} col-md-3`)}>
@@ -17,6 +18,9 @@ const CustomSidebar = (props) => (
         <div className="force-overflow"></div>
       </div>
     </div>
+    <hr/>
+    <span style={{textAlign:'center', fontWeight:'bold'}}>View</span>
+    <SidebarViews/>
   </div>
 )
 

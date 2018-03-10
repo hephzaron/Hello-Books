@@ -51,7 +51,7 @@ const fetchGenres = () => (
                 text: errors.response.data.message
             }))
             return errors
-        });
+        })
     )
 )
 
@@ -79,7 +79,7 @@ const createGenre = (genreDetails) => (
         })
         .catch(errors => {
             dispatch(addFlashMessage({
-                type: 'error'
+                type: 'error',
                 text: errors.response.data.message
             }));
             return errors;

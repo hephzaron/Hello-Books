@@ -158,8 +158,8 @@ const createAuthor = (authorDetails) => (
                 text: errors.response.data.message
             }));
             return errors
-        });
-    );
+        })
+    )
 );
 
 
@@ -191,8 +191,8 @@ const editAuthor = authorDetails => (
                 text: errors.response.data.message
             }));
             return errors;
-        });
-    );
+        })
+    )
 );
 
 /**
@@ -223,7 +223,7 @@ const assignAuthor = ({ authorId, bookId }) => (
                 type: 'error',
                 text: errors.response.data.message
             }));
-        });
+        })
     )
 )
 

@@ -6,7 +6,10 @@ import mirrorKeys from 'Utils/mirrorKeys';
  */
 
 const pageTypes = [
-    'SEARCH_PAGE'
+    'SEARCH_PAGE',
+    'BOOKS_FETCHED_PAGE',
+    'AUTHORS_FETCHED_PAGE',
+    'GENRES_FETCHED_PAGE'
 ]
 
 export default mirrorKeys(pageTypes);

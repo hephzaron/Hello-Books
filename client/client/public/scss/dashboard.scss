@@ -46,6 +46,18 @@ hr {
     margin: 4px 0px 4px 0px
 }
 
+%sidebar-style-common {
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(75, 12, 46)
+}
+
+@mixin sidebar-views($float, $margin-left) {
+    @extend %sidebar-style-common;
+    float: $float;
+    margin-left: $margin-left
+}
+
 .admin-sidebar {
     text-align: center;
     border: 0;
@@ -67,18 +79,19 @@ hr {
     }
     .scrollbar {
         float: left;
-        height: 500px;
+        height: 400px;
         width: 100%;
         background: #F5F5F5;
         overflow-y: scroll;
         margin-bottom: 25px
     }
     .force-overflow {
-        min-height: 550px
+        min-height: 500px
     }
     #wrapper {
         text-align: center;
         width: 100%;
+        height: 62%;
         margin: auto;
         padding: 4px
     }
@@ -87,6 +100,20 @@ hr {
         a:hover {
             color: white;
             background-color: rgb(9, 60, 83);
+        }
+    }
+    #sidebar-views {
+        text-align: center;
+        width: 100%;
+        span {
+            @include sidebar-views(left, 25%);
+            margin-top: 5px;
+            &:hover {
+                cursor: pointer
+            }
+            p {
+                @include sidebar-views(right, 20px);
+            }
         }
     }
 }
@@ -165,7 +192,10 @@ gold {
     @include align(center);
     float: right;
     img {
-        @extend %img-common-style
+        @extend %img-common-style;
+        &:hover {
+            cursor: pointer
+        }
     }
     span {
         @extend %span-common-style

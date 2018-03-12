@@ -24,7 +24,7 @@ const FlashMesssage = ({ message })=>{
 						<li key={index}>{value}</li>)}
 					</ul>                     
 			}
-			{text.length === 1 && <span>{text[0]}</span>}
+			{(text.length === 1 || typeof(text)==='string') && <span>{text}</span>}
     </div>
     );
 };

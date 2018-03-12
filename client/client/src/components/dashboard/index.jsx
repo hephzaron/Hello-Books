@@ -11,6 +11,7 @@ import Header from 'General/Header';
 import CenterPage from './CenterPage';
 import Search from './Search';
 import Sidebar from './Sidebar';
+import RightSidebar from './RightSidebar';
 import CustomBadge from './UserMenu/CustomBadge';
 import UserMenu from './UserMenu';
 import { connect } from 'react-redux';
@@ -48,7 +49,7 @@ class Dashboard extends Component {
            </Header>
            <Sidebar/>
            <CenterPage/>
-           <div className="col-md-2"></div>
+           <RightSidebar/>
         </div>
       </Router>
     

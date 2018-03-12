@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import CustomSidebar from './CustomSidebar';
-import $ from 'jquery';
+import { toggleElementClass } from 'Utils/toggle';
 
 
 class Sidebar extends Component {
@@ -9,29 +9,17 @@ class Sidebar extends Component {
     this.onClickCreate = this.onClickCreate.bind(this);
   }
 
-  componentWillUnmount(){
-    $(".admin-sidebar btn").removeClass("dropdown-menu")
-  }
-
-  componentWillMount(){
-  }
   componentDidMount(){
-    $(".btn-l").click(()=>{
-      if($(".btn-r").hasClass("active")&&!$(".btn-l").hasClass("active")){
-        $(".btn-r").removeClass('active');
-        $(".btn-l").addClass("active")
-      }
+    toggleElementClass({
+        toggleType: 'double',
+        previous:'.btn-l',
+        next:'.btn-r',
+        toggledClass: 'active'
     });
-    
-    $(".btn-r").click(()=>{
-      if($(".btn-l").hasClass('active')&&!$(".btn-r").hasClass("active")){
-        $(".btn-l").removeClass('active');
-        $(".btn-r").addClass("active")
-      }
-    })
   }
 
   onClickCreate(event){
+    event.preventDefault()
   }
   render(){
     return(

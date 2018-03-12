@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
+import { toggleDropdown } from 'Utils/toggle';
 
 /**
  * @description Returns a Custom list
@@ -17,7 +17,7 @@ import $ from 'jquery';
  
 const propTypes = {
   identifier: PropTypes.string.isRequired,
-  listDirection: PropTypes.string.isRequired,
+  listDirection: PropTypes.string,
   listContent:PropTypes.array.isRequired,
   rest: PropTypes.obejct,
   children: PropTypes.node,
@@ -26,19 +26,11 @@ const propTypes = {
 
 class CustomList extends Component{
   componentDidMount(){
-    
-    $(`.${this.props.dropdownInitiator}`).click(()=>{
-      $(`#${this.props.identifier}`).toggle()
-    });
-    $(".navbar-toggle").click(()=>{
-      $("#bs-example-navbar-collapse-l").toggle()
-    });
-    $(document).click((event)=>{
-      let target = $(event.target);
-      if(!target.is(`.${this.props.dropdownInitiator}`)&&!target.is(`#${this.props.identifier}`)){
-        $(`#${this.props.identifier}`).hide()
-      }
-    });
+    const { 
+      dropdownInitiator,
+      identifier
+    } = this.props
+    toggleDropdown(`.${dropdownInitiator}`,`#${identifier}`);
   }
 
   
@@ -71,6 +63,7 @@ class CustomList extends Component{
     const listItems = listContent.map((item, index)=>
     <li key={index}
       role={item.role?item.role:''}
+      onClick = { item.onClick }
       className = {classnames(item.role=='seperator'?'divider':'list-item',
           item.role=='header'?'dropdown-header':'')}
       style = {{...item['role'] === 'header' ? {fontSize:'17px'}:{fontSize:'16px'}}}>

@@ -30,9 +30,9 @@ class FlashMessageList extends Component {
    */
 
   render () { 
-    const { message,} = this.props;
+    const { message } = this.props;
     return (
-      <SetTimeout interval = {10000}>
+      <SetTimeout interval = {30000}>
         {Object.keys(message).length !==0 &&
       <FlashMessage
         message = {message}/>

@@ -19,7 +19,7 @@ const Header = (props)=> (
                   <span className="icon-bar"></span>
                 </button>
               </div>
-              <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-l">
+              <div className="collapse navbar-collapse" >
               <div className="navbar-left">
                 <h4 style={{float:'right'}}>
                   {props.heading}

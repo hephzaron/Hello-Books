@@ -5,6 +5,7 @@ import pageTypes from './pageTypes';
 import FlashMessageList from 'Components/FlashMessageList';
 import { loadPage, showPage, hidePage } from 'Actions/centerPage';
 import { getBooks } from 'Actions/bookActions';
+import Spinner from '../Spinner';
 
 {/* import page custom components*/}
 
@@ -37,7 +38,7 @@ class CenterPageContainer extends Component {
       isLoading: false
     }
   }
-  componentDidMount(){
+  componentWillMount(){
     this.setState({ isLoading: true });
     this.props.getBooks()
       .then((data)=>{
@@ -46,21 +47,24 @@ class CenterPageContainer extends Component {
           isLoading:false
         });
       }else{
-        this.props.showPage(BOOKS_FETCHED_PAGE)
+        this.props.showPage(BOOKS_FETCHED_PAGE);
       }
     })
   }
+
   render(){
-      if(!this.props.pageType){
-        return null
-      }
+      if(this.state.isLoading){
+        return (
+          <Spinner/>
+        )
+      }else{
       const SpecificPage = CENTER_PAGE_COMPONENTS[this.props.pageType]; 
         return(
           <div className="col-md-6">
             <FlashMessageList />
-            <SpecificPage/>
-          </div>
-      );
+            {/**<SpecificPage/>**/}
+          </div>)
+      }
     }
 };
 

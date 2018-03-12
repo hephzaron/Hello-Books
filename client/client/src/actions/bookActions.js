@@ -85,7 +85,7 @@ export const getBooks = () => (
             dispatch(setBooks([]));
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: 'errors.response.data.message'
             }));
             return errors
         })

@@ -18,7 +18,7 @@ const {
  * @returns {object} action creator
  */
 
-const setAuthors = (authors) => ({
+export const setAuthors = (authors) => ({
     type: SET_AUTHORS,
     ...authors
 });
@@ -30,7 +30,7 @@ const setAuthors = (authors) => ({
  * @returns {object} action creator
  */
 
-const authorFetched = (author) => ({
+export const authorFetched = (author) => ({
     type: AUTHOR_FETCHED,
     author
 });
@@ -42,7 +42,7 @@ const authorFetched = (author) => ({
  * @returns {object} action creator
  */
 
-const addAuthor = (author) => ({
+export const addAuthor = (author) => ({
     type: ADD_AUTHOR,
     author
 });
@@ -53,7 +53,7 @@ const addAuthor = (author) => ({
  * @param {object} author - Payload of edited author
  * @returns {object} action creator
  */
-const authorEdited = (author) => ({
+export const authorEdited = (author) => ({
     type: AUTHOR_EDITED,
     author
 });
@@ -65,7 +65,7 @@ const authorEdited = (author) => ({
  * @returns {object} action creator
  */
 
-const authorAssigned = (authorBook) => ({
+export const authorAssigned = (authorBook) => ({
     type: AUTHOR_ASSIGNED,
     authorBook
 });
@@ -76,7 +76,7 @@ const authorAssigned = (authorBook) => ({
  * @param {number} id  - deleted author id
  * @returns  {object} action creator
  */
-const authorDeleted = (authorId) => ({
+export const authorDeleted = (authorId) => ({
     type: AUTHOR_DELETED,
     authorId
 });
@@ -88,9 +88,9 @@ const authorDeleted = (authorId) => ({
  * @returns {promise} Axios http response
  */
 
-const getAuthors = () => (
+export const getAuthors = () => (
     dispatch => (
-        axios.get('/authors/books')
+        axios.get('/authors')
         .then(response => {
             dispatch(setAuthors(response.data.authors));
             return response;
@@ -113,9 +113,9 @@ const getAuthors = () => (
  * @returns {promise} Axios http response
  */
 
-const fetchAuthor = (id) => (
+export const fetchAuthor = (id) => (
     dispatch => (
-        axios.get(`/authors/${id}/books`)
+        axios.get(`/authors/${id}`)
         .then(response => {
             dispatch(authorFetched(response.data.author));
             return response;
@@ -137,7 +137,7 @@ const fetchAuthor = (id) => (
  * @returns {promise} Axios http response
  */
 
-const createAuthor = (authorDetails) => (
+export const createAuthor = (authorDetails) => (
     dispatch => (
         axios.post('/authors', authorDetails)
         .then(response => {
@@ -170,7 +170,7 @@ const createAuthor = (authorDetails) => (
  * @returns {promise} Axios http response
  */
 
-const editAuthor = authorDetails => (
+export const editAuthor = authorDetails => (
     dispatch => (
         axios.put(`/authors/${authorDetails.id}`, authorDetails)
         .then(response => {
@@ -203,7 +203,7 @@ const editAuthor = authorDetails => (
  * @returns {promise} Axios http response
  */
 
-const assignAuthor = ({ authorId, bookId }) => (
+export const assignAuthor = ({ authorId, bookId }) => (
     dispatch => (
         axios.post(`/authors/${authorId}/books/${bookId}`, {})
         .then((response) => {
@@ -233,7 +233,7 @@ const assignAuthor = ({ authorId, bookId }) => (
  * @param {object} authorDetails - Details of author to be deleted from library
  * @returns {promise} Axios http response
  */
-const deleteAuthor = authorDetails => (
+export const deleteAuthor = authorDetails => (
     dispatch => (
         axios.delete(`/authors/${authorDetails.id}`, authorDetails)
         .then(response => {
@@ -252,18 +252,3 @@ const deleteAuthor = authorDetails => (
         })
     )
 )
-
-export default {
-    setAuthors,
-    authorFetched,
-    addAuthor,
-    authorEdited,
-    authorAssigned,
-    authorDeleted,
-    getAuthors,
-    fetchAuthor,
-    createAuthor,
-    editAuthor,
-    assignAuthor,
-    deleteAuthor
-};

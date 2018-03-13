@@ -48,7 +48,7 @@ const fetchGenres = () => (
             dispatch(setGenres([]));
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: 'errors.response.data.message-genres'
             }))
             return errors
         })
@@ -87,7 +87,7 @@ const createGenre = (genreDetails) => (
     )
 )
 
-export default {
+export {
     fetchGenres,
     createGenre,
     setGenres,

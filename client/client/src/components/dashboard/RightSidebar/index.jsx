@@ -1,12 +1,17 @@
 import React , { Component } from 'react';
 import RightSidebar from './RightSidebar';
 import AuthorBookLists from './AuthorBookLists';
+import GenreBookLists from './GenreBookLists';
 import { toggleElementClass } from 'Utils/toggle';
 
 
 class SortSidebar extends Component {
   constructor(props){
     super(props);
+
+    this.state = {
+      sortOptions: 'authors'
+    }
     this.sortByAuthors = this.sortByAuthors.bind(this);
     this.sortByCategories = this.sortByCategories.bind(this);
   }
@@ -21,10 +26,16 @@ class SortSidebar extends Component {
   }
 sortByAuthors(event){
   event.preventDefault()
+  this.setState({
+    sortOptions:'authors'
+  })
 
 }
 sortByCategories(event){
   event.preventDefault()
+  this.setState({
+    sortOptions:'genres'
+  })
 }
   render(){
     return(
@@ -32,7 +43,13 @@ sortByCategories(event){
         rightSidebarClass = "sort-sidebar"
         sortByAuthors={this.sortByAuthors}
         sortByCategories = {this.sortByCategories}>
-        <AuthorBookLists/>
+        {
+          this.state.sortOptions === 'authors' &&
+          <AuthorBookLists/>
+        }{
+          this.state.sortOptions === 'genres' &&
+          <GenreBookLists/>
+        }
       </RightSidebar>
     )
   }

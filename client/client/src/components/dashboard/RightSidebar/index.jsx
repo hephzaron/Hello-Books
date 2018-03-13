@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import RightSidebar from './RightSidebar';
-import BookLists from './BookLists';
+import AuthorBookLists from './AuthorBookLists';
 import { toggleElementClass } from 'Utils/toggle';
 
 
@@ -32,7 +32,7 @@ sortByCategories(event){
         rightSidebarClass = "sort-sidebar"
         sortByAuthors={this.sortByAuthors}
         sortByCategories = {this.sortByCategories}>
-        <BookLists/>
+        <AuthorBookLists/>
       </RightSidebar>
     )
   }

@@ -99,7 +99,7 @@ export const getAuthors = () => (
             dispatch(setAuthors([]));
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: 'errors.response.data.message-author'
             }));
             return errors;
         })

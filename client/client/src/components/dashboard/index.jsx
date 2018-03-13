@@ -15,6 +15,7 @@ import RightSidebar from './RightSidebar';
 import CustomBadge from './UserMenu/CustomBadge';
 import UserMenu from './UserMenu';
 import { connect } from 'react-redux';
+import ErrorBoundary from '../ErrorBoundary';
 
 /**
  * @description Renders the dashboard on successful authentication
@@ -49,7 +50,9 @@ class Dashboard extends Component {
            </Header>
            <Sidebar/>
            <CenterPage/>
+           <ErrorBoundary>
            <RightSidebar/>
+           </ErrorBoundary>
         </div>
       </Router>
     

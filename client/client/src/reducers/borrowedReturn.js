@@ -19,7 +19,12 @@ const borrowedReturn = (state = initialBorrowedReturnState, action = {}) => {
             };
             break;
         case BORROWED_FETCHED:
-            return action.borrowedBooks;
+            return {
+                ...state,
+                borrowedBooks: [
+                    ...state.borrowedBooks, action.borrowedBooks
+                ]
+            }
             break;
         case SET_BORROWED_BOOKS:
             return {

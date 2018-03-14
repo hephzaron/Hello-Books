@@ -95,9 +95,9 @@ module.exports = {
                 },
                 include: [{
                     model: Books,
-                    attributes: ['title', 'ISBN'],
+                    attributes: ['id','title', 'ISBN'],
                     through: {
-                        attributes: ['returned'],
+                        attributes: ['returned','createdAt'],
                         where: {
                             returned: req.query.returned
                         }

@@ -96,7 +96,35 @@ hr {
         margin-bottom: 25px
     }
     .force-overflow {
-        min-height: 500px
+        min-height: 500px;
+        text-align: left;
+        li {
+            padding: 0 2px 2px;
+            &:hover,
+            &:active {
+                border-left: 2px solid #56A5EC
+            }
+        }
+        h5 {
+            cursor: pointer;
+            font-weight: bold;
+            color: #4863A0;
+            &>span {
+                float: right
+            }
+            &:hover {
+                color: #625D5D
+            }
+        }
+        p>.badge {
+            float: right;
+            color: #2B3856;
+            background-color: #BCC6CC;
+            &:hover {
+                @include on-active(#BCC6CC, #2B3856);
+                cursor: pointer;
+            }
+        }
     }
     #wrapper {
         text-align: center;

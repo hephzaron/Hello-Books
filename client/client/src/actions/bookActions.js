@@ -76,7 +76,7 @@ export const booksSearched = result => ({
  */
 export const getBooks = () => (
     dispatch => (
-        axios.get('/users/books')
+        axios.get('/books')
         .then((response) => {
             dispatch(setBooks(response.data.books));
             return response
@@ -309,6 +309,6 @@ export const searchBooks = (title, page) =>
         dispatch(booksSearched({}));
         dispatch(addFlashMessage({
             type: 'error',
-            text: errors.response.data.message
+            text: 'errors.response.data.message-search'
         }));
     })

@@ -79,11 +79,11 @@ export const borrowBook = ({ userId, bookId }) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: `errors.response.data.message-borrow-${bookId}`
             }));
             return errors;
-        });
-    );
+        })
+    )
 );
 
 /**
@@ -94,7 +94,7 @@ export const borrowBook = ({ userId, bookId }) => (
  */
 export const fetchBorrowedBook = ({ userId }) => (
     dispatch => (
-        axios.get(`/users/${userId}/books`)
+        axios.get(`/users/${userId}/books?returned=false`)
         .then(response => {
             dispatch(borrowedFetched(response.data.borrowedBooks));
             return response;
@@ -102,12 +102,12 @@ export const fetchBorrowedBook = ({ userId }) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: 'errors.response.data.message-borrowed'
             }));
             dispatch(borrowedFetched({}));
             return errors;
-        });
-    );
+        })
+    )
 );
 
 /**
@@ -119,7 +119,7 @@ export const fetchBorrowedBook = ({ userId }) => (
 
 export const getAllBorrowedBooks = () => (
     dispatch => (
-        axios.get('/books/users')
+        axios.get('/borrowed-books/users')
         .then(response => {
             dispatch(borrowedFetched(response.data.userBooks));
             return response;
@@ -131,8 +131,8 @@ export const getAllBorrowedBooks = () => (
                 text: errors.response.data.message
             }));
             return errors;
-        });
-    );
+        })
+    )
 )
 
 /**
@@ -160,9 +160,9 @@ export const returnBook = ({ userId, bookId }) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: `errors.response.data.message-return-${bookId}`
             }));
             return errors
-        });
-    );
+        })
+    )
 );

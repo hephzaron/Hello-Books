@@ -373,15 +373,35 @@ gold {
         list-style-type: none;
         padding-left: 2px;
         overflow: hidden;
-        &:hover {
+        &:hover,
+        &:active {
             color: white;
             background-color: #11303D;
-            cursor: pointer
+            cursor: pointer !important
         }
     }
     span {
         margin-right: 2px;
         font-size: 10px;
         font-weight: bold
+    }
+}
+
+.col-md-6 {
+    form {
+        margin-bottom: 0 !important;
+        padding-bottom: 10px !important;
+        padding-top: 10px !important;
+        margin-top: 20px;
+        width: 60%;
+        .btn-success {
+            width: 100%;
+            padding: 2px;
+            border: 0;
+            margin-bottom: 0;
+            background-color: #3075A5;
+            height: 35px;
+            text-transform: capitalize
+        }
     }
 }

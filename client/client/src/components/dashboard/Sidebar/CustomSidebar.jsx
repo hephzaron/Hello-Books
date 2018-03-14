@@ -3,20 +3,29 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import CreateOptions from './CreateOptions';
 import SidebarViews from './SidebarViews';
+import pageTypes from '../CenterPage/pageTypes';
+import { loadPage } from 'Actions/centerPage';
+import { connect } from 'react-redux';
+
+const { AUTHOR_PAGE } = pageTypes;
 
 class CustomSidebar extends Component {
   constructor(props){
     super(props);
-    this.state = {
+    this.clickAuthor = this.clickAuthor.bind(this);
+  }
 
-    }
+  clickAuthor(event){
+    event.preventDefault();
+    this.props.loadPage(AUTHOR_PAGE)
   }
 
   render(){
     return(
       <div className={classnames(`${this.props.sidebarClass} col-md-3`)}>
-        <div className="btn btn-default dropdown-create-options" onClick={this.props.onClickCreate}>Create</div>
-        <CreateOptions/>
+        <div className="btn btn-default dropdown-create-options" >Create</div>
+        <CreateOptions
+          clickAuthor = {this.clickAuthor}/>
         <hr/>
         <div id="wrapper">
           <div className="scrollbar" id="style-default">
@@ -38,10 +47,14 @@ class CustomSidebar extends Component {
 
 CustomSidebar.propTypes = {
   sidebarClass: PropTypes.string,
-  onClickCreate: PropTypes.func.isRequired,
   listBook: PropTypes.func.isRequired,
   listBorrowedBook: PropTypes.func.isRequired,
   children: PropTypes.node
 }
 
-export default CustomSidebar;
+const actionCreators = {
+  loadPage
+}
+export { CustomSidebar }
+
+export default connect(null, actionCreators)(CustomSidebar);

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from 'General/Pagination';
-import Card from '../Card';
+import Card from '../../Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-class BooksFetchedPage extends Component {
+class SearchPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,7 +25,7 @@ class BooksFetchedPage extends Component {
             <div>
                 <div className="container">
                     <div className="text-center">
-                        <h1>Books</h1>
+                        <h1>Search results</h1>
                         {
                             this.state.pageOfItems.map(item =>
                             <MuiThemeProvider>
@@ -52,5 +52,5 @@ const mapStateToProps = (state) => ({
   books: state.books['books']
 });
 
-export { BooksFetchedPage }
-export default connect(mapStateToProps)(BooksFetchedPage);
+export { SearchPage }
+export default connect(mapStateToProps)(SearchPage)

@@ -14,10 +14,6 @@ const {
     GENRES_FETCHED_PAGE 
   } = pageTypes;
 
-const propTypes = {
-  icon: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
-}
 
 class SidebarViews extends Component {
   constructor(props){
@@ -110,7 +106,6 @@ class SidebarViews extends Component {
     )
   }
 }
-SidebarViews.propTypes = propTypes;
 
 const actionCreators = {
   getBooks,

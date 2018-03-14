@@ -7,6 +7,7 @@ import mirrorKeys from 'Utils/mirrorKeys';
 
 const pageTypes = [
     'SEARCH_PAGE',
+    'AUTHOR_PAGE',
     'BOOKS_FETCHED_PAGE',
     'AUTHORS_FETCHED_PAGE',
     'GENRES_FETCHED_PAGE'

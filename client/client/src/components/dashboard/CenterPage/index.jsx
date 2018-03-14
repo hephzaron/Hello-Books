@@ -6,22 +6,25 @@ import FlashMessageList from 'Components/FlashMessageList';
 import { loadPage, showPage, hidePage } from 'Actions/centerPage';
 import { getBooks } from 'Actions/bookActions';
 import Spinner from '../Spinner';
+import ErrorBoundary from '../../ErrorBoundary';
 
 {/* import page custom components*/}
 
-import SearchPage from '../pages/SearchPage';
-import BooksFetchedPage from '../pages/BooksFetchedPage';
-import AuthorsFetchedPage from '../pages/AuthorsFetchedPage';
-import GenresFetchedPage from '../pages/GenresFetchedPage';
+import SearchPage from '../pages/Search';
+import AuthorPage from '../pages/Author';
+import BooksFetchedPage from '../pages/Book/BooksFetchedPage';
+/**import AuthorsFetchedPage from '../pages/Author/AuthorsFetchedPage';
+import GenresFetchedPage from '../pages/Genre/GenresFetchedPage';**/
 
 const CENTER_PAGE_COMPONENTS = {
   SEARCH_PAGE: SearchPage,
+  AUTHOR_PAGE: AuthorPage,
   BOOKS_FETCHED_PAGE: BooksFetchedPage,
-  AUTHORS_FETCHED_PAGE: AuthorsFetchedPage,
-  GENRES_FETCHED_PAGE: GenresFetchedPage
+  /**AUTHORS_FETCHED_PAGE: AuthorsFetchedPage,
+  GENRES_FETCHED_PAGE: GenresFetchedPage**/
 }
 
-const { BOOKS_FETCHED_PAGE } = pageTypes;
+const { BOOKS_FETCHED_PAGE, AUTHOR_PAGE } = pageTypes;
 
 const contextTypes = {
   router: PropTypes.object.isRequired
@@ -38,19 +41,6 @@ class CenterPageContainer extends Component {
       isLoading: false
     }
   }
-  componentWillMount(){
-    this.setState({ isLoading: true });
-    this.props.getBooks()
-      .then((data)=>{
-      if(data.response && data.response.status >= 400){
-        this.setState({
-          isLoading:false
-        });
-      }else{
-        this.props.showPage(BOOKS_FETCHED_PAGE);
-      }
-    })
-  }
 
   render(){
       if(this.state.isLoading){
@@ -62,7 +52,9 @@ class CenterPageContainer extends Component {
         return(
           <div className="col-md-6">
             <FlashMessageList />
-            {/**<SpecificPage/>**/}
+            <ErrorBoundary>
+              {this.props.pageType && <SpecificPage/>}
+            </ErrorBoundary>
           </div>)
       }
     }

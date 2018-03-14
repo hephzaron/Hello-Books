@@ -60,8 +60,6 @@ class Sidebar extends Component {
         }
       }]
     }
-
-    this.onClickCreate = this.onClickCreate.bind(this);
     this.listBook = this.listBook.bind(this);
     this.listBorrowedBook = this.listBorrowedBook.bind(this)
   }
@@ -105,11 +103,7 @@ class Sidebar extends Component {
         toggledClass: 'active'
     });
   }
-
-  onClickCreate(event){
-    event.preventDefault()
-  }
-
+  
   listBook(event){
     event.preventDefault();
     this.setState({
@@ -129,7 +123,6 @@ class Sidebar extends Component {
       <ErrorBoundary>
       <CustomSidebar
         sidebarClass = "admin-sidebar"
-        onClickCreate = {this.onClickCreate}
         listBook = {this.listBook}
         listBorrowedBook = {this.listBorrowedBook}>
         {this.state.list==='book' && 

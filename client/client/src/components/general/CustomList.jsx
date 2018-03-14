@@ -63,7 +63,7 @@ class CustomList extends Component{
     const listItems = listContent.map((item, index)=>
     <li key={index}
       role={item.role?item.role:''}
-      onClick = { item.onClick }
+      onClick = {item.onClick ? item.onClick: null }
       className = {classnames(item.role=='seperator'?'divider':'list-item',
           item.role=='header'?'dropdown-header':'')}
       style = {{...item['role'] === 'header' ? {fontSize:'17px'}:{fontSize:'16px'}}}>

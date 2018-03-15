@@ -393,7 +393,10 @@ gold {
         padding-bottom: 10px !important;
         padding-top: 10px !important;
         margin-top: 20px;
-        width: 60%;
+        width: 70%;
+        textarea {
+            width: 100%
+        }
         .btn-success {
             width: 100%;
             padding: 2px;
@@ -404,4 +407,58 @@ gold {
             text-transform: capitalize
         }
     }
+}
+
+
+/*Custom style for file upload field*/
+
+$width: 100%;
+$display: inline-block;
+.inputfile {
+    opacity: 0;
+    &-box {
+        position: relative;
+        display: $display;
+        width: $width;
+        height: 40px !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+#image-file,
+#doc-file {
+    float: left;
+    width: 0px;
+}
+
+.preview {
+    width: $width;
+    height: 40px !important;
+    display: $display;
+    margin-bottom: 4px;
+    padding-bottom: 0px;
+    border: 2px solid rgb(151, 190, 223);
+    .btn {
+        text-align: left;
+        padding-left: 2px;
+        padding-right: 2px;
+        height: 100%;
+        width: 110px;
+        p {
+            float: right;
+            position: relative;
+            bottom: 20px;
+        }
+    }
+    &>p {
+        position: relative;
+        left: 115px;
+        bottom: 25px;
+        height: 10px
+    }
+}
+
+.upload-file {
+    height: 40px;
+    margin-bottom: 10px
 }

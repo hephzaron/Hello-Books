@@ -323,30 +323,3 @@ $border-radius: 4px;
     margin-top: 7px;
     margin-right: 7px;
 }
-
-.inputfile {
-    opacity: 0;
-    &-box {
-        position: relative;
-        display: $display;
-        width: $width
-    }
-}
-
-#file {
-    float: left;
-    width: 0px;
-}
-
-.preview {
-    width: $width;
-    display: $display;
-    margin-bottom: 4px;
-    padding-bottom: 0px;
-    border: 2px solid rgb(151, 190, 223);
-    p {
-        float: right;
-        width: $width*0.7;
-        margin: 7px 10px 0px 2px
-    }
-}

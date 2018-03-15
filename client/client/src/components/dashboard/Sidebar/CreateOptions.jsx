@@ -15,6 +15,7 @@ const CreateOptions = (props) =>
   const listContent = [
     { 
       name:'Book Genre',
+      onClick: props.clickGenre,
       href:''
     },{
       role:'seperator'
@@ -26,6 +27,7 @@ const CreateOptions = (props) =>
       role:'seperator'
     },{
       name: 'Book',
+      onClick: props.clickBook,
       href:''
     }
   ]
@@ -42,7 +44,9 @@ const CreateOptions = (props) =>
 }
 
 CreateOptions.propTypes = {
-  clickAuthor: PropTypes.func.isRequired
+  clickAuthor: PropTypes.func.isRequired,
+  clickGenre: PropTypes.func.isRequired,
+  clickBook: PropTypes.func.isRequired
 }
 
 export default CreateOptions;

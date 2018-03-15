@@ -40,7 +40,7 @@ class AuthorPage extends Component {
     }
     this.setState({errors:{}})    
     this.setState({isLoading:true});
-    this.props.userSignupRequest(this.state.author)
+    this.props.createAuthor(this.state.author)
      .then(data=>{
        if(data.response && data.response.status>=400){
          this.setState({isLoading:false})

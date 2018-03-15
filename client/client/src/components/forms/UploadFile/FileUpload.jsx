@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 /**
  * File upload presentational component
@@ -10,47 +11,31 @@ import PropTypes from 'prop-types';
  */
 
 const FileUpload = (props) => (
+  <div className = "upload-file">
   <span className = "inputfile-box" >
   <div className="preview">
-  <label htmlFor="file" className = "btn btn-default" >{props.fileExtensionMessage}</label>
+  <label 
+    htmlFor={`${props.name}-file`}
+    className = {"btn btn-default glyphicon glyphicon-folder-open"} >
+      <p>{` ${props.fileExtensionMessage}`}</p>
+  </label>
     <input 
       type="file" 
-      id="file"
-      name="file" 
-      className="inputfile"
-      name = "inputfile" 
-      accept= {`.jpg, .jpeg, .png, ${props.fileExtension ? props.fileExtension:''}` }
-      onchange={props.onChange}/>
+      id={`${props.name}-file`}
+      name={props.name}
+      className={classnames(`inputfile`)}
+      accept= {props.fileExtension ? props.fileExtension:''}/>
         <p>{props.uploadMessage}</p>
     </div>
-    {
-      props.validationError.name && 
-      <p className = "form-text text-danger">
-        {props.validationError.name}
-      </p>
-    }
-    {
-      props.validationError.size && 
-      <p className = "form-text text-danger">
-        {props.validationError.size}
-      </p>
-    }
-      <span 
-        className = "btn btn-group btn-default"   
-        style={{width:'100%'}}
-        onClick = {props.uploadFile}>
-        Click to upload
-      </span>
   </span>
+  </div>
 )
 
 FileUpload.propTypes = {
-  onChange: PropTypes.func,
-  fileExtension: PropTypes.string,
-  fileExtensionMessage: PropTypes.string,
-  validationError: PropTypes.object.isRequired,
+  fileExtension: PropTypes.string.isRequired,
+  fileExtensionMessage: PropTypes.string.isRequired,
   uploadMessage: PropTypes.string.isRequired,
-  uploadFile: PropTypes.func.isRequired
+  name: PropTypes.string.isRequired
 }
 FileUpload.defaultProps = {
   uploadMessage: 'No files currently selected for upload'

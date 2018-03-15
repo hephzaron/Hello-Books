@@ -8,18 +8,18 @@ import classnames from 'classnames';
  * @returns {void} 
  */
 
-const Textarea = (props) => (
+const TextArea = ({label}) => (
 	<div className="form-group form-sm">
-		<textarea {...rest}>
-		{props.label}
+		<textarea
+			className={classnames(`form-control`)}>
+			{label}
 		</textarea>
 	</div>
 )
 
-Textarea.propTypes = {
-	label:PropTypes.string.isRequired
+TextArea.propTypes = {
+	label:PropTypes.string.isRequired,
+	inputClass: PropTypes.string
 }
 
-Textarea.defaultProps = {
-}
-export default Textarea
+export default TextArea

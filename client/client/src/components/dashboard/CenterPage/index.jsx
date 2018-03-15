@@ -12,6 +12,8 @@ import ErrorBoundary from '../../ErrorBoundary';
 
 import SearchPage from '../pages/Search';
 import AuthorPage from '../pages/Author';
+import GenrePage from '../pages/Genre';
+import BookPage from '../pages/Book';
 import BooksFetchedPage from '../pages/Book/BooksFetchedPage';
 /**import AuthorsFetchedPage from '../pages/Author/AuthorsFetchedPage';
 import GenresFetchedPage from '../pages/Genre/GenresFetchedPage';**/
@@ -19,12 +21,18 @@ import GenresFetchedPage from '../pages/Genre/GenresFetchedPage';**/
 const CENTER_PAGE_COMPONENTS = {
   SEARCH_PAGE: SearchPage,
   AUTHOR_PAGE: AuthorPage,
+  GENRE_PAGE: GenrePage,
+  BOOK_PAGE: BookPage,
   BOOKS_FETCHED_PAGE: BooksFetchedPage,
   /**AUTHORS_FETCHED_PAGE: AuthorsFetchedPage,
   GENRES_FETCHED_PAGE: GenresFetchedPage**/
 }
 
-const { BOOKS_FETCHED_PAGE, AUTHOR_PAGE } = pageTypes;
+const { 
+  BOOKS_FETCHED_PAGE, 
+  AUTHOR_PAGE, 
+  GENRE_PAGE 
+} = pageTypes;
 
 const contextTypes = {
   router: PropTypes.object.isRequired

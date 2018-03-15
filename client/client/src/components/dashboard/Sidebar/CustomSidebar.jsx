@@ -7,12 +7,18 @@ import pageTypes from '../CenterPage/pageTypes';
 import { loadPage } from 'Actions/centerPage';
 import { connect } from 'react-redux';
 
-const { AUTHOR_PAGE } = pageTypes;
+const { 
+  AUTHOR_PAGE, 
+  GENRE_PAGE,
+  BOOK_PAGE
+} = pageTypes;
 
 class CustomSidebar extends Component {
   constructor(props){
     super(props);
     this.clickAuthor = this.clickAuthor.bind(this);
+    this.clickGenre = this.clickGenre.bind(this);
+    this.clickBook = this.clickBook.bind(this);
   }
 
   clickAuthor(event){
@@ -20,12 +26,24 @@ class CustomSidebar extends Component {
     this.props.loadPage(AUTHOR_PAGE)
   }
 
+  clickGenre(event){
+    event.preventDefault();
+    this.props.loadPage(GENRE_PAGE)
+  }
+
+  clickBook(event){
+    event.preventDefault();
+    this.props.loadPage(BOOK_PAGE)
+  }
+
   render(){
     return(
       <div className={classnames(`${this.props.sidebarClass} col-md-3`)}>
         <div className="btn btn-default dropdown-create-options" >Create</div>
         <CreateOptions
-          clickAuthor = {this.clickAuthor}/>
+          clickAuthor = {this.clickAuthor}
+          clickGenre = {this.clickGenre}
+          clickBook = {this.clickBook}/>
         <hr/>
         <div id="wrapper">
           <div className="scrollbar" id="style-default">

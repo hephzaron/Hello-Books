@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash';
  * @return {object} isValid and errors
  */
 
-export default (inputs) {
+export default (inputs) => {
     let errors = {};
     const {
         id,

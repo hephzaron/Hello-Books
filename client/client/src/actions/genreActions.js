@@ -80,7 +80,7 @@ const createGenre = (genreDetails) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: 'errors.response.data.message-create-genre'
             }));
             return errors;
         })

@@ -15,8 +15,13 @@ export default (inputs) => {
         name
     } = inputs;
 
+    let validText = /^\w*(\s*\w*)*$/i
+
     if (Validator.isEmpty(name)) {
         errors.name = 'This field is required'
+    }
+    if (!Validator.isEmpty(name) && !validText.test(name)) {
+        errors.name = 'Please enter a valid book category'
     }
     return {
         errors,

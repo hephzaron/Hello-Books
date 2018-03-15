@@ -9,6 +9,9 @@ import { isEmpty } from 'lodash';
  */
 
 export default (inputs) => {
+
+    let validText = /^\w*(\s*\w*)*$/i
+
     let errors = {};
     const {
         id,
@@ -25,16 +28,17 @@ export default (inputs) => {
     if (Validator.isEmpty(description)) {
         errors.description = 'Give a brief description of book here'
     }
+    if (!Validator.isEmpty(title) && !validText.test(title)) {
+        errors.title = "Please enter a valid book title"
+    }
     if (Number.isNaN(parseInt(genreId, 10))) {
         errors.genreId = 'Please select a book category'
     }
+    if (Number.isNaN(parseInt(quantity, 10))) {
+        errors.quantity = 'Field must be of numeric type'
+    }
     if (!Validator.isISBN(ISBN)) {
         errors.ISBN = 'Field of type ISBN is required'
-    }
-    if (!id) {
-        if (Number.isNaN(parseInt(quantity, 10))) {
-            errors.quantity = 'Field must be of numeric type'
-        }
     }
     return {
         errors,

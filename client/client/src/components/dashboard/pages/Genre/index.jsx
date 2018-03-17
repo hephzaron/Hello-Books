@@ -48,7 +48,7 @@ class GenrePage extends Component {
   }
 
   isFormValid(){
-    const { errors, isValid } = validateGenre(this.state.genre);
+    const { errors, isValid } = validateGenre(this.state.genre,'create');
     if(!isValid){
       this.setState({errors});
     }

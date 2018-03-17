@@ -3,20 +3,32 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import BookForm from './BookForm';
 import validateBook from 'Utils/validators/book';
+import validateGenre from 'Utils/validators/genre';
 import validFileType from 'Utils/validators/upload';
 import { createBook } from 'Actions/bookActions';
+import { fetchGenres } from 'Actions/genreActions';
+
+/**
+ * @class BookPage
+ * @description Renders Book page component
+ * @param {object}-props
+ * @returns {JSX} - React element * 
+ */
 
 class BookPage extends Component {
   constructor(props){
     super(props);
     this.state = {
       book:{
+        genre_id:0,
         title:'',
         quantity:0,
         description:'',
+        ISBN:'',
         fileDir:'',
         imageDir:''
       },
+      genreName:'',
       image : {
         name: 'No image currently selected',
         size: 0,
@@ -27,6 +39,22 @@ class BookPage extends Component {
         size: 0,
         fileDir: ''        
       },
+      genres: [
+        {
+          "name": "Maths and statistics",
+          "id": 1,
+        },{
+          "name": "Sciences",
+          "id": 2
+        },{
+          "name": "Linguistics",
+          "id": 3
+        },{
+          "name": "Human Biology",
+          "id": 4
+        }
+      ],
+      showItems:false,
       isLoading: false,
       errors:{}
     }    
@@ -34,17 +62,73 @@ class BookPage extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.handleImageSelect = this.handleImageSelect.bind(this);
     this.handleDocSelect = this.handleDocSelect.bind(this);
+    this.onGenreClick = this.onGenreClick.bind(this);
   }
 
-  
+/**
+ * @method componentWillMount
+ * @memberof BookPage
+ * @description Lifecycle method to load book categories
+ * @param {null}
+ * @returns {void}
+ */
+componentWillMount(){
+  this.setState({
+    isLoading:true
+  });
+  this.props.fetchGenres()
+    .then((data)=>{
+    if(data.response && data.response.status >= 400){
+      this.setState({
+        isLoading:false
+      });
+    }
+    this.setState({
+      isLoading: false
+    });
+  });
+}
+
+/**
+ * @method componentDidMount
+ * @memberof BookPage
+ * @description Lifecycle method to handle click and 
+ * change events for files and book categories
+ * @param {null}
+ * @returns {void}
+ */
 componentDidMount(){
+
   let imageFile = document.getElementById('image-file');
   let docFile = document.getElementById('doc-file');
   imageFile.addEventListener('change', this.handleImageSelect,false);
   docFile.addEventListener('change',this.handleDocSelect,false);
+
+  
+  let dropdownSelect = document.getElementById('dropdown-select');
+  dropdownSelect.addEventListener('click',()=>{
+    this.setState({
+      showItems:!this.state.showItems
+    })
+  })
+
 }
 
+/**
+ * @method onChange
+ * @memberof BookPage
+ * @description Handles on change event for form fields
+ * @param {object}  event - event handler
+ * @returns {void}
+ */
+
   onChange(event){
+    if(event.target.name==='genreName'){
+      this.setState({
+        genreName: event.target.value,
+        showItems: true
+      })
+    }
     
     this.setState({
       book:{
@@ -59,7 +143,7 @@ componentDidMount(){
    * @description This handles form input onChnage event
    * @param {object} event-event handdler
    * @returns {undefined}
-   * @memberof UploadFile
+   * @memberof BookPage
    */
 
   handleImageSelect(event){
@@ -80,7 +164,14 @@ componentDidMount(){
       size: files[0].size,
       imgDir: window.URL.createObjectURL(files[0])
       },
-      errors: {}
+      book:{
+        ...this.state.book,
+        ['imageDir']:window.URL.createObjectURL(files[0])
+      },
+      errors:{
+        ...errors,
+        image : null
+      }
     });
 
   }
@@ -88,9 +179,9 @@ componentDidMount(){
    /**
    * @method handleDocSelect
    * @description This handles form input onChnage event
-   * @param {object} event-event handdler
+   * @param {object} event-event handler
    * @returns {undefined}
-   * @memberof UploadFile
+   * @memberof BookPage
    */
 
   handleDocSelect(event){
@@ -111,15 +202,29 @@ componentDidMount(){
         size: files[0].size,
         fileDir: window.URL.createObjectURL(files[0])
       },
-      errors: {}
+      book:{
+        ...this.state.book,
+        ['fileDir']:window.URL.createObjectURL(files[0])
+      },
+      errors:{
+        ...errors,
+        doc:null
+      }
     });
 
   }
 
+ /**
+ * @method onSubmit
+ * @memberof BookPage
+ * @description Handles form submission
+ * @param { object } event - event handler
+ * @returns {void}
+ */
   onSubmit(event){
     event.preventDefault();
 
-    if(!this.isFormValid()){ 
+    if(!this.isGenreValid()||!this.isFormValid()){ 
       return;
     }
     this.setState({errors:{}})    
@@ -135,15 +240,60 @@ componentDidMount(){
 
   }
 
+/**
+ * @method isGenreValid
+ * @memberof BookPage
+ * @description Validates user selection from a list of book genres
+ * @param {null}
+ * @returns { boolean } isValid
+ */
+
+  isGenreValid(){
+    const { genres, genreName } = this.state;
+    let { errors, isValid } = validateGenre({genres, genreName},'select');
+    if(!isValid){
+      this.setState({errors});
+    }
+    return isValid;
+  }
+
+/**
+ * @method isFormValid
+ * @memberof BookPage
+ * @description Validates user entries on form
+ * @param {null}
+ * @returns { boolean } isValid
+ */
+
   isFormValid(){
-    const { errors, isValid } = validateBook(this.state.book);
+    let { errors, isValid } = validateBook(this.state.book);
     if(!isValid){
       this.setState({errors});
     }
     return isValid;
   };
 
+
+/**
+ * @method onGenreClick
+ * @memberof BookPage
+ * @description handles click event on genre selection list
+ * @param { object } item - list item
+ * @returns { void } 
+ */
+  onGenreClick(item){
+    this.setState({
+      book:{
+        ...this.state.book,
+        ['genre_id']:item.id
+      },
+      showItems: false,
+      genreName: item.name
+    });
+  }
+
   render(){
+    
     return(
       <BookForm
         validationError = {this.state.errors}
@@ -153,13 +303,22 @@ componentDidMount(){
         onSubmit = {this.onSubmit}
         buttonRole = {'create'}
         imageFile = {this.state.image}
-        docFile = {this.state.document}/>
+        docFile = {this.state.document}
+        genres={this.state.genres}
+        genreName={this.state.genreName}
+        showItems={this.state.showItems}
+        onItemClick={(item)=>this.onGenreClick(item)}/>
     )
   }
 }
 
+const mapStateToProps = (state) => ({
+  genres: state.genres['genres']
+})
+
 const actionCreators = {
-  createBook
+  createBook,
+  fetchGenres
 }
 export { BookPage }
-export default connect(null, actionCreators)(BookPage)
+export default connect(mapStateToProps, actionCreators)(BookPage)

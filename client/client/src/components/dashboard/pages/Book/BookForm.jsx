@@ -5,6 +5,7 @@ import Button from 'Forms/Button';
 import SingleInput from 'Forms/SingleInput';
 import FileUpload from 'Forms/UploadFile/FileUpload';
 import TextArea from 'Forms/TextArea';
+import SelectionList from 'General/SelectionList';
 import FlashMessageList from 'Components/FlashMessageList';
 
 const propTypes = {
@@ -13,10 +14,12 @@ const propTypes = {
   validationError: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   book: PropTypes.object.isRequired,
-  imageFile: PropTypes.func.isRequired,
-  docFile: PropTypes.func.isRequired,
+  imageFile: PropTypes.object.isRequired,
+  docFile: PropTypes.object.isRequired,
   buttonRole: PropTypes.string.isRequired,
-  uploadFile: PropTypes.func.isRequired
+  uploadFile: PropTypes.func.isRequired,
+  genres: PropTypes.array.isRequired,
+  onItemClick: PropTypes.func.isRequired
 }
 
 const BookForm = (props) => (
@@ -26,6 +29,28 @@ const BookForm = (props) => (
         (props.buttonRole==='edit'?'Update Book': 
         null)}
     </h2>
+    <SelectionList
+      inputName = "Categories"
+      placeholder="book categories"
+      showItems = {props.showItems}
+      onChange = {props.onChange}
+      value={props.genreName}
+      listName="genreName">
+      {props.genres && 
+        props.genres.map(genre=>
+        <li 
+          key={genre.id} 
+          onClick={() => props.onItemClick(genre)}>
+            {genre.name}
+        </li>
+      )}
+    </SelectionList>
+    {
+      props.validationError.genreName && 
+      <p className = "form-text text-danger">
+        {props.validationError.genreName}
+      </p>
+    }
     <SingleInput
       identifier = "inputTitle"
       placeholder = "Title"
@@ -37,6 +62,19 @@ const BookForm = (props) => (
         props.validationError.title && 
         <p className = "form-text text-danger">
           {props.validationError.title}
+        </p>
+      }
+    <SingleInput
+      identifier = "inputISBN"
+      placeholder = "ISBN"
+      name = "ISBN"
+      label = "ISBN:"
+      onChange = {props.onChange}
+      value = {props.book.ISBN}/>
+      {
+        props.validationError.ISBN && 
+        <p className = "form-text text-danger">
+          {props.validationError.ISBN}
         </p>
       }
     <SingleInput

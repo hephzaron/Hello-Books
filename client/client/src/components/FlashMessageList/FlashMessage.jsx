@@ -12,11 +12,12 @@ import classnames from 'classnames';
 const FlashMesssage = ({ message })=>{
   const {type, text} = message;
   return (
-    <div className = {classnames('alert',{
+    <div className = {classnames('alert fade in',{
         'alert-info': type === 'info',
         'alert-danger': type === 'error',
         'alert-success': type === 'success'
     })}>
+    <a className="close" data-dismiss="alert">&times;</a>
       {
 				Array.isArray(text) && text.length>1 &&
 					<ul>

@@ -115,6 +115,11 @@ module.exports = {
         new webpack.DefinePlugin({
             API_KEY: JSON.stringify(API_KEY)
         }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
+        }),
         new webpack.HotModuleReplacementPlugin()
 
     ],

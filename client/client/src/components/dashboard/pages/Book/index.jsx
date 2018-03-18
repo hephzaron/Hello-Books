@@ -65,29 +65,6 @@ class BookPage extends Component {
     this.onGenreClick = this.onGenreClick.bind(this);
   }
 
-/**
- * @method componentWillMount
- * @memberof BookPage
- * @description Lifecycle method to load book categories
- * @param {null}
- * @returns {void}
- */
-componentWillMount(){
-  this.setState({
-    isLoading:true
-  });
-  this.props.fetchGenres()
-    .then((data)=>{
-    if(data.response && data.response.status >= 400){
-      this.setState({
-        isLoading:false
-      });
-    }
-    this.setState({
-      isLoading: false
-    });
-  });
-}
 
 /**
  * @method componentDidMount
@@ -98,6 +75,8 @@ componentWillMount(){
  * @returns {void}
  */
 componentDidMount(){
+  
+  this.props.fetchGenres();
 
   let imageFile = document.getElementById('image-file');
   let docFile = document.getElementById('doc-file');
@@ -204,7 +183,7 @@ componentDidMount(){
       },
       book:{
         ...this.state.book,
-        ['fileDir']:window.URL.createObjectURL(files[0])
+        fileDir: window.URL.createObjectURL(files[0])
       },
       errors:{
         ...errors,
@@ -226,13 +205,12 @@ componentDidMount(){
 
     if(!this.isGenreValid()||!this.isFormValid()){ 
       return;
-    }
-    this.setState({errors:{}})    
+    }   
     this.setState({isLoading:true});
     this.props.createBook(this.state.book)
      .then(data=>{
        if(data.response && data.response.status>=400){
-         this.setState({isLoading:false})
+         this.setState({isLoading:true})
        }else{
          document.getElementById('book-form').reset();
        }
@@ -252,8 +230,14 @@ componentDidMount(){
     const { genres, genreName } = this.state;
     let { errors, isValid } = validateGenre({genres, genreName},'select');
     if(!isValid){
-      this.setState({errors});
+      this.setState({
+        errors, 
+        showItems:false
+      });
     }
+    this.setState({
+      showItems:false
+    });
     return isValid;
   }
 

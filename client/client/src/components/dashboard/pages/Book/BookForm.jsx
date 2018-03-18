@@ -91,7 +91,16 @@ const BookForm = (props) => (
         </p>
       }
     <TextArea
-      label= "Book description"/>
+      value= {props.book.description}
+      name = "description"
+      placeholder = "Book description"
+      onChange={props.onChange}/>
+      {
+        props.validationError.description&& 
+        <p className = "form-text text-danger">
+          {props.validationError.description}
+        </p>
+      }
     <FileUpload
       fileExtensionMessage = "Upload pics"
       fileExtension = ".jpg, .jpeg, .png"

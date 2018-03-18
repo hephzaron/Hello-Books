@@ -14,9 +14,8 @@ export default (inputs) => {
 
     let errors = {};
     const {
-        id,
         title,
-        genreId,
+        genre_id,
         description,
         ISBN,
         quantity,
@@ -31,8 +30,8 @@ export default (inputs) => {
     if (!Validator.isEmpty(title) && !validText.test(title)) {
         errors.title = "Please enter a valid book title"
     }
-    if (Number.isNaN(parseInt(genreId, 10))) {
-        errors.genreId = 'Please select a book category'
+    if (Number.isNaN(parseInt(genre_id, 10))) {
+        errors.genre_id = 'Please select a book category'
     }
     if (Number.isNaN(parseInt(quantity, 10))) {
         errors.quantity = 'Field must be of numeric type'

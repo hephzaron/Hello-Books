@@ -41,7 +41,13 @@ const contextTypes = {
 const propTypes = {
   pageType: PropTypes.string.isRequired
 }
-
+/**
+ * @class CenterPageContainer
+ * @extends { React.Component }
+ * @description Center page to render different pages
+ * @param { object } props
+ * @returns { JSX }
+ */
 class CenterPageContainer extends Component {
   constructor(props){
     super(props);

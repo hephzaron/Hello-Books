@@ -7,6 +7,7 @@ import { toggleElementClass } from 'Utils/toggle';
 
 /**
  * @class BookListItems
+ * @extends { React.Component }
  * @description Renders and handle dropdown of book lists 
  * @param { object } - props
  * @return { JSX } elements

@@ -12,6 +12,12 @@ const propTypes = {
   isLoading: PropTypes.bool.isRequired,
   genre: PropTypes.object.isRequired
 }
+/**
+ * @function GenreForm
+ * @description Renders the book category creation form
+ * @param { object } props
+ * @returns { JSX }
+ */
 
 const GenreForm = (props) => (
   <form className="form-user" id="genre-form" onSubmit = {props.onSubmit}>

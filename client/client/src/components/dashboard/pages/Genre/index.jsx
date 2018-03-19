@@ -5,6 +5,13 @@ import GenreForm from './GenreForm';
 import validateGenre from 'Utils/validators/genre';
 import { createGenre } from 'Actions/genreActions';
 
+
+/**
+ * @class GeenrePage 
+ * @description Renders the book categories page
+ * @param { object } props
+ * @returns { JSX }
+ */
 class GenrePage extends Component {
   constructor(props){
     super(props);
@@ -19,6 +26,13 @@ class GenrePage extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+   * @method onChange
+   * @memberof GenrePage
+   * @description handle onChange event on Book Genre form
+   * @param { event } event handler
+   * @returns { void  }
+   */
   onChange(event){
     this.setState({
       genre:{
@@ -28,6 +42,13 @@ class GenrePage extends Component {
     });
   }
 
+  /**
+   * @method onSubmit
+   * @memberof GenrePage
+   * @description handle onSubmit event on Book Genre form
+   * @param { event } event handler
+   * @returns { void  }
+   */
   onSubmit(event){
     event.preventDefault();
 
@@ -47,6 +68,13 @@ class GenrePage extends Component {
 
   }
 
+  /**
+   * @method isFormValid
+   * @memberof GenrePage
+   * @description Validate user  entries on Genre form
+   * @param { null }
+   * @returns { boolean } isValid
+   */
   isFormValid(){
     const { errors, isValid } = validateGenre(this.state.genre,'create');
     if(!isValid){

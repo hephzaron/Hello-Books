@@ -6,6 +6,14 @@ import IconButton from 'material-ui/IconButton';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+/**
+ * @class CustomBadge
+ * @extends { React.Component }
+ * @description Renders the user  avatar annd home icon on navigation bar
+ * @param { null }
+ * @returns { void }
+ */
+
 class CustomBadge extends Component{
   render(){
     const {

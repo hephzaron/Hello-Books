@@ -22,6 +22,12 @@ const propTypes = {
   onItemClick: PropTypes.func.isRequired
 }
 
+/**
+ * @function BookForm
+ * @description Renders the book form component
+ * @param {object} props 
+ * @returns { JSX }
+ */
 const BookForm = (props) => (
   <form className="form-user" id="book-form" onSubmit = {props.onSubmit}>
     <h2>

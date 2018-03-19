@@ -13,7 +13,12 @@ const propTypes = {
   author: PropTypes.object.isRequired,
   buttonRole: PropTypes.string.isRequired
 }
-
+/**
+ * @function AuthorForm
+ * @description  Renders the author form components
+ * @param { object } props
+ * @returns { JSX }
+ */
 const AuthorForm = (props) => (
   <form className="form-user" id="author-form" onSubmit = {props.onSubmit}>
     <h2>

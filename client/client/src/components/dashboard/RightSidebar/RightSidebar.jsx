@@ -2,6 +2,13 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
+/**
+ * @function RightSidebar
+ * @param { object } props
+ * @description Presentational component for right sidebar components
+ * @returns { JSX }
+ */
+
 const RightSidebar = (props) => (
   <div className={classnames(`${props.rightSidebarClass} col-md-3`)}>
     <span className="glyphicon glyphicon-list-alt"> Sort books by</span>

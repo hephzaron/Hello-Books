@@ -7,6 +7,13 @@ import  { fetchBorrowedBook, returnBook } from 'Actions/borrowActions';
 import { connect } from 'react-redux';
 import ErrorBoundary from 'Components/ErrorBoundary';
 
+/**
+ * @class Sidebar
+ * @extends { React.Component }
+ * @description renders the left sidebar components
+ * @param { object } props
+ * @returns { JSX }
+ */
 class Sidebar extends Component {
   constructor(props){
     super(props);
@@ -64,6 +71,14 @@ class Sidebar extends Component {
     this.listBorrowedBook = this.listBorrowedBook.bind(this)
   }
 
+  /**
+   * @method componentWillMount
+   * @memberof SIdebar
+   * @description Lifecycle component just before component mounts
+   * @param { null } 
+   * @returns { void }
+   */
+
   componentWillMount(){
     
     this.setState({
@@ -94,7 +109,13 @@ class Sidebar extends Component {
     });     
   }
 
-
+  /**
+   * @method componentDidMount
+   * @memberof Sidebar
+   * @description Lifecycle component after component mounts
+   * @param { null } 
+   * @returns { void }
+   */
   componentDidMount(){
     toggleElementClass({
         toggleType: 'double',
@@ -104,6 +125,13 @@ class Sidebar extends Component {
     });
   }
   
+  /**
+   * @method listBook
+   * @memberof Sidebar
+   * @description Handles click event to show books list
+   * @param { event }  event handler
+   * @returns { void }
+   */
   listBook(event){
     event.preventDefault();
     this.setState({
@@ -111,6 +139,13 @@ class Sidebar extends Component {
     });
   }
 
+  /**
+   * @method listBorrowedBook
+   * @memberof Sidebar
+   * @description Handles click event to show borrowed books list
+   * @param { event }  event handler
+   * @returns { void }
+   */
   listBorrowedBook(event){
     event.preventDefault();
     this.setState({

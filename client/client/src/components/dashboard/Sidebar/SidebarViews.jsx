@@ -14,7 +14,13 @@ const {
     GENRES_FETCHED_PAGE 
   } = pageTypes;
 
-
+/**
+ * @class SidebarView
+ * @extends { React.Component }
+ * @description Renders various view options on sidebar
+ * @param { object } props
+ * @returns {  JSX }
+ */
 class SidebarViews extends Component {
   constructor(props){
     super(props);
@@ -28,6 +34,13 @@ class SidebarViews extends Component {
     this.viewAuthors = this.viewAuthors.bind(this);
   }
 
+  /**
+   * @method viewCategories
+   * @memberof SidebarViews
+   * @description Handles click events to view boook categories
+   * @param { event } event handler
+   * @returns { void }
+   */
   viewCategories(event){
     event.preventDefault();
 
@@ -44,6 +57,13 @@ class SidebarViews extends Component {
     })
   }
 
+  /**
+   * @method viewBooks
+   * @memberof SidebarViews
+   * @description Handles click events to view boooks
+   * @param { event } event handler
+   * @returns { void }
+   */
   viewBooks(event){
     event.preventDefault();
     
@@ -60,6 +80,13 @@ class SidebarViews extends Component {
     })
   }
 
+  /**
+   * @method viewCategories
+   * @memberof SidebarViews
+   * @description Handles click events to view authors
+   * @param { event } event handler
+   * @returns { void }
+   */
   viewAuthors(event){
     event.preventDefault();
     

@@ -4,6 +4,13 @@ import AuthorBookLists from './AuthorBookLists';
 import GenreBookLists from './GenreBookLists';
 import { toggleElementClass } from 'Utils/toggle';
 
+/**
+ * @class SortSidebar
+ * @extends { React.Component }
+ * @description renders the right sider bar components 
+ * @param { object } props
+ * @returns { JSX } 
+ */
 
 class SortSidebar extends Component {
   constructor(props){
@@ -16,6 +23,14 @@ class SortSidebar extends Component {
     this.sortByCategories = this.sortByCategories.bind(this);
   }
 
+  /**
+   * @method componentDidMount
+   * @memberof  SortSidebar
+   * @description Lifecycle method after component mounts
+   * @param { null } 
+   * @returns { void }
+   */
+
   componentDidMount(){
     toggleElementClass({
         toggleType: 'double',
@@ -24,6 +39,13 @@ class SortSidebar extends Component {
         toggledClass: 'active-r'
     });
   }
+
+  /**
+   * @method sortByAuthors
+   * @memberof SortSidebar
+   * @description Display list of sorted book by author
+   * @param {event} event handler 
+   */
 sortByAuthors(event){
   event.preventDefault()
   this.setState({
@@ -31,6 +53,13 @@ sortByAuthors(event){
   })
 
 }
+
+  /**
+   * @method sortByCategories
+   * @memberof SortSidebar
+   * @description Display list of sorted book by categories
+   * @param {event} event handler 
+   */
 sortByCategories(event){
   event.preventDefault()
   this.setState({

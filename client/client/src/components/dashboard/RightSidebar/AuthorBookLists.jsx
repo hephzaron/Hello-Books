@@ -11,6 +11,13 @@ const propTypes = {
   authors: PropTypes.array
 }
 
+/**
+ * @class AuthorBookLists
+ * @extends { React.Component }
+ * @description Renders a list of authors and written books
+ * @param { object } props
+ * @returns { JSX }
+ */
 class AuthorBookLists extends Component {
   constructor(props){
     super(props);
@@ -48,6 +55,13 @@ class AuthorBookLists extends Component {
       };
   }
 
+  /**
+   * @method componentWillMount
+   * @memberof AuthorBookLists
+   * @description Lifecycle event just before component mounts
+   * @param { null }
+   * @returns { void }
+   */
   componentWillMount(){
     this.setState({
       isLoading:true

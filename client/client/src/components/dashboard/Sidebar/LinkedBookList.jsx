@@ -5,6 +5,14 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { borrowBook, returnBook } from 'Actions/borrowActions';
 
+/**
+ * @class LinkedBookList
+ * @extends { React.Component }
+ * @description Renders list items and handles individual item eventd
+ * @param { object } props
+ * @returns { JSX }
+ */
+
 class LinkedBookList extends Component {
 
   constructor(props){
@@ -14,6 +22,13 @@ class LinkedBookList extends Component {
     this.returnBook = this.returnBook.bind(this);
   }
   
+  /**
+   * @method borrowBook
+   * @memberof LinkedBookList
+   * @description Borrows book
+   * @param {number} id 
+   * @returns { void }
+   */
   borrowBook(id){
     this.props.borrowBook({
       userId:this.props.user['userId'],
@@ -21,6 +36,13 @@ class LinkedBookList extends Component {
     })
   }
 
+   /**
+   * @method returnBook
+   * @memberof LinkedBookList
+   * @description Returns book
+   * @param {number} id 
+   * @returns { void }
+   */
   returnBook(id){
     this.props.returnBook({
       userId:this.props.user['userId'],

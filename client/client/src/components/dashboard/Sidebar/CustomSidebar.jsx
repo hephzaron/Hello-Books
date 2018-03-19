@@ -13,6 +13,14 @@ const {
   BOOK_PAGE
 } = pageTypes;
 
+
+/**
+ * @class CustomSidebar
+ * @extends { React.Component }
+ * @description Renders the left sidebar components
+ * @param { object } props
+ * @returns { JSX }
+ */
 class CustomSidebar extends Component {
   constructor(props){
     super(props);
@@ -21,16 +29,35 @@ class CustomSidebar extends Component {
     this.clickBook = this.clickBook.bind(this);
   }
 
+  /**
+   * @method clickAuthor
+   * @description handles author click event to render author page
+   * @param { event } event handler
+   * @returns { void }
+   */
+
   clickAuthor(event){
     event.preventDefault();
     this.props.loadPage(AUTHOR_PAGE)
   }
 
+    /**
+   * @method clickGenre
+   * @description handles genre click event to render genre page
+   * @param { event } event handler
+   * @returns { void }
+   */
   clickGenre(event){
     event.preventDefault();
     this.props.loadPage(GENRE_PAGE)
   }
 
+  /**
+   * @method clickAuthor
+   * @description handles book click event to render book page
+   * @param { event } event handler
+   * @returns { void }
+   */
   clickBook(event){
     event.preventDefault();
     this.props.loadPage(BOOK_PAGE)

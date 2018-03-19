@@ -10,6 +10,14 @@ const propTypes = {
   genres: PropTypes.array
 }
 
+/**
+ * @class GenreBookLists
+ * @extends { React.Component }
+ * @description renders a list of book category and assigned books
+ * @param { object } props
+ * @returns { JSX }
+ */
+
 class GenreBookLists extends Component {
   constructor(props){
     super(props);
@@ -47,21 +55,18 @@ class GenreBookLists extends Component {
       };
   }
 
+  /**
+   * @method componentWillMount 
+   * @memberof GenreBookLists
+   * @description lifecycle method just before components mount to fetch genres
+   * @param { null }
+   * @returns { null }
+   */
   componentWillMount(){
     this.setState({
       isLoading:true
     });
     this.props.fetchGenres()
-      .then((data)=>{
-      if(data.response && data.response.status >= 400){
-        this.setState({
-          isLoading:false
-        });
-      }
-      this.setState({
-        isLoading: false
-      });
-    });
   }
 
   render(){

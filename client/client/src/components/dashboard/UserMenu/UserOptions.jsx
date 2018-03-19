@@ -22,6 +22,12 @@ const listContent = [
   }
 ]
 
+/**
+ * @function UserOptions
+ * @description Presentational component to render user options dropdown
+ * @param { object } props 
+ * @returns { JSX }
+ */
 const UserOptions = (props)=> {
   const { email, username } = props.user;
 

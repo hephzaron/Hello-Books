@@ -3,6 +3,14 @@ import { connect } from 'react-redux';
 import UserOptions from './UserOptions';
 import { logoutUser } from 'Actions/userAuth';
 
+/**
+ * @class UserDropdown
+ * @extends { React.Component } 
+ * @description Renders the user dropdown list
+ * @param { object } props
+ * @returns { JSX }
+ */
+
 class UserDropdown extends Component {
   constructor(props){
     super(props)
@@ -13,9 +21,24 @@ class UserDropdown extends Component {
     this.signOut = this.signOut.bind(this);
   }
 
+  /**
+   * @method viewprofile
+   * @memberof UserDropdown
+   * @description Handles on click event to view user profile
+   * @param { null }
+   * @returns { void }
+   */
   viewProfile(){
     alert('My profile')
   }
+
+   /**
+   * @method signOut
+   * @memberof UserDropdown
+   * @description Handles on click event to sign user out
+   * @param { null }
+   * @returns { void }
+   */
   signOut(){
     this.props.logoutUser()
   }

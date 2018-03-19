@@ -5,6 +5,7 @@ import CustomList from 'General/CustomList';
 
 
 /**
+ * @function CreateOptions
  * @description Renders a custom dropdown component
  * @param {void}
  * @return {JSX}

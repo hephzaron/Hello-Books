@@ -8,7 +8,8 @@ const propTypes = {
   isLoading: PropTypes.bool.isRequired,
   onEditClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
-  listPageClass: PropTypes.string.isRequired
+  listPageClass: PropTypes.string.isRequired,
+  pageOffset: PropTypes.number.isRequired
 }
 
 /**
@@ -28,7 +29,7 @@ class CenterPageList extends Component {
       pager: {
         page: 1,
         startIndex: 0,
-        endIndex:5,
+        endIndex: this.props.pageOffset,
         lastPage: false,
         lastPageNum: 0
       }
@@ -65,16 +66,17 @@ class CenterPageList extends Component {
    */
 
   goToPreviousPage(){
-    const { startIndex, page } = this.state.pager
+    const { startIndex, page } = this.state.pager;
+    const { pageOffset } = this.props;
     if(page>1){
       this.setState({
         items: [
-          ...this.props.items.slice(startIndex - 5, startIndex)
+          ...this.props.items.slice(startIndex - pageOffset, startIndex)
         ],
         pager: {
           ...this.state.pager,
           page: page - 1,
-          startIndex: startIndex - 5,
+          startIndex: startIndex - pageOffset,
           endIndex: startIndex 
         }
       })
@@ -89,8 +91,9 @@ class CenterPageList extends Component {
    * @return { void }
    */
   goToNextPage(){
-    const { startIndex, page, lastPageNum } = this.state.pager;
-    if(page >= (lastPageNum/5)){
+    const { endIndex, page, lastPageNum } = this.state.pager;
+    const { pageOffset } = this.props;
+    if(page >= (lastPageNum/pageOffset)){
       this.setState({
         pager:{
           ...this.state.pager,
@@ -101,25 +104,25 @@ class CenterPageList extends Component {
     }
       this.setState({
         items: [
-          ...this.props.items.slice(startIndex + 5, startIndex + 10)
+          ...this.props.items.slice(endIndex, endIndex + pageOffset)
         ],
         pager: {
           ...this.state.pager,
           page: page + 1,
-          startIndex: startIndex + 5,
-          endIndex: startIndex + 10,
+          startIndex: endIndex,
+          endIndex: endIndex+pageOffset,
         }
       })
   }
 
   render(){
-    const { isLoading, listPageClass } = this.props;
+    const { isLoading, listPageClass, onEditClick, onDeleteClick, pageOffset } = this.props;
     const { items,pager:{page, lastPageNum} } = this.state;
     return(
       <div className={classnames(`${listPageClass}`)}>
       <ul className="pager">
        <li className="previous" onClick={this.goToPreviousPage}><a>&larr; Previous</a></li>
-       <li>{`Page ${page} of ${Math.ceil(lastPageNum/5)}`}</li>
+       <li>{`Page ${page} of ${Math.ceil(lastPageNum/pageOffset)}`}</li>
        <li className="next" onClick = {this.goToNextPage}><a>Next &rarr;</a></li>
       </ul>
       <ul className="list-group">
@@ -145,7 +148,7 @@ class CenterPageList extends Component {
                 {title && title}
                 {name&& name}
                 {fullName && fullName}
-                {fullName &&<span className='badge'>{
+                {(fullName ||name) &&<span className='badge'>{
                     Array.isArray(Books)&& Books.length!==0 ?
                     `${Books.length} books written`: null
                   }
@@ -178,13 +181,18 @@ class CenterPageList extends Component {
                 </span>
               }
               </p>
-              <span 
-                className={classnames(`${isLoading?'disbale':''}`)} 
-                onClick={() =>props.onEditClick(item)}>Edit</span>
-            
-              <span 
-                className={classnames(`${isLoading?'disbale':''}`)} 
-                onClick={() =>props.onDeleteClick(item)}>Delete</span>
+              {
+                onEditClick &&
+                <span 
+                  className={classnames(`${isLoading?'disbale':''}`)} 
+                  onClick={() =>onEditClick(item)}>Edit</span> 
+              }
+              {
+                onDeleteClick &&
+                <span 
+                  className={classnames(`${isLoading?'disbale':''}`)} 
+                  onClick={() =>onDeleteClick(item)}>Delete</span>
+              }
             </li>)
           }
         )

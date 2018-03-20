@@ -307,8 +307,8 @@ gold {
 
 .loader {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 45%;
+    left: 45%;
     &>p {
         font-weight: bold;
         font-size: 30px;
@@ -545,7 +545,8 @@ $display: inline-block;
     text-align: $textAlign
 }
 
-.author-list {
+.author-list,
+.genre-list {
     @include parent-linked-list(left);
     .list-group-item {
         margin: 0;

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import pageTypes from './pageTypes';
 import FlashMessageList from 'Components/FlashMessageList';
 import { loadPage, showPage, hidePage } from 'Actions/centerPage';
-import { getBooks } from 'Actions/bookActions';
 import Spinner from '../Spinner';
 import ErrorBoundary from '../../ErrorBoundary';
 
@@ -16,7 +15,7 @@ import GenrePage from '../pages/Genre';
 import BookPage from '../pages/Book';
 import BooksFetchedPage from '../pages/Book/BooksFetchedPage';
 import AuthorsFetchedPage from '../pages/Author/AuthorsFetchedPage';
-/**import GenresFetchedPage from '../pages/Genre/GenresFetchedPage';**/
+import GenresFetchedPage from '../pages/Genre/GenresFetchedPage';
 
 const CENTER_PAGE_COMPONENTS = {
   SEARCH_PAGE: SearchPage,
@@ -25,12 +24,13 @@ const CENTER_PAGE_COMPONENTS = {
   BOOK_PAGE: BookPage,
   BOOKS_FETCHED_PAGE: BooksFetchedPage,
   AUTHORS_FETCHED_PAGE: AuthorsFetchedPage,
-  /**GENRES_FETCHED_PAGE: GenresFetchedPage**/
+  GENRES_FETCHED_PAGE: GenresFetchedPage
 }
 
 const { 
   BOOKS_FETCHED_PAGE,
   AUTHORS_FETCHED_PAGE,
+  GENRES_FETCHED_PAGE,
   AUTHOR_PAGE, 
   GENRE_PAGE 
 } = pageTypes;
@@ -53,10 +53,16 @@ class CenterPageContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: true
     }
   }
-
+  componentWillReceiveProps(nextProps){
+    if(this.props.pageType !== nextProps.pageType){
+      this.setState({
+        isLoading:false
+      })
+    }
+  }
   render(){
       if(this.state.isLoading){
         return (
@@ -87,8 +93,7 @@ const mapStateToProps = state => ({
 const actionCreators = {
   loadPage,
   showPage,
-  hidePage,
-  getBooks
+  hidePage
 }
 
 export default connect(mapStateToProps, actionCreators)(CenterPageContainer);

@@ -43,7 +43,8 @@ class SidebarViews extends Component {
    */
   viewCategories(event){
     event.preventDefault();
-
+    
+    this.props.showPage(GENRES_FETCHED_PAGE)
     this.setState({ isLoading: true });
     this.props.fetchGenres()
       .then((data)=>{

@@ -280,3 +280,127 @@ export const authors = [{
         }]
     }
 ]
+
+export const genres = [{
+        "name": "Maths and statistics",
+        "id": 1,
+        "books": [{
+            "id": 1,
+            "title": "Java programming for beginners"
+        }, {
+            "id": 2,
+            "title": "R-studio programming"
+        }]
+    },
+    {
+        "name": "Sciences",
+        "id": 2,
+        "books": [{
+            "id": 1,
+            "title": "ES6 for experts"
+        }, {
+            "id": 2,
+            "title": "Building micro services"
+        }, {
+            "id": 3,
+            "title": "Hone your skills"
+        }, {
+            "id": 4,
+            "title": "Video editing"
+        }]
+    },
+    {
+        "name": "Maths and  3",
+        "id": 3,
+        "books": [{
+            "id": 1,
+            "title": "Java programming for beginners"
+        }]
+    },
+    {
+        "name": "Sciences 4",
+        "id": 4,
+        "books": [{
+                "id": 1,
+                "title": "ES6 for experts"
+            },
+            {
+                "id": 2,
+                "title": "Building micro services"
+            },
+            {
+                "id": 3,
+                "title": "Hone your skills"
+            }
+        ]
+    },
+    {
+        "name": "Maths and statistics 5",
+        "id": 5,
+        "books": [{
+            "id": 1,
+            "title": "Java programming for beginners"
+        }, {
+            "id": 2,
+            "title": "R-studio programming"
+        }]
+    },
+    {
+        "name": "Sciences 6",
+        "id": 6,
+        "books": [{
+            "id": 1,
+            "title": "ES6 for experts"
+        }, {
+            "id": 2,
+            "title": "Building micro services"
+        }, {
+            "id": 3,
+            "title": "Hone your skills"
+        }, {
+            "id": 4,
+            "title": "Video editing"
+        }]
+    },
+    {
+        "name": "Maths and  7",
+        "id": 7,
+        "books": [{
+            "id": 1,
+            "title": "Java programming for beginners"
+        }]
+    },
+    {
+        "name": "Sciences 8",
+        "id": 8,
+        "books": [{
+                "id": 1,
+                "title": "ES6 for experts"
+            },
+            {
+                "id": 2,
+                "title": "Building micro services"
+            },
+            {
+                "id": 3,
+                "title": "Hone your skills"
+            }
+        ]
+    },
+
+    {
+        "name": "Sciences 9",
+        "id": 9,
+        "books": []
+    },
+    {
+        "name": "Sciences 10",
+        "id": 10,
+        "books": []
+    },
+    {
+        "name": "Sciences 10",
+        "id": 11,
+        "books": []
+    },
+]

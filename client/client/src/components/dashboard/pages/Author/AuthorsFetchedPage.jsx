@@ -58,6 +58,7 @@ class AuthorsFetchedPage extends Component {
         listPageClass = "author-list"
         items={this.state.authors}
         isLoading={this.state.isLoading}
+        pageOffset = { 5 }
         onEditClick = {(author)=>this.onEditAuthor(author)}
         onDeleteClick = {(author)=>this.onDeleteAuthor(author)}/>
     )

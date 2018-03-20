@@ -90,6 +90,7 @@ class SidebarViews extends Component {
   viewAuthors(event){
     event.preventDefault();
     
+    this.props.showPage(AUTHORS_FETCHED_PAGE) //test purpose  
     this.setState({ isLoading: true });
     this.props.getAuthors()
       .then((data)=>{

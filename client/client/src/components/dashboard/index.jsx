@@ -16,6 +16,8 @@ import CustomBadge from './UserMenu/CustomBadge';
 import UserMenu from './UserMenu';
 import { connect } from 'react-redux';
 import ErrorBoundary from '../ErrorBoundary';
+import Footer from 'General/Footer';
+import moment from 'moment';
 
 /**
  * @description Renders the dashboard on successful authentication
@@ -48,11 +50,19 @@ class Dashboard extends Component {
               <UserMenu/>
               <Search/>
            </Header>
-           <Sidebar/>
-           <CenterPage/>
-           <ErrorBoundary>
-           <RightSidebar/>
-           </ErrorBoundary>
+           <div>
+            <div className="col-md-3">
+              <Sidebar/>
+            </div>
+            <div className="col-md-6">
+              <CenterPage/>
+            </div>
+            <div className="col-md-3">
+              <RightSidebar/>
+            </div>
+            </div>
+            <Footer
+              mmYY={moment(Date.now()).format('MMMM YYYY')}/>
         </div>
       </Router>
     

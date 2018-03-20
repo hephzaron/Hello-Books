@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import pageTypes from './pageTypes';
@@ -29,7 +29,8 @@ const CENTER_PAGE_COMPONENTS = {
 }
 
 const { 
-  BOOKS_FETCHED_PAGE, 
+  BOOKS_FETCHED_PAGE,
+  AUTHORS_FETCHED_PAGE,
   AUTHOR_PAGE, 
   GENRE_PAGE 
 } = pageTypes;
@@ -64,12 +65,12 @@ class CenterPageContainer extends Component {
       }else{
       const SpecificPage = CENTER_PAGE_COMPONENTS[this.props.pageType]; 
         return(
-          <div className="col-md-6">
+          <Fragment>
             <FlashMessageList />
             <ErrorBoundary>
               {this.props.pageType && <SpecificPage/>}
             </ErrorBoundary>
-          </div>)
+          </Fragment>)
       }
     }
 };

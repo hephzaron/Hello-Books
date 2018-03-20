@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
  */
 
 const RightSidebar = (props) => (
-  <div className={classnames(`${props.rightSidebarClass} col-md-3`)}>
+  <div className={classnames(`${props.rightSidebarClass}`)}>
     <span className="glyphicon glyphicon-list-alt"> Sort books by</span>
     <hr/>
       <div className="nested-list" id="style-default">

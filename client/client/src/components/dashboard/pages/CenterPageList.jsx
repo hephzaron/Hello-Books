@@ -36,7 +36,13 @@ class CenterPageList extends Component {
     this.goToPreviousPage = this.goToPreviousPage.bind(this);
     this.goToNextPage = this.goToNextPage.bind(this);
   }
-
+/**
+ * @method componentDidMount
+ * @memberof CenterPageList
+ * @description Lifecycle method to initiate page when component mounts
+ * @param { void }
+ * @return { void }
+ */
   componentDidMount(){
    const { startIndex, endIndex } = this.state.pager;
     this.setState({
@@ -49,6 +55,14 @@ class CenterPageList extends Component {
       }
     })
   }
+
+  /**
+   * @method goToPreviousPage
+   * @memberof CenterPageList
+   * @description Handles navigation to previous page
+   * @param { void }
+   * @return { void }
+   */
 
   goToPreviousPage(){
     const { startIndex, page } = this.state.pager
@@ -67,6 +81,13 @@ class CenterPageList extends Component {
     }
   }
 
+  /**
+   * @method goToNextPage
+   * @memberof CenterPageList
+   * @description Handles navigation to next page
+   * @param { void }
+   * @return { void }
+   */
   goToNextPage(){
     const { startIndex, page, lastPageNum } = this.state.pager;
     if(page >= (lastPageNum/5)){

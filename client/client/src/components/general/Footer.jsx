@@ -14,7 +14,6 @@ const propTypes = {
 const Footer = (props) => {
   return(
   <div>
-    <hr/>
     <footer>
       <p>{`© ${props.mmYY} HiLib, Inc.`}</p>
     </footer>

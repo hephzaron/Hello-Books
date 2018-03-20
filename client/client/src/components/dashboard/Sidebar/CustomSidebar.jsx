@@ -81,7 +81,7 @@ class CustomSidebar extends Component {
             <div className="force-overflow">{this.props.children}</div>
           </div>
         </div>
-        <hr/>
+        <br/>
         <span style={{textAlign:'center', fontWeight:'bold'}}>View</span>
         <SidebarViews/>
       </div>   

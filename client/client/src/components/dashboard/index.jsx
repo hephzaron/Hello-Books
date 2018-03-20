@@ -50,7 +50,7 @@ class Dashboard extends Component {
               <UserMenu/>
               <Search/>
            </Header>
-           <div>
+           <div className="container-fluid">
             <div className="col-md-3">
               <Sidebar/>
             </div>

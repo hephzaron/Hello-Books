@@ -58,7 +58,7 @@ export const fetchPage = (page, items, onPageChange) => (
             return;
         }
         // get new pager object for specified object
-        pager = getPager(items.length, page)
+        pager = getPager(items.length, page, 3)
 
         const { startIndex, endIndex } = pager;
 

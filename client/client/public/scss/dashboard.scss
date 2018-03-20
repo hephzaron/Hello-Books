@@ -591,6 +591,25 @@ $display: inline-block;
     }
 }
 
+.book-paginate {
+    overflow-x: hidden;
+    width: 100%;
+    h3 {
+        margin-right: 50%
+    }
+    #page-navigator {
+        float: left;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        a:hover {
+            cursor: pointer;
+        }
+    }
+}
+
 
 /*Custom style for footer*/
 

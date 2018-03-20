@@ -56,7 +56,7 @@ class Pagination extends Component {
       totalPages,
       pages
   } = this.props.pager;  
-    return(<div>
+    return(<div id= "page-navigator">
       { 
         (pages||pages.length >1) &&
         (

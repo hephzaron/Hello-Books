@@ -29,15 +29,17 @@ class BooksFetchedPage extends Component {
     render() {
       const { books } = this.state
         return (
-            <div>
+            <div className="book-paginate">
                 <div className="container">
                     <div className="text-center">
-                        <h1>Books</h1>
+                        <h3>Books</h3>
                         {
                             this.state.pageOfItems.map(item =>
-                            <MuiThemeProvider>
-                                <Card book = { item }/>
-                            </MuiThemeProvider>
+                            <div className="col-xs-2">
+                                <MuiThemeProvider>
+                                    <Card book = { item }/>
+                                </MuiThemeProvider>
+                            </div>
                         )}
                         <Pagination 
                             items={ books } 

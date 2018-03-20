@@ -19,11 +19,15 @@ const CustomCard = (props) => {
     description,
     Authors,
     ISBN
-  } = props.book
+  } = props.book;
+
+  const defaultStyle =  {width:'100%',padding:0, margin:0};
 
   return (
-    <Card>
+    <Card containerStyle={defaultStyle}>
       <CardHeader
+        textStyle ={defaultStyle}
+        style = {defaultStyle}
         title={title}
         subtitle = {`${(Authors.length > 1) ? Authors.reduce((prevAuthor, nextAuthor)=>{
           return `${prevAuthor['fullName']}, ${nextAuthor['fullName']}`
@@ -33,7 +37,6 @@ const CustomCard = (props) => {
         overlay = {<CardTitle subtitle={ISBN}/>}>
         <img src={coverPhotoURL} alt={coverPhotoURL.substr(coverPhotoURL.lastIndexOf('/')+1)}/>
       </CardMedia>
-      <CardTitle title={title}/>
       <CardText>
         {description}
       </CardText>

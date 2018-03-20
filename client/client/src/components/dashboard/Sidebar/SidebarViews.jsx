@@ -68,6 +68,7 @@ class SidebarViews extends Component {
   viewBooks(event){
     event.preventDefault();
     
+    this.props.showPage(BOOKS_FETCHED_PAGE) //test purpose   
     this.setState({ isLoading: true });
     this.props.getBooks()
       .then((data)=>{

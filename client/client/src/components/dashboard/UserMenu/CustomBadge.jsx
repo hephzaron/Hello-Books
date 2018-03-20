@@ -9,7 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 /**
  * @class CustomBadge
  * @extends { React.Component }
- * @description Renders the user  avatar annd home icon on navigation bar
+ * @description Renders the user  avatar and home icon on navigation bar
  * @param { null }
  * @returns { void }
  */

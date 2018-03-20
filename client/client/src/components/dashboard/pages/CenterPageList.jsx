@@ -116,8 +116,20 @@ class CenterPageList extends Component {
   }
 
   render(){
-    const { isLoading, listPageClass, onEditClick, onDeleteClick, pageOffset } = this.props;
-    const { items,pager:{page, lastPageNum} } = this.state;
+    const { 
+      isLoading, 
+      listPageClass, 
+      onEditClick, 
+      onDeleteClick, 
+      pageOffset 
+    } = this.props;
+    const { 
+      items,
+      pager:{
+        page, 
+        lastPageNum
+      } 
+    } = this.state;
     return(
       <div className={classnames(`${listPageClass}`)}>
       <ul className="pager">

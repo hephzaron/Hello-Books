@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Pagination from 'General/Pagination';
 import Card from '../../Card';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { getBooks,editBook, deleteBook } from 'Actions/bookActions';
+import { showModal, closeModal } from 'Actions/modal';
+import modalTypes from 'Components/Modal/modalTypes';
+import { books } from '../client-data';
+
+const { EDIT_BOOK_MODAL, ASSIGN_BOOK_MODAL }  = modalTypes;
 
 class BooksFetchedPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageOfItems: []
+            pageOfItems: [],
+            books:[...books]
         }
 
         this.onPageChange = this.onPageChange.bind(this);
@@ -20,7 +27,7 @@ class BooksFetchedPage extends Component {
     }
  
     render() {
-      const { books } = this.props
+      const { books } = this.state
         return (
             <div>
                 <div className="container">

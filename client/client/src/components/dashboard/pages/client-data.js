@@ -404,3 +404,145 @@ export const genres = [{
         "books": []
     },
 ]
+
+export const books = [{
+        id: 1,
+        title: 'Java programming for beginners',
+        coverPhotoURL: require('Public/images/book_1.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 7,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke' },
+            { fullName: 'J.P Clarke-2' },
+            { fullName: 'J.P Clarke-3' }
+        ]
+    }, {
+        id: 2,
+        title: 'Avalanche of historical facts',
+        coverPhotoURL: require('Public/images/book_2.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 3,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke-1' }
+        ]
+    }, {
+        id: 3,
+        title: 'The lover and his dog',
+        coverPhotoURL: require('Public/images/book_3.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 9,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke-2' },
+            { fullName: 'J.P Clarke-2' }
+        ]
+    },
+    {
+        id: 4,
+        title: 'Java programming for beginners -4',
+        coverPhotoURL: require('Public/images/book_4.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 7,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke' },
+            { fullName: 'J.P Clarke-2' }
+        ]
+    }, {
+        id: 5,
+        title: 'Avalanche of historical facts-5',
+        coverPhotoURL: require('Public/images/book_5.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 3,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke-1' },
+            { fullName: 'J.P Clarke-2' }
+        ]
+    }, {
+        id: 6,
+        title: 'The lover and his dog-6',
+        coverPhotoURL: require('Public/images/book_6.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 9,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke-2' }
+        ]
+    },
+    {
+        id: 7,
+        title: 'Java programming for beginners-7',
+        coverPhotoURL: require('Public/images/book_1.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 7,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke' }
+        ]
+    }, {
+        id: 8,
+        title: 'Avalanche of historical facts-8',
+        coverPhotoURL: require('Public/images/book_6.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 3,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke-1' }
+        ]
+    }, {
+        id: 9,
+        title: 'The lover and his dog-9',
+        coverPhotoURL: require('Public/images/book_5.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 9,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke-2' }
+        ]
+    }, {
+        id: 10,
+        title: 'Java programming for beginners-10',
+        coverPhotoURL: require('Public/images/book_4.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 7,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke' }
+        ]
+    }, {
+        id: 11,
+        title: 'Avalanche of historical facts -11',
+        coverPhotoURL: require('Public/images/book_3.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 3,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke-1' }
+        ]
+    }, {
+        id: 12,
+        title: 'The lover and his dog-12',
+        coverPhotoURL: require('Public/images/book_2.jpg'),
+        description: 'Book description here..... All about reading',
+        ISBN: '978-2956-92-9',
+        available: 9,
+        createdAt: '2018-03-04T15:36:19.802Z',
+        Authors: [
+            { fullName: 'J.P Clarke-2' }
+        ]
+    }
+]

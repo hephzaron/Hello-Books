@@ -515,9 +515,87 @@ $display: inline-block;
     margin-bottom: 10px
 }
 
+
+/*Custom style for author list page*/
+
+%parent-linked-list {
+    height: 100%;
+    margin: 0;
+    border: 0;
+}
+
+%linked-list-h5 {
+    cursor: pointer;
+    font-weight: bold;
+    color: #4863A0;
+}
+
+@mixin linked-list-btn($btn-width, $btn-font-size, $btn-float) {
+    width: $btn-width;
+    font-weight: $font-weight;
+    font-size: $btn-font-size;
+    background-color: $btn-default-color;
+    color: white;
+    border: 0;
+    float: $btn-float
+}
+
+@mixin parent-linked-list($textAlign) {
+    @extend %parent-linked-list;
+    text-align: $textAlign
+}
+
+.author-list {
+    @include parent-linked-list(left);
+    .list-group-item {
+        margin: 0;
+        padding: 0;
+        &>span {
+            margin: 3px 0px 3px 20px;
+            font-weight: bold;
+            color: #585554;
+            &:hover,
+            &:active {
+                @include on-active($btn-default-color, white);
+                cursor: pointer;
+                font-weight: bolder
+            }
+        }
+        &-text {
+            margin-left: 10px;
+            color: #BF6012
+        }
+    }
+    h5 {
+        @extend %linked-list-h5;
+        background-color: #D1CAC6;
+        color: rgb(9, 16, 80);
+        padding: 7px;
+        &>.badge {
+            float: right;
+            color: #2B3856;
+            background-color: white
+        }
+    }
+    .pager {
+        margin: 3px 5px;
+        &>li a {
+            &:hover {
+                border: 1px solid #5F79D9;
+                background-color: white;
+                color: #5F79D9;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
+/*Custom style for footer*/
+
 footer {
     text-align: center;
     color: #A22612;
-    font-weight: bold;
+    font-weight: $font-weight;
     border-top: 1px solid #1D299E
 }

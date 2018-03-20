@@ -93,14 +93,15 @@ class CenterPageList extends Component {
 
   render(){
     const { isLoading, listPageClass } = this.props;
-    const { items } = this.state;
+    const { items,pager:{page, lastPageNum} } = this.state;
     return(
-      <Fragment>
+      <div className={classnames(`${listPageClass}`)}>
       <ul className="pager">
-       <li onClick={this.goToPreviousPage}><a>Previous</a></li>
-       <li onClick = {this.goToNextPage}><a>Next</a></li>
+       <li className="previous" onClick={this.goToPreviousPage}><a>&larr; Previous</a></li>
+       <li>{`Page ${page} of ${Math.ceil(lastPageNum/5)}`}</li>
+       <li className="next" onClick = {this.goToNextPage}><a>Next &rarr;</a></li>
       </ul>
-      <ul className={classnames(`list-group ${listPageClass}`)}>
+      <ul className="list-group">
       {
         items && items.map(item=>{
           const {
@@ -157,18 +158,18 @@ class CenterPageList extends Component {
               }
               </p>
               <span 
-                className={classnames(`${isLoading?'disbale':''} btn btn-default edit`)} 
+                className={classnames(`${isLoading?'disbale':''}`)} 
                 onClick={() =>props.onEditClick(item)}>Edit</span>
             
               <span 
-                className={classnames(`${isLoading?'disbale':''} btn btn-default edit`)} 
+                className={classnames(`${isLoading?'disbale':''}`)} 
                 onClick={() =>props.onDeleteClick(item)}>Delete</span>
             </li>)
           }
         )
       }
       </ul>
-      </Fragment>
+      </div>
     )
   }
 }

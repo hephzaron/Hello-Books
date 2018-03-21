@@ -107,8 +107,9 @@ class SidebarViews extends Component {
   }
 
   render(){
-    const View = ({icon, name, onClick, disabled}) => (
+    const View = ({id, icon, name, onClick, disabled}) => (
       <span 
+        id = { id }
         className={classnames(`glyphicon glyphicon-${ icon }`)}
         onClick={ onClick }
         disabled ={ disabled }>
@@ -118,16 +119,19 @@ class SidebarViews extends Component {
     return(
       <div id="sidebar-views">
         <View
+          id = "view-genres"
           icon={'th-list'}
           name={'Book categories'}
           onClick={this.viewCategories}
           disabled={this.state.isLoading}/>
         <View
+          id = "view-books"
           icon={'book'}
           name={'Books'}
           onClick={this.viewBooks}
           disabled={this.state.isLoading}/>
         <View
+          id = "view-authors"
           icon={'user'}
           name={'Authors'}
           onClick={this.viewAuthors}

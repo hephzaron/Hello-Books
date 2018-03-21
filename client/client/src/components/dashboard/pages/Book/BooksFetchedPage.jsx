@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import Pagination from 'General/Pagination';
 import Card from '../../Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { getBooks,editBook, deleteBook } from 'Actions/bookActions';
+import { getBooks, deleteBook } from 'Actions/bookActions';
 import { showModal, closeModal } from 'Actions/modal';
 import modalTypes from 'Components/Modal/modalTypes';
 import { books } from '../client-data';
 import { moveLeft, moveRight } from 'Utils/scroll'
 
-const { EDIT_BOOK_MODAL, ASSIGN_BOOK_MODAL }  = modalTypes;
+const { EDIT_BOOK_MODAL }  = modalTypes;
 
 class BooksFetchedPage extends Component {
     constructor(props) {
@@ -30,8 +30,21 @@ class BooksFetchedPage extends Component {
         moveRight("#scroll-right", ".book-paginate")
     }
 
-    editBook(){}
-    deleteBook(){}
+    editBook(book){
+        alert(`edit book ${book.title} ${book.id}`)
+    }
+    deleteBook(book){
+        this.props.deleteBook(book)
+        .then((data)=>{
+            if(data.response && data.response.status>=400){
+              this.setState({
+                  isLoading:false
+                })
+            }else{
+              document.getElementById("view-books").click();
+            }
+        })
+    }
  
     onPageChange(pageOfItems) {
         this.setState({ pageOfItems: pageOfItems });
@@ -87,4 +100,4 @@ const mapStateToProps = (state) => ({
 });
 
 export { BooksFetchedPage }
-export default connect(mapStateToProps)(BooksFetchedPage);
+export default connect(mapStateToProps, {deleteBook})(BooksFetchedPage);

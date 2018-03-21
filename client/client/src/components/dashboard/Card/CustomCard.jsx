@@ -13,6 +13,7 @@ import {
 
 const CustomCard = (props) => {
   const {
+    id,
     title,
     coverPhotoURL,
     description,
@@ -47,7 +48,7 @@ const CustomCard = (props) => {
             className = {
               classnames(`${actions.iconClass ? actions.iconClass:''}`)
             }
-            onClick = {actions.onClick}
+            onClick = {() => actions.onClick(props.book)}
             disabled = {props.isLoading}>
             {actions.label}
           </span>)}

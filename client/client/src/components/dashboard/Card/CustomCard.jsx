@@ -43,12 +43,14 @@ const CustomCard = (props) => {
       </CardText>
       <CardActions>
         {props.cardActions && props.cardActions.map(actions=>
-          <button
-            className = "btn-success badge"
+          <span
+            className = {
+              classnames(`${actions.iconClass ? actions.iconClass:''}`)
+            }
             onClick = {actions.onClick}
             disabled = {props.isLoading}>
             {actions.label}
-          </button>)}
+          </span>)}
       </CardActions>
     </Card>
   )

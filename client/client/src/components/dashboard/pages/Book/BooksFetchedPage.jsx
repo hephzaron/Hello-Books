@@ -40,10 +40,12 @@ class BooksFetchedPage extends Component {
     render() {
       const { books } = this.state
       const cardActions = [{
-          label: 'edit',
+          label: 'Edit',
+          iconClass: 'glyphicon glyphicon-pencil',
           onClick: this.editBook
         },{
-            label: 'delete',
+            label: 'Delete',
+            iconClass: 'glyphicon glyphicon-trash',
             onClick: this.deleteBook
         }
       ]
@@ -57,15 +59,16 @@ class BooksFetchedPage extends Component {
                             this.state.pageOfItems.map(item =>
                             <div className="col-xs-3">
                                 <MuiThemeProvider>
-                                    <Card book = { item }/>
+                                    <Card 
+                                        book = { item }
+                                        isLoading = {this.state.isLoading}
+                                        cardActions = {cardActions}/>
                                 </MuiThemeProvider>
                             </div>
                         )}
                         <Pagination 
                             items={ books } 
-                            onPageChange={this.onPageChange}
-                            isLoading = {this.state.isLoading}
-                            cardActions = {cardActions}/>
+                            onPageChange={this.onPageChange}/>
                     </div>
                 </div>
                 <hr />

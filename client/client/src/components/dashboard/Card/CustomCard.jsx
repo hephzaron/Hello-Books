@@ -10,7 +10,6 @@ import {
   CardText 
 }from 'material-ui/Card';
 
-import Button from 'Forms/Button';
 
 const CustomCard = (props) => {
   const {
@@ -37,17 +36,19 @@ const CustomCard = (props) => {
         overlay = {<CardTitle subtitle={ISBN}/>}>
         <img src={coverPhotoURL} alt={coverPhotoURL.substr(coverPhotoURL.lastIndexOf('/')+1)}/>
       </CardMedia>
-      <CardText>
+      <CardText
+        textStyle ={defaultStyle}
+        style = {defaultStyle}>
         {description}
       </CardText>
       <CardActions>
         {props.cardActions && props.cardActions.map(actions=>
-          <Button
-            className = "btn-success"
-            name = {actions.label}
+          <button
+            className = "btn-success badge"
             onClick = {actions.onClick}
-            icon = {false}
-            disabled = {props.isLoading}/>)}
+            disabled = {props.isLoading}>
+            {actions.label}
+          </button>)}
       </CardActions>
     </Card>
   )

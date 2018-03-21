@@ -594,8 +594,30 @@ $display: inline-block;
 .book-paginate {
     overflow-x: hidden;
     width: 100%;
-    h3 {
-        margin-right: 50%
+    padding-top: 25px;
+    .glyphicon {
+        border-radius: 50%;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        font-size: 20px;
+        padding: 10px;
+        position: fixed;
+        z-index: 1;
+        top: 45%;
+        &-chevron-right {
+            left: 70%
+        }
+        &:hover {
+            cursor: pointer;
+            padding: 12px;
+        }
+    }
+    p {
+        z-index: 1;
+        position: absolute;
+        left: 45%;
+        font-weight: bold;
+        padding: 4px
     }
     #page-navigator {
         float: left;
@@ -603,7 +625,8 @@ $display: inline-block;
         margin: 0;
         width: 100%;
         position: absolute;
-        top: 100%;
+        top: 105%;
+        left: 3%;
         a:hover {
             cursor: pointer;
         }

@@ -7,6 +7,7 @@ import { getBooks,editBook, deleteBook } from 'Actions/bookActions';
 import { showModal, closeModal } from 'Actions/modal';
 import modalTypes from 'Components/Modal/modalTypes';
 import { books } from '../client-data';
+import { moveLeft, moveRight } from 'Utils/scroll'
 
 const { EDIT_BOOK_MODAL, ASSIGN_BOOK_MODAL }  = modalTypes;
 
@@ -15,27 +16,46 @@ class BooksFetchedPage extends Component {
         super(props);
         this.state = {
             pageOfItems: [],
-            books:[...books]
+            books:[...books],
+            isLoading:false
         }
 
         this.onPageChange = this.onPageChange.bind(this);
+        this.editBook = this.editBook.bind(this);
+        this.deleteBook = this.deleteBook.bind(this);
     }
+
+    componentDidMount(){
+        moveLeft("#scroll-left", ".book-paginate");     
+        moveRight("#scroll-right", ".book-paginate")
+    }
+
+    editBook(){}
+    deleteBook(){}
  
     onPageChange(pageOfItems) {
-        // update state with new page of items
         this.setState({ pageOfItems: pageOfItems });
     }
  
     render() {
       const { books } = this.state
+      const cardActions = [{
+          label: 'edit',
+          onClick: this.editBook
+        },{
+            label: 'delete',
+            onClick: this.deleteBook
+        }
+      ]
         return (
-            <div className="book-paginate">
+            <div className="book-paginate"> 
                 <div className="container">
+                <span id = "scroll-left" className="glyphicon glyphicon-chevron-left"></span>
+                <span id = "scroll-right" className="glyphicon glyphicon-chevron-right"></span>
                     <div className="text-center">
-                        <h3>Books</h3>
                         {
                             this.state.pageOfItems.map(item =>
-                            <div className="col-xs-2">
+                            <div className="col-xs-3">
                                 <MuiThemeProvider>
                                     <Card book = { item }/>
                                 </MuiThemeProvider>
@@ -43,7 +63,9 @@ class BooksFetchedPage extends Component {
                         )}
                         <Pagination 
                             items={ books } 
-                            onPageChange={this.onPageChange} />
+                            onPageChange={this.onPageChange}
+                            isLoading = {this.state.isLoading}
+                            cardActions = {cardActions}/>
                     </div>
                 </div>
                 <hr />

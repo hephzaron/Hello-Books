@@ -1,4 +1,4 @@
-let step = 30;
+let step = 200;
 let scrolling = false;
 
 
@@ -32,7 +32,7 @@ export function moveRight(rightClickElement, content) {
 
 
 function scrollContent(direction, content) {
-    let offset = (direction === "left" ? "-=1px" : "+=1px");
+    let offset = (direction === "left" ? "-=5px" : "+=5px");
     $(content).animate({
         scrollLeft: offset
     }, 1, () => {

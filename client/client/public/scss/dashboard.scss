@@ -65,7 +65,10 @@ hr {
 @mixin sidebar-views($float, $margin-left) {
     @extend %sidebar-style-common;
     float: $float;
-    margin-left: $margin-left
+    margin-left: $margin-left;
+    &:hover {
+        color: rgb(9, 73, 91);
+    }
 }
 
 %col-md {

@@ -301,7 +301,7 @@ $border-radius: 4px;
     text-align: left;
     position: relative;
     outline: 0;
-    width: auto;
+    width: 100%;
     display: $display;
     vertical-align: middle;
     box-sizing: border-box;
@@ -311,6 +311,9 @@ $border-radius: 4px;
 }
 
 .glyphicon-remove {
+    position: absolute;
+    left: 64%;
+    top: 3%;
     &:hover {
         color: white;
         background-color: rgba(39, 38, 38, 0.65);

@@ -155,7 +155,7 @@ export const createBook = (bookDetails) => (
  * @param {object} bookDetails - Details of book to be edited
  * @returns {promise} Axios http response
  */
-export const editBook = (bookDetails) => {
+export const editBook = (bookDetails) => (
     dispatch => (
         axios.put(`/books/${bookDetails.id}`, bookDetails)
         .then((response) => {
@@ -174,7 +174,7 @@ export const editBook = (bookDetails) => {
             return errors;
         })
     )
-}
+)
 
 /**
  * Update book assets

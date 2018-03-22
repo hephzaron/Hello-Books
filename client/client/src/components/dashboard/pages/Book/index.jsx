@@ -69,7 +69,8 @@ class BookPage extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.state.editedBook['id'] !== nextProps.editedBook['id']){
+    if(this.props.editedBook && 
+      (this.state.editedBook['id'] !== nextProps.editedBook['id'])){
       this.setState({
         editedBook:{
           ...this.state.editedBook,
@@ -219,9 +220,9 @@ componentDidMount(){
     if(!this.isGenreValid()||!this.isFormValid()){ 
       return;
     }   
-    if(this.props.editForm){
-      this.state.book['id'] = this.state.editedBook['id']
-      this.props.editBook(this.state.book);
+    if(this.props.editedBook){
+      const { editedBook : { id }} = this.state;
+      this.props.editBook(Object.assign({}, this.state.book,{ id }));
     }
     this.setState({isLoading:true});
     this.props.createBook(this.state.book)
@@ -302,13 +303,14 @@ componentDidMount(){
         isLoading = {this.state.isLoading}
         onChange = {this.onChange}
         onSubmit = {this.onSubmit}
-        buttonRole = {'create'}
+        buttonRole = {`${this.props.editedBook ? 'update':'create'}`}
         imageFile = {this.state.image}
         docFile = {this.state.document}
         genres={this.state.genres}
         genreName={this.state.genreName}
         showItems={this.state.showItems}
-        onItemClick={(item)=>this.onGenreClick(item)}/>
+        onItemClick={(item)=>this.onGenreClick(item)}
+        editBookModal = {this.props.editedBook}/>
     )
   }
 }

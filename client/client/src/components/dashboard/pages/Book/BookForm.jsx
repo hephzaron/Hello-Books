@@ -19,7 +19,8 @@ const propTypes = {
   buttonRole: PropTypes.string.isRequired,
   uploadFile: PropTypes.func.isRequired,
   genres: PropTypes.array.isRequired,
-  onItemClick: PropTypes.func.isRequired
+  onItemClick: PropTypes.func.isRequired,
+  editBookModal: PropTypes.bool
 }
 
 /**
@@ -30,9 +31,10 @@ const propTypes = {
  */
 const BookForm = (props) => (
   <form className="form-user" id="book-form" onSubmit = {props.onSubmit}>
+    {props.editBookModal && <FlashMessageList/>}
     <h2>
       {props.buttonRole === 'create'? 'Create New Book':
-        (props.buttonRole==='edit'?'Update Book': 
+        (props.buttonRole==='update'?'Edit Book': 
         null)}
     </h2>
     <SelectionList

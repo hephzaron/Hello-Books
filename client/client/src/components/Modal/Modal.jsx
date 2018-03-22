@@ -39,7 +39,8 @@ class Modal extends Component {
    * @param {void}
    */
 
-   handleOverlayClick(){
+   handleOverlayClick(event){
+    event.stopPropagation();
      this.props.onClose();
    }
    /**

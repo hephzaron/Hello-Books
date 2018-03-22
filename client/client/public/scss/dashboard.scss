@@ -412,33 +412,7 @@ gold {
     }
 }
 
-
-/**Custom style for center page*/
-
-.col-md-6 {
-    .dropdown {
-        ul {
-            text-align: left;
-            position: absolute;
-            list-style-type: none;
-            padding: 0;
-            left: 0;
-            top: 100%;
-            width: 100%;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            background-color: #C8D1D7;
-            li {
-                cursor: pointer;
-                padding-left: 5px;
-                &:hover {
-                    @include on-active($btn-default-color);
-                    font-weight: bold;
-                    border-left: 4px solid $btn-default-color
-                }
-            }
-        }
-    }
+@mixin form-style($form-width) {
     form {
         margin-bottom: 0 !important;
         padding-bottom: 10px !important;
@@ -464,8 +438,47 @@ gold {
     }
 }
 
+%form-dropdown {
+    .dropdown {
+        ul {
+            text-align: left;
+            position: absolute;
+            list-style-type: none;
+            padding: 0;
+            left: 0;
+            top: 100%;
+            width: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            background-color: #C8D1D7;
+            li {
+                cursor: pointer;
+                padding-left: 5px;
+                &:hover {
+                    @include on-active($btn-default-color);
+                    font-weight: bold;
+                    border-left: 4px solid $btn-default-color
+                }
+            }
+        }
+    }
+}
 
-/*Custom style for file upload field*/
+
+/**Custom style for center page and form modals*/
+
+.col-md-6 {
+    @include form-style(70%);
+    @extend %form-dropdown
+}
+
+.modal-dialog-div {
+    @include form-style(100%);
+    @extend %form-dropdown
+}
+
+
+/**Custom style for file upload field**/
 
 $width: 100%;
 $display: inline-block;

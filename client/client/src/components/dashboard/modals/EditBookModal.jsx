@@ -13,7 +13,6 @@ class EditBookModal extends Component {
   }
 
   onClose(event){
-    event.preventDefault();
     this.props.closeModal()
   }
   render(){
@@ -27,12 +26,9 @@ class EditBookModal extends Component {
 }
 
 EditBookModal.propTypes = {
-  payload: PropTypes.object.isRequired
-}
-
-const actionCreators = {
-  closeModal
+  payload: PropTypes.object.isRequired,
+  closeModal: PropTypes.func.isRequired
 }
 
 export { EditBookModal }
-export default connect(null, actionCreators)(EditBookModal)
+export default connect(null, { closeModal })(EditBookModal)

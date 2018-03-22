@@ -9,7 +9,7 @@ import classnames from 'classnames';
  * @returns {string} HTML markup of component
  */
 
-const FlashMesssage = ({ message })=>{
+const FlashMesssage = ({ message, closeAlert })=>{
   const {type, text} = message;
   return (
     <div className = {classnames('alert fade in',{
@@ -17,7 +17,7 @@ const FlashMesssage = ({ message })=>{
         'alert-danger': type === 'error',
         'alert-success': type === 'success'
     })}>
-    <a className="close" data-dismiss="alert">&times;</a>
+    <span onClick={closeAlert} className="close" data-dismiss="alert">&times;</span>
       {
 				Array.isArray(text) && text.length>1 &&
 					<ul>
@@ -31,7 +31,8 @@ const FlashMesssage = ({ message })=>{
 };
 
 FlashMesssage.propTypes = {
-  message: PropTypes.object
+  message: PropTypes.object.isRequired,
+  closeAlert: PropTypes.func.isRequired
 }
 
 

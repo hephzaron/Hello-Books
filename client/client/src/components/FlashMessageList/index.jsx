@@ -12,10 +12,19 @@ import { removeFlashMessage } from 'Actions/flashMessage';
  */
 
 class FlashMessageList extends Component {
+  constructor(props){
+    super(props);
+    this.state= {
+      alertClosed: false
+    }
+    this.closeAlert = this.closeAlert.bind(this)
+  }
 
+ 
   /**
    * @description Lifecycle method invoked when component will unmount
    * @memberof FlashMessageList
+   * @method componentWillMount
    * @returns undefined
    */
   
@@ -24,21 +33,54 @@ class FlashMessageList extends Component {
   }
 
   /**
+   * componentWillRecieveProps
+   * @description Lifecycle method before component receives new props
+   * @param { object } nextProps
+   * @returns { void }
+   */
+
+   componentWillReceiveProps(nextProps){
+    if(this.props.message !== nextProps.message){
+      this.setState({
+        alertClosed: false
+      });
+    }
+  }
+  
+  
+  /**
+   * closeAlert
+   * @description Closes alert
+   * @returns {void}
+   * @memberof FlashMessageList
+   */
+
+  closeAlert(){
+    this.setState({
+      alertClosed:true
+    });
+  }
+
+  
+  /**
    * @description Renders flash message component
    * @returns {JSX} - JSX
    * @memberof FlashMessageList
    */
-
   render () { 
     const { message } = this.props;
-    return (
-      <SetTimeout interval = {30000}>
-        {Object.keys(message).length !==0 &&
-      <FlashMessage
-        message = {message}/>
-      }
-      </SetTimeout>
-    );
+    if(!this.state.alertClosed){
+      return (
+        <SetTimeout interval = {15000}>
+          {Object.keys(message).length !==0 &&
+        <FlashMessage
+          message = {message}
+          closeAlert = {this.closeAlert}/>
+        }
+        </SetTimeout>
+      );
+    }
+    return null;
   }
   
 }

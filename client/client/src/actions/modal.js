@@ -11,10 +11,11 @@ const {
  * @param { object } - [modalType]
  * @returns { object } - Returns object creator
  */
-export const loadModal = (modalType) => {
+export const loadModal = (modalType, payload) => {
     return {
         type: SHOW_MODAL,
-        modalType: modalType
+        modalType,
+        payload
     };
 };
 export const hideModal = () => {
@@ -23,9 +24,9 @@ export const hideModal = () => {
     }
 };
 
-export const showModal = modalType => (
+export const showModal = (modalType, payload) => (
     dispatch => {
-        dispatch(loadModal(modalType));
+        dispatch(loadModal(modalType, payload));
     }
 );
 export const closeModal = () => (

@@ -31,7 +31,7 @@ class BooksFetchedPage extends Component {
     }
 
     editBook(book){
-        alert(`edit book ${book.title} ${book.id}`)
+        this.props.showModal(EDIT_BOOK_MODAL, book)
     }
     deleteBook(book){
         this.props.deleteBook(book)
@@ -100,4 +100,7 @@ const mapStateToProps = (state) => ({
 });
 
 export { BooksFetchedPage }
-export default connect(mapStateToProps, {deleteBook})(BooksFetchedPage);
+export default connect(mapStateToProps, {
+    showModal, 
+    closeModal,
+    deleteBook})(BooksFetchedPage);

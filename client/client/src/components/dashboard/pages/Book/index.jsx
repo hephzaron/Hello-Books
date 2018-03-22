@@ -5,7 +5,7 @@ import BookForm from './BookForm';
 import validateBook from 'Utils/validators/book';
 import validateGenre from 'Utils/validators/genre';
 import validFileType from 'Utils/validators/upload';
-import { createBook } from 'Actions/bookActions';
+import { createBook, editBook } from 'Actions/bookActions';
 import { fetchGenres } from 'Actions/genreActions';
 
 /**
@@ -27,6 +27,9 @@ class BookPage extends Component {
         ISBN:'',
         fileDir:'',
         imageDir:''
+      },
+      editedBook:{
+        id: 0
       },
       genreName:'',
       image : {
@@ -65,6 +68,16 @@ class BookPage extends Component {
     this.onGenreClick = this.onGenreClick.bind(this);
   }
 
+  componentWillReceiveProps(nextProps){
+    if(this.state.editedBook['id'] !== nextProps.editedBook['id']){
+      this.setState({
+        editedBook:{
+          ...this.state.editedBook,
+          id: nextProps.editedBook['id']
+        }
+      });
+    }
+  }
 
 /**
  * @method componentDidMount
@@ -206,6 +219,10 @@ componentDidMount(){
     if(!this.isGenreValid()||!this.isFormValid()){ 
       return;
     }   
+    if(this.props.editForm){
+      this.state.book['id'] = this.state.editedBook['id']
+      this.props.editBook(this.state.book);
+    }
     this.setState({isLoading:true});
     this.props.createBook(this.state.book)
      .then(data=>{
@@ -296,12 +313,17 @@ componentDidMount(){
   }
 }
 
+BookPage.propType = {
+  editedBook: PropTypes.object
+}
+
 const mapStateToProps = (state) => ({
   genres: state.genres['genres']
 })
 
 const actionCreators = {
   createBook,
+  editBook,
   fetchGenres
 }
 export { BookPage }

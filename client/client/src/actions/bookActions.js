@@ -169,7 +169,7 @@ export const editBook = (bookDetails) => {
         .catch((errors) => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: 'errors.response.data.message-editBook'
             }));
             return errors;
         })

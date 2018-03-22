@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import ErrorBoundary from '../ErrorBoundary';
 import Footer from 'General/Footer';
 import moment from 'moment';
+import  ModalContainer  from 'Components/Modal';
 
 /**
  * @description Renders the dashboard on successful authentication
@@ -63,6 +64,7 @@ class Dashboard extends Component {
             </div>
             <Footer
               mmYY={moment(Date.now()).format('MMMM YYYY')}/>
+          <ModalContainer />
         </div>
       </Router>
     

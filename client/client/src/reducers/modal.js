@@ -14,7 +14,8 @@ const modal = (state = initialModalState, action = {}) => {
     switch (action.type) {
         case SHOW_MODAL:
             return Object.assign({}, state, {
-                modalType: action.modalType
+                modalType: action.modalType,
+                payload: action.payload
             });
             break;
         case HIDE_MODAL:

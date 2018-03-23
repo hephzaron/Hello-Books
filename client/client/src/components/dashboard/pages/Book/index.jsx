@@ -71,13 +71,25 @@ class BookPage extends Component {
   componentWillReceiveProps(nextProps){
     if(this.props.editedBook && 
       (this.state.editedBook['id'] !== nextProps.editedBook['id'])){
+        const { editedBook :{ id, genre_id }} = nextProps;
       this.setState({
-        editedBook:{
-          ...this.state.editedBook,
-          id: nextProps.editedBook['id']
-        }
+        editedBook:Object.assign({},this.state.book,{ id }),
+        book: Object.assign({}, this.state.book, nextProps.editedBook),
+        genreName: this.state.genres.filter((genre)=>
+          genre.id === genre_id 
+        )[0].name
       });
     }
+  }
+
+  componentWillMount(){
+    const { editedBook :{ id, genre_id }} = this.props
+    this.setState({
+      editedBook:Object.assign({},this.state.book,this.props.editedBook),
+      book: Object.assign({}, this.state.book, this.props.editedBook),
+      genreName: this.state.genres.filter((genre)=>
+        genre.id === genre_id )[0].name
+      });
   }
 
 /**

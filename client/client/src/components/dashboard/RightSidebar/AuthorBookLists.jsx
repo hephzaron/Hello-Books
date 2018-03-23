@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { getAuthors } from 'Actions/authorActions';
 import BookListItems from './BookListItems';
-import $ from 'jquery';
+import { authors } from '../pages/client-data';
 
 const propTypes = {
   authors: PropTypes.array
@@ -23,34 +23,8 @@ class AuthorBookLists extends Component {
     super(props);
     this.state= {
       isLoading: false,
-      authors: [{
-            "fullName": "Nelkon Parker",
-            "id": 1,
-            "Books": [{
-                "id": 1,
-                "title": "Java programming for beginners"
-            }, {
-                "id": 2,
-                "title": "R-studio programming"
-            }, {
-                "id": 3,
-                "title": "Video editing"
-            }]
-        },
-        {
-            "fullName": "Charles Philip",
-            "id": 2,
-            "Books": [{
-                "id": 1,
-                "title": "ES6 for experts"
-            }, {
-                "id": 2,
-                "title": "Building micro services"
-            }, {
-                "id": 3,
-                "title": "Hone your skills"
-            }]
-          }
+      authors: [
+        ...authors
         ]
       };
   }

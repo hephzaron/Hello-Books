@@ -6,6 +6,7 @@ import { getBooks } from 'Actions/bookActions';
 import  { fetchBorrowedBook, returnBook } from 'Actions/borrowActions';
 import { connect } from 'react-redux';
 import ErrorBoundary from 'Components/ErrorBoundary';
+import { books } from '../pages/client-data';
 
 /**
  * @class Sidebar
@@ -21,28 +22,8 @@ class Sidebar extends Component {
     this.state = {
       list: 'book',
       isLoading: false,
-      books:[{
-        id: 1,
-        title: 'Java programming for beginners',
-        available: 7,
-        createdAt: '2018-03-04T15:36:19.802Z',
-        Authors:[
-          {fullName: 'J.P Clarke'}
-        ]},{
-        id: 2,
-        title: 'Avalanche of historical facts',
-        available: 3,
-        createdAt: '2018-03-04T15:36:19.802Z',
-        Authors:[
-          {fullName: 'J.P Clarke-1'}
-        ]},{
-        id: 3,
-        title: 'The lover and his dog',
-        available: 9,
-        createdAt: '2018-03-04T15:36:19.802Z',
-        Authors:[
-          {fullName: 'J.P Clarke-2'}
-        ]}
+      books:[
+        ...books
       ],
       borrowedBooks:[{
         id: 1,

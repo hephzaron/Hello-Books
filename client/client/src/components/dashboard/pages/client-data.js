@@ -407,10 +407,12 @@ export const genres = [{
 
 export const books = [{
         id: 1,
+        genre_id: 1,
         title: 'Java programming for beginners',
         coverPhotoURL: require('Public/images/book_1.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 7,
         available: 7,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -420,10 +422,12 @@ export const books = [{
         ]
     }, {
         id: 2,
+        genre_id: 2,
         title: 'Avalanche of historical facts',
         coverPhotoURL: require('Public/images/book_2.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 3,
         available: 3,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -431,10 +435,12 @@ export const books = [{
         ]
     }, {
         id: 3,
+        genre_id: 3,
         title: 'The lover and his dog',
         coverPhotoURL: require('Public/images/book_3.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 9,
         available: 9,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -444,10 +450,12 @@ export const books = [{
     },
     {
         id: 4,
+        genre_id: 4,
         title: 'Java programming for beginners -4',
         coverPhotoURL: require('Public/images/book_4.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 7,
         available: 7,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -456,10 +464,12 @@ export const books = [{
         ]
     }, {
         id: 5,
+        genre_id: 5,
         title: 'Avalanche of historical facts-5',
         coverPhotoURL: require('Public/images/book_5.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 3,
         available: 3,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -468,10 +478,12 @@ export const books = [{
         ]
     }, {
         id: 6,
+        genre_id: 6,
         title: 'The lover and his dog-6',
         coverPhotoURL: require('Public/images/book_6.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 9,
         available: 9,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -480,10 +492,12 @@ export const books = [{
     },
     {
         id: 7,
+        genre_id: 7,
         title: 'Java programming for beginners-7',
         coverPhotoURL: require('Public/images/book_1.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 7,
         available: 7,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -491,10 +505,12 @@ export const books = [{
         ]
     }, {
         id: 8,
+        genre_id: 8,
         title: 'Avalanche of historical facts-8',
         coverPhotoURL: require('Public/images/book_6.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 4,
         available: 3,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -502,10 +518,12 @@ export const books = [{
         ]
     }, {
         id: 9,
+        genre_id: 1,
         title: 'The lover and his dog-9',
         coverPhotoURL: require('Public/images/book_5.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 12,
         available: 9,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -513,10 +531,12 @@ export const books = [{
         ]
     }, {
         id: 10,
+        genre_id: 2,
         title: 'Java programming for beginners-10',
         coverPhotoURL: require('Public/images/book_4.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 7,
         available: 7,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -524,10 +544,12 @@ export const books = [{
         ]
     }, {
         id: 11,
+        genre_id: 3,
         title: 'Avalanche of historical facts -11',
         coverPhotoURL: require('Public/images/book_3.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 5,
         available: 3,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [
@@ -535,10 +557,12 @@ export const books = [{
         ]
     }, {
         id: 12,
+        genre_id: 4,
         title: 'The lover and his dog-12',
         coverPhotoURL: require('Public/images/book_2.jpg'),
         description: 'Book description here..... All about reading',
         ISBN: '978-2956-92-9',
+        quantity: 9,
         available: 9,
         createdAt: '2018-03-04T15:36:19.802Z',
         Authors: [

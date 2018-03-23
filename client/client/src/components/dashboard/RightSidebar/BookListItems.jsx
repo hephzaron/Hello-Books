@@ -50,7 +50,8 @@ class BookListItems extends Component{
         id, 
         fullName, 
         name, 
-        Books 
+        Books,
+        books
       }} = this.props;
     
     return(
@@ -65,8 +66,8 @@ class BookListItems extends Component{
         <ul 
           className={`dropdown-menu-${id}`}>
           {
-            Books.length !== 0 &&
-            Books.map(book =>
+            (Books||books).length !== 0 &&
+            (Books||books).map(book =>
               <li key={book.id} className='dropdown-item'>{book.title}</li>
             )
           }

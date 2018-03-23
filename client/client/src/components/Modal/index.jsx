@@ -13,6 +13,7 @@ import AboutUsModal from 'HomePage/Statements/About';
 
 {/*import form modals*/}
 import EditBookModal from '../dashboard/modals/EditBookModal';
+import EditAuthorModal from '../dashboard/modals/EditAuthorModal';
 
 const MODAL_COMPONENTS = {
   RESET_PASSWORD_MODAL: PasswordResetModal,
@@ -21,7 +22,8 @@ const MODAL_COMPONENTS = {
   VISION_STATEMENT_MODAL: VisionStatementModal,
   PASSION_STATEMENT_MODAL: PassionStatementModal,
   ABOUT_US_MODAL: AboutUsModal,
-  EDIT_BOOK_MODAL: EditBookModal
+  EDIT_BOOK_MODAL: EditBookModal,
+  EDIT_AUTHOR_MODAL: EditAuthorModal
 }
 
 const contextTypes = {

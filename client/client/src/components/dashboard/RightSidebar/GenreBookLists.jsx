@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { fetchGenres } from 'Actions/genreActions';
 import BookListItems from './BookListItems';
+import { genres } from '../pages/client-data';
 
 const propTypes = {
   genres: PropTypes.array
@@ -23,35 +24,9 @@ class GenreBookLists extends Component {
     super(props);
     this.state= {
       isLoading: false,
-      genres: [{
-            "name": "Maths and statistics",
-            "id": 1,
-            "Books": [{
-                "id": 1,
-                "title": "Java programming for beginners"
-            }, {
-                "id": 2,
-                "title": "R-studio programming"
-            }]
-        },
-        {
-            "name": "Sciences",
-            "id": 2,
-            "Books": [{
-                "id": 1,
-                "title": "ES6 for experts"
-            }, {
-                "id": 2,
-                "title": "Building micro services"
-            }, {
-                "id": 3,
-                "title": "Hone your skills"
-            }, {
-                "id": 4,
-                "title": "Video editing"
-            }]
-          }
-        ]
+      genres: [
+        ...genres
+      ]
       };
   }
 

@@ -1,5 +1,7 @@
 export const authors = [{
         "fullName": "Nelkon Parker",
+        "firstName": "Nelkon",
+        "lastName": "Parker",
         "id": 1,
         "dateOfBirth": "1972-03-04T15:36:19.802Z",
         "dateOfDeath": "2012-07-04T15:36:19.802Z",
@@ -19,6 +21,8 @@ export const authors = [{
     {
         "fullName": "Charles Philip",
         "id": 2,
+        "firstName": "Charles",
+        "lastName": "Philip",
         "dateOfBirth": "1981-01-04T15:36:19.802Z",
         "dateOfDeath": null,
         "createdAt": "2016-01-04T15:36:19.802Z",
@@ -36,6 +40,8 @@ export const authors = [{
     }, {
         "fullName": "Nelkon Parker 3",
         "id": 3,
+        "firstName": "Nelkon",
+        "lastName": "Parker 3",
         "dateOfBirth": "1972-03-04T15:36:19.802Z",
         "dateOfDeath": "2012-07-04T15:36:19.802Z",
         "createdAt": "2017-01-04T15:36:19.802Z",
@@ -54,6 +60,8 @@ export const authors = [{
     {
         "fullName": "Charles Philip 4",
         "id": 4,
+        "firstName": "Charles",
+        "lastName": "Philip 4",
         "dateOfBirth": "1981-01-04T15:36:19.802Z",
         "dateOfDeath": null,
         "createdAt": "2016-01-04T15:36:19.802Z",
@@ -71,6 +79,8 @@ export const authors = [{
     }, {
         "fullName": "Nelkon Parker 5",
         "id": 5,
+        "firstName": "Nelkon",
+        "lastName": "Parker 5",
         "dateOfBirth": "1972-03-04T15:36:19.802Z",
         "dateOfDeath": "2012-07-04T15:36:19.802Z",
         "createdAt": "2017-01-04T15:36:19.802Z",
@@ -89,6 +99,8 @@ export const authors = [{
     {
         "fullName": "Charles Philip 6",
         "id": 6,
+        "firstName": "Charles",
+        "lastName": "Philip 6",
         "dateOfBirth": "1981-01-04T15:36:19.802Z",
         "dateOfDeath": null,
         "createdAt": "2016-01-04T15:36:19.802Z",
@@ -106,6 +118,8 @@ export const authors = [{
     }, {
         "fullName": "Nelkon Parker 7",
         "id": 7,
+        "firstName": "Nelkon",
+        "lastName": "Parker 7",
         "dateOfBirth": "1972-03-04T15:36:19.802Z",
         "dateOfDeath": "2012-07-04T15:36:19.802Z",
         "createdAt": "2017-01-04T15:36:19.802Z",
@@ -124,6 +138,8 @@ export const authors = [{
     {
         "fullName": "Charles Philip 8",
         "id": 8,
+        "firstName": "Charles",
+        "lastName": "Philip 8",
         "dateOfBirth": "1981-01-04T15:36:19.802Z",
         "dateOfDeath": null,
         "createdAt": "2016-01-04T15:36:19.802Z",
@@ -141,6 +157,8 @@ export const authors = [{
     }, {
         "fullName": "Nelkon Parker 9",
         "id": 9,
+        "firstName": "Nelkon",
+        "lastName": "Parker 9",
         "dateOfBirth": "1972-03-04T15:36:19.802Z",
         "dateOfDeath": "2012-07-04T15:36:19.802Z",
         "createdAt": "2017-01-04T15:36:19.802Z",
@@ -159,6 +177,8 @@ export const authors = [{
     {
         "fullName": "Charles Philip 10",
         "id": 10,
+        "firstName": "Charles",
+        "lastName": "Philip 10",
         "dateOfBirth": "1981-01-04T15:36:19.802Z",
         "dateOfDeath": null,
         "createdAt": "2016-01-04T15:36:19.802Z",
@@ -176,6 +196,8 @@ export const authors = [{
     }, {
         "fullName": "Nelkon Parker 11",
         "id": 11,
+        "firstName": "Nelkon",
+        "lastName": "Parker 11",
         "dateOfBirth": "1972-03-04T15:36:19.802Z",
         "dateOfDeath": "2012-07-04T15:36:19.802Z",
         "createdAt": "2017-01-04T15:36:19.802Z",
@@ -194,6 +216,8 @@ export const authors = [{
     {
         "fullName": "Charles Philip 12",
         "id": 12,
+        "firstName": "Charles",
+        "lastName": "Philip 12",
         "dateOfBirth": "1981-01-04T15:36:19.802Z",
         "dateOfDeath": null,
         "createdAt": "2016-01-04T15:36:19.802Z",
@@ -211,6 +235,8 @@ export const authors = [{
     }, {
         "fullName": "Nelkon Parker 13",
         "id": 13,
+        "firstName": "Nelkon",
+        "lastName": "Parker 13",
         "dateOfBirth": "1972-03-04T15:36:19.802Z",
         "dateOfDeath": "2012-07-04T15:36:19.802Z",
         "createdAt": "2017-01-04T15:36:19.802Z",
@@ -229,6 +255,8 @@ export const authors = [{
     {
         "fullName": "Charles Philip 14",
         "id": 14,
+        "firstName": "Charles",
+        "lastName": "Philip 14",
         "dateOfBirth": "1981-01-04T15:36:19.802Z",
         "dateOfDeath": null,
         "createdAt": "2016-01-04T15:36:19.802Z",
@@ -246,6 +274,8 @@ export const authors = [{
     }, {
         "fullName": "Nelkon Parker 15",
         "id": 15,
+        "firstName": "Nelkon",
+        "lastName": "Parker 15",
         "dateOfBirth": "1972-03-04T15:36:19.802Z",
         "dateOfDeath": "2012-07-04T15:36:19.802Z",
         "createdAt": "2017-01-04T15:36:19.802Z",
@@ -264,6 +294,8 @@ export const authors = [{
     {
         "fullName": "Charles Philip 16",
         "id": 16,
+        "firstName": "Charles",
+        "lastName": "Philip 16",
         "dateOfBirth": "1981-01-04T15:36:19.802Z",
         "dateOfDeath": null,
         "createdAt": "2016-01-04T15:36:19.802Z",
@@ -399,7 +431,7 @@ export const genres = [{
         "books": []
     },
     {
-        "name": "Sciences 10",
+        "name": "Sciences 11",
         "id": 11,
         "books": []
     },

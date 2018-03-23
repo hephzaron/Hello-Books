@@ -7,6 +7,7 @@ import validateGenre from 'Utils/validators/genre';
 import validFileType from 'Utils/validators/upload';
 import { createBook, editBook } from 'Actions/bookActions';
 import { fetchGenres } from 'Actions/genreActions';
+import { genres } from '../client-data';
 
 /**
  * @class BookPage
@@ -43,19 +44,7 @@ class BookPage extends Component {
         fileDir: ''        
       },
       genres: [
-        {
-          "name": "Maths and statistics",
-          "id": 1,
-        },{
-          "name": "Sciences",
-          "id": 2
-        },{
-          "name": "Linguistics",
-          "id": 3
-        },{
-          "name": "Human Biology",
-          "id": 4
-        }
+        ...genres
       ],
       showItems:false,
       isLoading: false,

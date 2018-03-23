@@ -188,7 +188,7 @@ export const editAuthor = authorDetails => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: errors.response.data.message
+                text: 'errors.response.data.message-editAuthor'
             }));
             return errors;
         })

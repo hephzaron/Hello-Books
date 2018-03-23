@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AuthorForm from './AuthorForm';
 import validateAuthor from 'Utils/validators/author';
-import { createAuthor } from 'Actions/authorActions';
+import { createAuthor, editAuthor } from 'Actions/authorActions';
+import moment from 'moment';
 
 /**
  * @class AuthorPage
@@ -22,11 +23,65 @@ class AuthorPage extends Component {
         dateOfBirth:'',
         dateOfDeath:''
       },
+      editedAuthor:{
+        id: 0
+      },
       isLoading: false,
       errors:{}
     }    
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.formatDate = this.formatDate.bind(this);
+  }
+
+  /**
+ * @method componentWillRecieveProps
+ * @memberof AuthorPage
+ * @description Lifecycle method before component recieves next props
+ * @param {null}
+ * @returns {void}
+ */
+
+componentWillReceiveProps(nextProps){
+  if(this.props.editedAuthor && 
+    (this.state.editedAuthor['id'] !== nextProps.editedAuthor['id'])){
+      const { editedAuthor :{ id}} = nextProps;
+    this.setState({
+      editedAuthor:Object.assign({},this.state.author,{ id }),
+      author: Object.assign({}, this.state.author,this.formatDate(nextProps.editedAuthor))
+    });
+  }
+}
+
+/**
+ * @method componentWillMount
+ * @memberof AuthorPage
+ * @description Lifecycle method before component mount
+ * @param {null}
+ * @returns {void}
+ */
+  componentWillMount(){
+    this.setState({
+      editedAuthor:Object.assign({},this.state.author,this.formatDate(this.props.editedAuthor)),
+      author: Object.assign({}, this.state.author, this.formatDate(this.props.editedAuthor))
+      });
+  }
+
+  /**
+   * formatDate
+   * @memberof AuthorPage
+   * @description format date before been displayed in form filed
+   * @param { object } object 
+   * @returns { object } 
+   */
+  formatDate(object){
+    const { dateOfBirth, dateOfDeath } = object
+   let dOB = dateOfBirth ? dateOfBirth.split('T')[0] : '' ;
+   let dOD = dateOfDeath ? dateOfDeath.split('T')[0] : '' ;
+   return Object.assign({}, object,{
+     dateOfBirth: dOB,
+     dateOfDeath: dOD
+   });
   }
 
   /**
@@ -96,13 +151,15 @@ class AuthorPage extends Component {
         isLoading = {this.state.isLoading}
         onChange = {this.onChange}
         onSubmit = {this.onSubmit}
-        buttonRole = {'create'}/>
+        buttonRole = {`${this.props.editedAuthor ? 'update':'create'}`}
+        editAuthorModal = {this.props.editedAuthor}/>
     )
   }
 }
 
 const actionCreators = {
-  createAuthor
+  createAuthor,
+  editAuthor
 }
 export { AuthorPage }
 export default connect(null, actionCreators)(AuthorPage)

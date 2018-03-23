@@ -21,9 +21,10 @@ const propTypes = {
  */
 const AuthorForm = (props) => (
   <form className="form-user" id="author-form" onSubmit = {props.onSubmit}>
+    {props.editAuthorModal && <FlashMessageList/>}
     <h2>
       {props.buttonRole === 'create'? 'Create New Author':
-        (props.buttonRole==='edit'?'Update Author': 
+        (props.buttonRole==='update'?'Edit Author': 
         null)}
     </h2>
     <SingleInput

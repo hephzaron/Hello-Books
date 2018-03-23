@@ -88,6 +88,7 @@ class BookPage extends Component {
  */
 
   componentWillMount(){
+    if(this.props.editedBook){
     const { editedBook :{ id, genre_id }} = this.props
     this.setState({
       editedBook:Object.assign({},this.state.book,this.props.editedBook),
@@ -95,6 +96,7 @@ class BookPage extends Component {
       genreName: this.state.genres.filter((genre)=>
         genre.id === genre_id )[0].name
       });
+    }
   }
 
 /**

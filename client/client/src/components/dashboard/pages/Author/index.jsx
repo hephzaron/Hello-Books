@@ -61,10 +61,12 @@ componentWillReceiveProps(nextProps){
  * @returns {void}
  */
   componentWillMount(){
+    if(this.props.editedAuthor){
     this.setState({
       editedAuthor:Object.assign({},this.state.author,this.formatDate(this.props.editedAuthor)),
       author: Object.assign({}, this.state.author, this.formatDate(this.props.editedAuthor))
       });
+    }
   }
 
   /**

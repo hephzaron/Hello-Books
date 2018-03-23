@@ -68,6 +68,14 @@ class BookPage extends Component {
     this.onGenreClick = this.onGenreClick.bind(this);
   }
 
+/**
+ * @method componentWillRecieveProps
+ * @memberof BookPage
+ * @description Lifecycle method before component recieves next props
+ * @param {null}
+ * @returns {void}
+ */
+
   componentWillReceiveProps(nextProps){
     if(this.props.editedBook && 
       (this.state.editedBook['id'] !== nextProps.editedBook['id'])){
@@ -81,6 +89,14 @@ class BookPage extends Component {
       });
     }
   }
+
+/**
+ * @method componentWillMount
+ * @memberof BookPage
+ * @description Lifecycle method before component mount
+ * @param {null}
+ * @returns {void}
+ */
 
   componentWillMount(){
     const { editedBook :{ id, genre_id }} = this.props

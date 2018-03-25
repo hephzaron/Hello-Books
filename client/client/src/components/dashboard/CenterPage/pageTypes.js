@@ -10,6 +10,7 @@ const pageTypes = [
     'AUTHOR_PAGE',
     'GENRE_PAGE',
     'BOOK_PAGE',
+    'ASSIGN_BOOK_PAGE',
     'BOOKS_FETCHED_PAGE',
     'AUTHORS_FETCHED_PAGE',
     'GENRES_FETCHED_PAGE'

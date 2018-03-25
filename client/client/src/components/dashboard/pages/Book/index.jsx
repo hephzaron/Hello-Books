@@ -117,7 +117,7 @@ componentDidMount(){
   docFile.addEventListener('change',this.handleDocSelect,false);
 
   
-  let dropdownSelect = document.getElementById('dropdown-select');
+  let dropdownSelect = document.getElementById('dropdown-select-genreName');
   dropdownSelect.addEventListener('click',()=>{
     this.setState({
       showItems:!this.state.showItems
@@ -247,7 +247,7 @@ componentDidMount(){
     this.props.createBook(this.state.book)
      .then(data=>{
        if(data.response && data.response.status>=400){
-         this.setState({isLoading:true})
+         this.setState({isLoading:false})
        }else{
          document.getElementById('book-form').reset();
        }

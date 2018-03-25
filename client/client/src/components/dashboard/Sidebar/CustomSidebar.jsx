@@ -10,7 +10,8 @@ import { connect } from 'react-redux';
 const { 
   AUTHOR_PAGE, 
   GENRE_PAGE,
-  BOOK_PAGE
+  BOOK_PAGE,
+  ASSIGN_BOOK_PAGE
 } = pageTypes;
 
 
@@ -27,6 +28,7 @@ class CustomSidebar extends Component {
     this.clickAuthor = this.clickAuthor.bind(this);
     this.clickGenre = this.clickGenre.bind(this);
     this.clickBook = this.clickBook.bind(this);
+    this.clickAssign = this.clickAssign.bind(this);
   }
 
   /**
@@ -41,7 +43,7 @@ class CustomSidebar extends Component {
     this.props.loadPage(AUTHOR_PAGE)
   }
 
-    /**
+  /**
    * @method clickGenre
    * @description handles genre click event to render genre page
    * @param { event } event handler
@@ -63,6 +65,18 @@ class CustomSidebar extends Component {
     this.props.loadPage(BOOK_PAGE)
   }
 
+  /**
+   * @method clickAssign
+   * @description handles genre click event to render genre page
+   * @param { event } event handler
+   * @returns { void }
+   */
+  clickAssign(event){
+    event.preventDefault();
+    this.props.loadPage(ASSIGN_BOOK_PAGE)
+  }
+
+
   render(){
     return(
       <div className={classnames(`${this.props.sidebarClass}`)}>
@@ -70,7 +84,8 @@ class CustomSidebar extends Component {
         <CreateOptions
           clickAuthor = {this.clickAuthor}
           clickGenre = {this.clickGenre}
-          clickBook = {this.clickBook}/>
+          clickBook = {this.clickBook}
+          clickAssign = {this.clickAssign}/>
         <hr/>
         <div id="wrapper">
           <div className="scrollbar" id="style-default">

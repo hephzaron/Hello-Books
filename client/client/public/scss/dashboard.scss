@@ -449,16 +449,17 @@ gold {
             left: 0;
             top: 100%;
             width: 100%;
+            height: 200px;
             overflow-y: scroll;
             overflow-x: hidden;
             background-color: #C8D1D7;
+            z-index: 2;
             li {
                 cursor: pointer;
                 padding-left: 5px;
                 &:hover {
-                    @include on-active($btn-default-color);
+                    @include on-active(white, $btn-default-color);
                     font-weight: bold;
-                    border-left: 4px solid $btn-default-color
                 }
             }
         }

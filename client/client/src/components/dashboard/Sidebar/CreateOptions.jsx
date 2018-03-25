@@ -30,6 +30,12 @@ const CreateOptions = (props) =>
       name: 'Book',
       onClick: props.clickBook,
       href:''
+    },{
+      role:'seperator'
+    },{
+      name: 'Assign book to author(s)',
+      onClick: props.clickAssign,
+      href:''
     }
   ]
 
@@ -47,7 +53,8 @@ const CreateOptions = (props) =>
 CreateOptions.propTypes = {
   clickAuthor: PropTypes.func.isRequired,
   clickGenre: PropTypes.func.isRequired,
-  clickBook: PropTypes.func.isRequired
+  clickBook: PropTypes.func.isRequired,
+  clickAssign: PropTypes.func.isRequired
 }
 
 export default CreateOptions;

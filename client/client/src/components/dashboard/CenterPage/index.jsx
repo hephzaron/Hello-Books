@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import pageTypes from './pageTypes';
 import FlashMessageList from 'Components/FlashMessageList';
 import { loadPage, showPage, hidePage } from 'Actions/centerPage';
 import Spinner from '../Spinner';
@@ -13,6 +12,7 @@ import SearchPage from '../pages/Search';
 import AuthorPage from '../pages/Author';
 import GenrePage from '../pages/Genre';
 import BookPage from '../pages/Book';
+import AssignBookPage from '../pages/AssignBook';
 import BooksFetchedPage from '../pages/Book/BooksFetchedPage';
 import AuthorsFetchedPage from '../pages/Author/AuthorsFetchedPage';
 import GenresFetchedPage from '../pages/Genre/GenresFetchedPage';
@@ -22,18 +22,11 @@ const CENTER_PAGE_COMPONENTS = {
   AUTHOR_PAGE: AuthorPage,
   GENRE_PAGE: GenrePage,
   BOOK_PAGE: BookPage,
+  ASSIGN_BOOK_PAGE: AssignBookPage,
   BOOKS_FETCHED_PAGE: BooksFetchedPage,
   AUTHORS_FETCHED_PAGE: AuthorsFetchedPage,
   GENRES_FETCHED_PAGE: GenresFetchedPage
 }
-
-const { 
-  BOOKS_FETCHED_PAGE,
-  AUTHORS_FETCHED_PAGE,
-  GENRES_FETCHED_PAGE,
-  AUTHOR_PAGE, 
-  GENRE_PAGE 
-} = pageTypes;
 
 const contextTypes = {
   router: PropTypes.object.isRequired

@@ -48,7 +48,7 @@ class SelectionList extends Component {
         <span 
           className="input-group-btn dropdown">
           <button
-            id="dropdown-select" 
+            id={`dropdown-select-${listName}`}
             type="button" 
             className="btn btn-default">
             {`${inputName} `}<span className="caret"></span>
@@ -56,7 +56,7 @@ class SelectionList extends Component {
         </span>
         {
           showItems && 
-          <ul className="select-items" id="select-items">
+          <ul className="select-items" id= "select-items">
             {Children.toArray(children).filter(
               child => !value.trim() || 
               child.props.children.toLowerCase().indexOf(value.toLowerCase()) !== -1

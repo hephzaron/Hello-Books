@@ -11,12 +11,12 @@ const { SET_CURRENT_USER } = types;
  * @returns {object} action creator
  */
 
-const setCurrentUser = (user) => ({
+export const setCurrentUser = (user) => ({
     type: SET_CURRENT_USER,
     user
 });
 
-const logoutUser = () => (
+export const logoutUser = () => (
     (dispatch) => {
         localStorage.clear();
         setAuthToken(false);
@@ -24,7 +24,7 @@ const logoutUser = () => (
     }
 )
 
-const loginUser = (userData) => (
+export const loginUser = (userData) => (
     (dispatch) => {
         const { token, ...rest } = userData;
         const userPayload = {...rest }
@@ -41,7 +41,7 @@ const loginUser = (userData) => (
  * @returns {object} It returns axios success response object or error object on error
  */
 
-const signin = (userData) => (
+export const signin = (userData) => (
     (dispatch) => (
         axios
         .post('/users/signin', userData)
@@ -67,7 +67,7 @@ const signin = (userData) => (
  * @returns {promise} axios promise
  */
 
-const sendResetPasswordMail = (payload) => (
+export const sendResetPasswordMail = (payload) => (
     (dispatch) => axios
     .post('/users/reset-password', payload)
     .then((response) => {
@@ -90,7 +90,7 @@ const sendResetPasswordMail = (payload) => (
  * @returns {promise} Axios promise object
  */
 
-const resetPassword = (payload) => (
+export const resetPassword = (payload) => (
     (dispatch) =>
     axios
     .post('/users/reset-password/verify', payload)
@@ -109,4 +109,20 @@ const resetPassword = (payload) => (
 
 )
 
-export { setCurrentUser, logoutUser, loginUser, signin, sendResetPasswordMail, resetPassword };
+export const changePassword = (payload) => (
+    dispatch =>
+    axios.put('/users/change_password', payload)
+    .then((response) => {
+        dispatch(addFlashMessage({
+            type: 'success',
+            text: response.data.message
+        }));
+        dispatch(logoutUser());
+    })
+    .catch((errors) => {
+        dispatch(addFlashMessage({
+            type: 'error',
+            text: errors.response.data.message
+        }));
+    })
+)

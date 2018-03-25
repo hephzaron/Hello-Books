@@ -95,6 +95,7 @@ class LinkedBookList extends Component {
 
 LinkedBookList.propTypes = {
   items: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired
 }
 

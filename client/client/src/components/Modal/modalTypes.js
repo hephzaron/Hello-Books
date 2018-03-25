@@ -7,6 +7,7 @@ import mirrorKeys from 'Utils/mirrorKeys';
 
 const modalTypes = [
     'RESET_PASSWORD_MODAL',
+    'CHANGE_PASSWORD_MODAL',
     'TERMS_OF_SERVICE_MODAL',
     'MISSION_STATEMENT_MODAL',
     'VISION_STATEMENT_MODAL',

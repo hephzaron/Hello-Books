@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserOptions from './UserOptions';
 import { logoutUser } from 'Actions/userAuth';
+import { showModal, closeModal } from 'Actions/modal';
+import modalTypes from '../../Modal/modalTypes';
+
+const { CHANGE_PASSWORD_MODAL } = modalTypes;
 
 /**
  * @class UserDropdown
@@ -14,11 +18,9 @@ import { logoutUser } from 'Actions/userAuth';
 class UserDropdown extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      isAuthenticated: false
-    }
     this.viewProfile = this.viewProfile.bind(this);
     this.signOut = this.signOut.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
 
   /**
@@ -28,7 +30,8 @@ class UserDropdown extends Component {
    * @param { null }
    * @returns { void }
    */
-  viewProfile(){
+  viewProfile(event){
+    event.preventDefault();
     alert('My profile')
   }
 
@@ -39,8 +42,14 @@ class UserDropdown extends Component {
    * @param { null }
    * @returns { void }
    */
-  signOut(){
+  signOut(event){
+    event.preventDefault();
     this.props.logoutUser()
+  }
+
+  changePassword(event){
+    event.preventDefault();
+    this.props.showModal(CHANGE_PASSWORD_MODAL)
   }
 
   render(){
@@ -52,8 +61,9 @@ class UserDropdown extends Component {
         <UserOptions
           user={this.props.user}
           isAuthenticated={this.props.isAuthenticated}
-          viewProfile = {this.props.viewProfile}
-          signOut = {this.props.signOut}/>
+          viewProfile = {this.viewProfile}
+          signOut = {this.signOut}
+          changePassword ={this.changePassword}/>
       </div>
     )
   }
@@ -65,6 +75,8 @@ const mapStateToProps = (state) => ({
 })
 
 const actionCreators = {
+  showModal,
+  closeModal,
   logoutUser
 }
 

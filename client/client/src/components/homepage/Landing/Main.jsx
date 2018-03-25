@@ -13,7 +13,6 @@ import Register from 'HomePage/Register';
 import Signin from 'HomePage/Signin';
 import Paginate from 'HomePage/Paginate';
 
-import ChangePassword from 'HomePage/ChangePassword/ChangePasswordForm';
 import ResetPassword from 'HomePage/ResetPassword/ResetPasswordForm';
 import ServiceDropdown from './DropdownMenu';
 import  ModalContainer  from 'Components/Modal';

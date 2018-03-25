@@ -5,6 +5,7 @@ import FlashMessageList from 'Components/FlashMessageList';
 import { loadPage, showPage, hidePage } from 'Actions/centerPage';
 import Spinner from '../Spinner';
 import ErrorBoundary from '../../ErrorBoundary';
+import pageTypes from './pageTypes';
 
 {/* import page custom components*/}
 
@@ -16,6 +17,8 @@ import AssignBookPage from '../pages/AssignBook';
 import BooksFetchedPage from '../pages/Book/BooksFetchedPage';
 import AuthorsFetchedPage from '../pages/Author/AuthorsFetchedPage';
 import GenresFetchedPage from '../pages/Genre/GenresFetchedPage';
+
+const { BOOKS_FETCHED_PAGE } = pageTypes;
 
 const CENTER_PAGE_COMPONENTS = {
   SEARCH_PAGE: SearchPage,
@@ -55,6 +58,13 @@ class CenterPageContainer extends Component {
         isLoading:false
       })
     }
+  }
+
+  componentDidMount(){
+    this.setState({
+      isLoading:false
+    });
+    this.props.showPage(BOOKS_FETCHED_PAGE)
   }
   render(){
       if(this.state.isLoading){

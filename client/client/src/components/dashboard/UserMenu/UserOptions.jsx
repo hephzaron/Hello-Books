@@ -3,25 +3,6 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import CustomList from 'General/CustomList';
 
-const listContent = [
-  {
-    role:'seperator'
-  },{ 
-    name:'View profile',
-    href:''
-  },{
-    role:'seperator'
-  },{
-    name: 'Change password',
-    href:''
-  },{
-    role:'seperator'
-  },{
-    name: 'Sign out',
-    href:''
-  }
-]
-
 /**
  * @function UserOptions
  * @description Presentational component to render user options dropdown
@@ -29,7 +10,38 @@ const listContent = [
  * @returns { JSX }
  */
 const UserOptions = (props)=> {
-  const { email, username } = props.user;
+  const { 
+    user: 
+    { 
+      email, 
+      username 
+    }, 
+    viewProfile, 
+    signOut, 
+    changePassword 
+  } = props
+
+  const listContent = [
+    {
+      role:'seperator'
+    },{ 
+      name:'View profile',
+      href:'',
+      onClick: viewProfile
+    },{
+      role:'seperator'
+    },{
+      name: 'Change password',
+      href:'',
+      onClick: changePassword
+    },{
+      role:'seperator'
+    },{
+      name: 'Sign out',
+      href:'',
+      onClick: signOut
+    }
+  ]
 
   return(
     <div className = "btn-group dropdown">
@@ -53,7 +65,10 @@ const UserOptions = (props)=> {
 }
 
 UserOptions.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  viewProfile: PropTypes.func.isRequired,
+  signOut: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired
 }
 
 export default UserOptions;

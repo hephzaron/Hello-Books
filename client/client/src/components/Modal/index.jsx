@@ -14,9 +14,12 @@ import AboutUsModal from 'HomePage/Statements/About';
 {/*import form modals*/}
 import EditBookModal from '../dashboard/modals/EditBookModal';
 import EditAuthorModal from '../dashboard/modals/EditAuthorModal';
+import ChangePasswordModal from '../dashboard/modals/ChangePasswordModal';
+
 
 const MODAL_COMPONENTS = {
   RESET_PASSWORD_MODAL: PasswordResetModal,
+  CHANGE_PASSWORD_MODAL: ChangePasswordModal,
   TERMS_OF_SERVICE_MODAL: TermsOfServiceModal,
   MISSION_STATEMENT_MODAL: MissionStatementModal,
   VISION_STATEMENT_MODAL: VisionStatementModal,

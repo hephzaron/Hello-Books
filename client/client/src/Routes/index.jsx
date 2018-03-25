@@ -7,7 +7,6 @@ import {
 import Home from 'HomePage/Home';
 import Register from 'HomePage/Register';
 import Signin from 'HomePage/Signin';
-import ChangePassword from 'HomePage/ChangePassword/ChangePasswordForm';
 import ResetPassword from 'HomePage/ResetPassword/ResetPasswordForm';
 import LandingPage from 'HomePage/Landing/Main'
 

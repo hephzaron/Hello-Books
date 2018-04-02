@@ -34,7 +34,6 @@ const SigninForm = (props) => (
       <FlashMessageList />
       <SingleInput
         identifier = "inputUsername"
-        type = "username"
         name = "username"
         placeholder = "Username"
         label = "Username :"

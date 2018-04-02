@@ -102,7 +102,7 @@ class SignIn extends Component {
           });
         }else{
           document.getElementById('signin-form').reset();
-          browserHistory.push('/dashboard');
+          this.context.router.history.push('/dashboard');
         }
       });
   }

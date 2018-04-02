@@ -15,7 +15,8 @@ import Signin from 'HomePage/Signin';
 import ResetPassword from 'HomePage/ResetPassword/ResetPasswordForm';
 import  ModalContainer  from 'Components/Modal';
 import logo from 'Public/images/logo.png';
-import Header from 'General/Header'
+import Header from 'General/Header';
+import Dashboard from 'Components/dashboard';
 
 /**
  * @description Renders the Landing page on user visit to site
@@ -77,6 +78,7 @@ class Main extends Component {
           <div className="route-container">
           <Route exact path="/signin" component= {Signin}/>
           <Route exact path="/register" component= {Register}/>
+          <Route exact path="/dashboard" component= { Dashboard }/>
           <ModalContainer />
           </div>
         </div>

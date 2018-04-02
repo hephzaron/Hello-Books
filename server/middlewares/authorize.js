@@ -48,7 +48,9 @@ module.exports = {
                         username: userProp.username,
                         token: token,
                         userId: userProp.id,
-                        admin: userProp.admin
+                        admin: userProp.admin,
+                        email: userProp.email,
+                        memValue: userProp.memValue
                     }
                 });
             }).catch(() => res.status(500).send({ message: 'Internal Server Error' }));

@@ -33,17 +33,17 @@ const SigninForm = (props) => (
     <form onSubmit = {props.onSubmit}>
       <FlashMessageList />
       <SingleInput
-        identifier = "inputEmail"
-        type = "email"
-        name = "email"
-        placeholder = "Email address"
-        label = "Email address :"
+        identifier = "inputUsername"
+        type = "username"
+        name = "username"
+        placeholder = "Username"
+        label = "Username :"
         onChange = {props.onChange}
-        value = {props.user.email}/>
+        value = {props.user.username}/>
 
-      {props.validationError.email &&
+      {props.validationError.username &&
         <p className = "form-text text-danger">
-          {props.validationError.email}
+          {props.validationError.username}
         </p>
       }
 

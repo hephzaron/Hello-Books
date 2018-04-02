@@ -9,7 +9,9 @@ import validateUser from 'Utils/validators/user';
 import { addFlashMessage } from 'Actions/flashMessage';
 import SigninForm from './SigninForm';
 /**Modal type constant */
-import modalTypes from  'Modal/modalTypes'
+import modalTypes from  'Modal/modalTypes';
+import { browserHistory } from 'react-router';
+
 const { RESET_PASSWORD_MODAL } = modalTypes;
 
 const contextTypes = {
@@ -29,7 +31,7 @@ const propTypes = {
 /*Make state available globally */
 let state = {
   user: {
-    email: '',
+    username: '',
     password: '',
     oauthID: ''
   },
@@ -99,7 +101,8 @@ class SignIn extends Component {
             isLoading: false
           });
         }else{
-          this.context.router.push('/dashboard');
+          document.getElementById('signin-form').reset();
+          browserHistory.push('/dashboard');
         }
       });
   }

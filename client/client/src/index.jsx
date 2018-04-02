@@ -13,7 +13,6 @@ import 'Public/css/bootstrap.min.css';
 import 'Public/scss/home.scss';
 import 'Public/scss/dashboard.scss';
 import Main from 'HomePage/Landing/Main';
-import Dashboard from 'Components/dashboard';
 
 
 /**

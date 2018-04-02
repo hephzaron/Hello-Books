@@ -8,6 +8,7 @@ import { userSignupRequestAction } from 'Actions/register';
 import RegisterForm from './RegisterForm';
 import { loadModal, showModal, hideModal } from 'Actions/modal';
 import modalTypes from 'Modal/modalTypes';
+import { browserHistory } from 'react-router';
 
 const { TERMS_OF_SERVICE_MODAL } = modalTypes;
 
@@ -89,7 +90,7 @@ class Register extends Component {
           this.setState({isLoading:false})
         }else{
           document.getElementById('signup-form').reset();
-          this.context.router.push('/dashboard')
+          browserHistory.push('/dashboard');
         }
       })
    };

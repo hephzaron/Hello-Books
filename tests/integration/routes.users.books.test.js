@@ -52,7 +52,7 @@ describe('GET BOOK', () => {
     //get  all books
     it('it should get all books in database', (done) => {
         chai.request(app)
-            .get('/books')
+            .get('/api/v1/books')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
@@ -69,7 +69,7 @@ describe('GET BOOK', () => {
     it('it should get all authors with the books written', (done) => {
 
         chai.request(app)
-            .get('/authors')
+            .get('/api/v1/authors')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
@@ -86,7 +86,7 @@ describe('GET BOOK', () => {
     //list books by category
     it('it should get books by categories', (done) => {
         chai.request(app)
-            .get('/genre/books')
+            .get('/api/v1/genre/books')
             .end((err, res) => {
                 res.type.should.equal('application/json');
                 res.should.have.status(200);
@@ -104,7 +104,7 @@ describe('GET BOOK', () => {
         let authorId = 2;
 
         chai.request(app)
-            .get(`/authors/${authorId}`)
+            .get(`/api/v1/authors/${authorId}`)
             .end((err, res) => {
                 const { author } = res.body;
                 res.type.should.equal('application/json');
@@ -123,7 +123,7 @@ describe('GET BOOK', () => {
     it('it should search for book', (done) => {
         let title = 'data';
         chai.request(app)
-            .get(`/search`)
+            .get(`/api/v1/search`)
             .query(`q=${title}&type=books`)
             .end((err, res) => {
                 let re = /data/i // string 'data' should be present in returned books
@@ -138,7 +138,7 @@ describe('GET BOOK', () => {
     it('it should search for author', (done) => {
         let name = 'nelkon';
         chai.request(app)
-            .get(`/search`)
+            .get(`/api/v1/search`)
             .query(`q=${name}&type=authors`)
             .end((err, res) => {
                 let re = /nelkon/i // string 'nelkon' should be present in returned authors

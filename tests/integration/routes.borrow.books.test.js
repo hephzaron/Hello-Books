@@ -56,7 +56,7 @@ describe('REGISTER USER', () => {
     };
     it('it should register user', (done) => {
         chai.request(app)
-            .post('/users/register')
+            .post('/api/v1/users/register')
             .send(user)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -73,7 +73,7 @@ describe('USER SHOULD LOGIN TO BORROW BOOK', () => {
 
     it('it should signin user and generate token to access routes', (done) => {
 
-        agent.post('/users/signin')
+        agent.post('/api/v1/users/signin')
             .send({ username: 'Philip', password: 'phil17' })
             .end((err, res) => {
 
@@ -96,7 +96,7 @@ describe('BORROW AND RETURN BOOKS', () => {
         try {
             //User with userId borrows two book with id equals 1 and id equals 2
             let bookId = 1;
-            agent.post('/users/' + userId + '/books/' + bookId)
+            agent.post('/api/v1/users/' + userId + '/books/' + bookId)
                 .set({ 'x-access-token': token })
                 .end((err, res) => {
                     // it should be successful
@@ -115,7 +115,7 @@ describe('BORROW AND RETURN BOOKS', () => {
         try {
             //....borrow second book with id equals 2
             let bookId = 2;
-            agent.post('/users/' + userId + '/books/' + bookId)
+            agent.post('/api/v1/users/' + userId + '/books/' + bookId)
                 .set({ 'x-access-token': token })
                 .end((err, res) => {
                     // it should be successful
@@ -132,7 +132,7 @@ describe('BORROW AND RETURN BOOKS', () => {
     }).timeout(17000);
 
     it('it should get unreturned book by a user before return of any', (done) => {
-        agent.get('/users/' + userId + '/books')
+        agent.get('/api/v1/users/' + userId + '/books')
             .set({ 'x-access-token': token })
             .query('returned=false')
             .end((err, res) => {
@@ -155,7 +155,7 @@ describe('BORROW AND RETURN BOOKS', () => {
             returned: true
         };
         let bookId = 1;
-        agent.put('/users/' + userId + '/books/' + bookId)
+        agent.put('/api/v1/users/' + userId + '/books/' + bookId)
             .set({ 'x-access-token': token })
             .send(book)
             .end((err, res) => {
@@ -171,7 +171,7 @@ describe('BORROW AND RETURN BOOKS', () => {
 
     });
     it('it should get unreturned book by a user', (done) => {
-        agent.get('/users/' + userId + '/books')
+        agent.get('/api/v1/users/' + userId + '/books')
             .set({ 'x-access-token': token })
             .query('returned=false')
             .end((err, res) => {

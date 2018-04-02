@@ -48,7 +48,7 @@ describe('/POST users', () => {
 
     it('it should POST user details to database for admin and non-admin', (done) => {
         chai.request(app)
-            .post('/users/register')
+            .post('/api/v1/users/register')
             // post non admin credentials to database
             .send(nonAdmin)
             .end((err, res) => {
@@ -68,7 +68,7 @@ describe('/POST users', () => {
 
                 //post admin credentals to database
                 chai.request(app)
-                    .post('/users/register')
+                    .post('/api/v1/users/register')
                     .send(admin)
                     .end((err, res) => {
                         // there should be a 201 status code
@@ -101,14 +101,14 @@ describe('/POST Book category', () => {
     };
     it('it should add book category on admin login', (done) => {
 
-        agent.post('/users/signin')
+        agent.post('/api/v1/users/signin')
             .send({ username: 'John Carther', password: 'admin' })
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body['user'].should.have.property('token').not.be.empty;
                 token = res.body['user'].token;
 
-                agent.post('/genre')
+                agent.post('/api/v1/genre')
                     .set({ 'x-access-token': token })
                     .send(category)
                     .end((err, res) => {
@@ -142,7 +142,7 @@ describe('/POST book', () => {
 
     it('it should not create book where authentication fails', (done) => {
         chai.request(app)
-            .post('/books')
+            .post('/api/v1/books')
             .send(book)
             .end((err, res) => {
                 res.should.have.status(401);
@@ -161,7 +161,7 @@ describe('/POST book', () => {
 
         // follow up with log in
         let agent = chai.request.agent(app);
-        agent.post('/users/signin')
+        agent.post('/api/v1/users/signin')
             .send({ username: 'seundee', password: 'sunny' })
             .end((err, res) => {
                 res.should.have.status(200);
@@ -169,7 +169,7 @@ describe('/POST book', () => {
                 let token = res.body['user'].token;
 
                 // Unauthorised user:non-admin should not create book
-                agent.post('/books')
+                agent.post('/api/v1/books')
                     .set({ 'x-access-token': token })
                     .send(book)
                     .end((err, res) => {
@@ -185,7 +185,7 @@ describe('/POST book', () => {
     // Registered admin should signin and be able to create book
     it('it should signin and allow admin to create book', (done) => {
 
-        agent.post('/users/signin')
+        agent.post('/api/v1/users/signin')
             .send({ username: 'John Carther', password: 'admin' })
             .end((err, res) => {
                 res.should.have.status(200);
@@ -193,7 +193,7 @@ describe('/POST book', () => {
                 let token = res.body['user'].token;
 
                 // Unauthorised user:admin should  create book
-                agent.post('/books')
+                agent.post('/api/v1/books')
                     .set({ 'x-access-token': token })
                     .send(book)
                     .end((err, res) => {
@@ -227,7 +227,7 @@ describe('/POST, /PUT Author', () => {
             updatedAt: new Date()
 
         };
-        agent.post('/authors')
+        agent.post('/api/v1/authors')
             .set({ 'x-access-token': token })
             .send(author)
             .end((err, res) => {
@@ -253,7 +253,7 @@ describe('/POST, /PUT Author', () => {
     const authorId = 1;
 
     it('it should update author record in database', (done) => {
-        agent.put(`/authors/${authorId}`)
+        agent.put(`/api/v1/authors/${authorId}`)
             .set({ 'x-access-token': token })
             .send(updatedAuthor)
             .end((err, res) => {
@@ -279,7 +279,7 @@ describe('PUT /books/:bookId', () => {
     const bookId = 1;
 
     it('it should update book record in database', (done) => {
-        agent.put('/books/' + bookId)
+        agent.put('/api/v1/books/' + bookId)
             .set({ 'x-access-token': token })
             .send(updatedBook)
             .end((err, res) => {
@@ -308,7 +308,7 @@ describe('PUT /books/:bookId', () => {
 
             let authorId = author.id;
 
-            agent.post('/authors/' + authorId + '/books/' + bookId)
+            agent.post('/api/v1/authors/' + authorId + '/books/' + bookId)
                 .set({ 'x-access-token': token })
                 .end((err, res) => {
                     res.should.have.status(201);
@@ -326,7 +326,7 @@ describe('PUT /books/:bookId', () => {
     }).timeout(5000);
 
     it('it should delete book from database', (done) => {
-        agent.del('/books/' + bookId)
+        agent.del('/api/v1/books/' + bookId)
             .set({ 'x-access-token': token })
             .end((err, res) => {
 
@@ -343,7 +343,7 @@ describe('PUT /books/:bookId', () => {
 describe('DELETE Author', () => {
     let authorId = 1
     it('it should delete author from database', (done) => {
-        agent.del(`/authors/${authorId}`)
+        agent.del(`/api/v1/authors/${authorId}`)
             .set({ 'x-access-token': token })
             .end((err, res) => {
 

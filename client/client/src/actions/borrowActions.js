@@ -63,7 +63,7 @@ export const borrowedReturned = (returnedBook) => ({
  */
 export const borrowBook = ({ userId, bookId }) => (
     dispatch => (
-        axios.post(`/users/${userId}/books/${bookId}`, {})
+        axios.post(`/api/v1/users/${userId}/books/${bookId}`, {})
         .then(response => {
             const {
                 borrowedBook,
@@ -94,7 +94,7 @@ export const borrowBook = ({ userId, bookId }) => (
  */
 export const fetchBorrowedBook = ({ userId }) => (
     dispatch => (
-        axios.get(`/users/${userId}/books?returned=false`)
+        axios.get(`http://localhost:5432/api/v1/users/${userId}/books?returned=false`)
         .then(response => {
             dispatch(borrowedFetched(response.data.borrowedBooks));
             return response;
@@ -102,7 +102,7 @@ export const fetchBorrowedBook = ({ userId }) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-borrowed'
+                text: errors.response.data.message
             }));
             dispatch(borrowedFetched({}));
             return errors;
@@ -119,7 +119,7 @@ export const fetchBorrowedBook = ({ userId }) => (
 
 export const getAllBorrowedBooks = () => (
     dispatch => (
-        axios.get('/borrowed-books/users')
+        axios.get('http://localhost:5432/api/v1/borrowed-books/users')
         .then(response => {
             dispatch(borrowedFetched(response.data.userBooks));
             return response;
@@ -144,7 +144,7 @@ export const getAllBorrowedBooks = () => (
  */
 export const returnBook = ({ userId, bookId }) => (
     dispatch => (
-        axios.put(`/users/${userId}/books/${bookId}`, { returned: true })
+        axios.put(`http://localhost:5432/api/v1/users/${userId}/books/${bookId}`, { returned: true })
         .then(response => {
             const {
                 message,

@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "practise setup for hello books front end",
     "main": "index.js",
+    "proxy": "http://localhost:5432",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",

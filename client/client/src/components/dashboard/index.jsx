@@ -40,6 +40,9 @@ class Dashboard extends Component {
     this.setState({isLoading:false})
   }
   render(){
+    if(!this.props.isAuthenticated){
+      return null
+    }
     
     return(
       <Router>
@@ -71,8 +74,14 @@ class Dashboard extends Component {
     )}
   }
 
+  Dashboard.propTypes = {
+    user: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
+  }
+
 const mapStateToProps = (state) => ({
- user: state.auth.user
+ user: state.auth.user,
+ isAuthenticated: state.auth.isAuthenticated
 })
 
 export { Dashboard }

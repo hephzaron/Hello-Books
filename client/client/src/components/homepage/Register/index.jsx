@@ -17,7 +17,7 @@ const contextTypes = {
 
 const propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
-  userSignupRequest: PropTypes.func.isRequired
+  userSignupRequestAction: PropTypes.func.isRequired
 };
 
 /**Make state available globally */
@@ -83,7 +83,7 @@ class Register extends Component {
      if(!this.isFormValid()){ return;}
      
      this.setState({isLoading:true});
-     this.props.userSignupRequest(this.state.user)
+     this.props.userSignupRequestAction(this.state.user)
       .then(data=>{
         if(data.response && data.response.status>=400){
           this.setState({isLoading:false})
@@ -124,10 +124,6 @@ class Register extends Component {
     return isValid;
   };
 
-  uploadFile(){
-
-  }
-
   render(){
     return(
       <RegisterForm
@@ -157,7 +153,7 @@ Register.propTypes = propTypes;
  * */
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    userSignupRequest: userSignupRequestAction,
+    userSignupRequestAction,
     addFlashMessage,
     showModal,
     loadModal,

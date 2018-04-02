@@ -99,7 +99,7 @@ class SignIn extends Component {
             isLoading: false
           });
         }else{
-          this.context.router.push('/user-profile');
+          this.context.router.push('/dashboard');
         }
       });
   }

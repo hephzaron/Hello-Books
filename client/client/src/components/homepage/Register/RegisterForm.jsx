@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Button from 'Forms/Button';
 import Checkbox from 'Forms/Checkbox';
 import SingleInput from 'Forms/SingleInput';
-import FileUpload from 'Forms/UploadFile';
 import FlashMessageList from 'Components/FlashMessageList';
 
 /**
@@ -23,7 +22,6 @@ const propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isChecked: PropTypes.bool.isRequired,
     toggleCheckbox: PropTypes.func.isRequired,
-    uploadFile: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired
 }
 
@@ -94,8 +92,6 @@ const RegisterForm = (props) => (
                   {props.validationError.confirmPassword}
                 </p>
             }
-        <FileUpload
-          uploadFile = {props.uploadFile}/>
         <Checkbox
           value = "terms"
           label = {`I agree to the`}

@@ -5,6 +5,7 @@ const credentials = require('./credentials.js');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+const cors = require('cors');
 
 // Set up the express app
 const app = express();
@@ -12,9 +13,11 @@ const app = express();
 app.use(logger('dev'));
 app.disable('x-powered-by');
 app.use(cookieParser(credentials.secret));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors({
+    credentials: true
+}));
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 

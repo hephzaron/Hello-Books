@@ -11,10 +11,8 @@ import PropTypes from 'prop-types';
 import Home from 'HomePage/Home';
 import Register from 'HomePage/Register';
 import Signin from 'HomePage/Signin';
-import Paginate from 'HomePage/Paginate';
 
 import ResetPassword from 'HomePage/ResetPassword/ResetPasswordForm';
-import ServiceDropdown from './DropdownMenu';
 import  ModalContainer  from 'Components/Modal';
 import logo from 'Public/images/logo.png';
 import Header from 'General/Header'
@@ -69,19 +67,16 @@ class Main extends Component {
         <div>
           <Header 
               heading= "Welcome to HiLIB">
-                <ServiceDropdown/>
                 <ul className="nav navbar-right navbar-nav " id="navbar">
                   <li><NavLink exact to = "/" activeStyle={selected} > Home</NavLink></li>
                   <li><NavLink exact to = "/signin" activeStyle={selected}> Sign In</NavLink></li>
                   <li><NavLink exact to = "/register" activeStyle={selected}>Register</NavLink></li>
-                  <li><NavLink exact to = "/api-docs" activeStyle={selected}>API Docs</NavLink></li>
                 </ul>
            </Header>
           <Route exact path="/" component= {this.MyHomePage} />
           <div className="route-container">
           <Route exact path="/signin" component= {Signin}/>
           <Route exact path="/register" component= {Register}/>
-          <Route exact path="/api-docs" component = {Paginate}/>
           <ModalContainer />
           </div>
         </div>

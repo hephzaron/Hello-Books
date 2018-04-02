@@ -59,8 +59,7 @@ if (localStorage.authToken) {
 
 render( 
     <Provider store = { store } >
-       {/**<Main/>**/} 
-       <Dashboard/>
+       <Main/> 
     </Provider>,
     document.getElementById('app')
 );

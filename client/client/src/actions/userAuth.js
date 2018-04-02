@@ -44,7 +44,7 @@ export const loginUser = (userData) => (
 export const signin = (userData) => (
     (dispatch) => (
         axios
-        .post('/users/signin', userData)
+        .post('http://localhost:5432/api/v1/users/signin', userData)
         .then((response) => {
             dispatch(loginUser(response.data.user));
             return response
@@ -69,7 +69,7 @@ export const signin = (userData) => (
 
 export const sendResetPasswordMail = (payload) => (
     (dispatch) => axios
-    .post('/users/reset-password', payload)
+    .post('http://localhost:5432/api/v1/users/reset-password', payload)
     .then((response) => {
         dispatch(addFlashMessage({
             type: 'success',
@@ -93,7 +93,7 @@ export const sendResetPasswordMail = (payload) => (
 export const resetPassword = (payload) => (
     (dispatch) =>
     axios
-    .post('/users/reset-password/verify', payload)
+    .post('http://localhost:5432/api/v1/users/reset-password/verify', payload)
     .then((response) => {
         dispatch(addFlashMessage({
             type: 'success',
@@ -111,7 +111,7 @@ export const resetPassword = (payload) => (
 
 export const changePassword = (payload) => (
     dispatch =>
-    axios.put('/users/change_password', payload)
+    axios.put('http://localhost:5432/api/v1/users/change_password', payload)
     .then((response) => {
         dispatch(addFlashMessage({
             type: 'success',

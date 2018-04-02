@@ -76,7 +76,7 @@ export const booksSearched = result => ({
  */
 export const getBooks = () => (
     dispatch => (
-        axios.get('/books')
+        axios.get('http://localhost:5432/api/v1/books')
         .then((response) => {
             dispatch(setBooks(response.data.books));
             return response
@@ -85,7 +85,7 @@ export const getBooks = () => (
             dispatch(setBooks([]));
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message'
+                text: errors.response.data.message
             }));
             return errors
         })
@@ -110,7 +110,7 @@ export const createBook = (bookDetails) => (
             documentURL: '',
             coverPhotoURL: ''
         };
-        return axios.post('/books', newBookDetails)
+        return axios.post('http://localhost:5432/api/v1/books', newBookDetails)
             .then(response =>
                 uploadBookAssets({
                     fileDir,
@@ -157,7 +157,7 @@ export const createBook = (bookDetails) => (
  */
 export const editBook = (bookDetails) => (
     dispatch => (
-        axios.put(`/books/${bookDetails.id}`, bookDetails)
+        axios.put(`http://localhost:5432/api/v1/books/${bookDetails.id}`, bookDetails)
         .then((response) => {
             dispatch(bookEdited(response.data.updatedBook));
             dispatch(addFlashMessage({
@@ -169,7 +169,7 @@ export const editBook = (bookDetails) => (
         .catch((errors) => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-editBook'
+                text: errors.response.data.message
             }));
             return errors;
         })
@@ -184,7 +184,7 @@ export const editBook = (bookDetails) => (
  */
 
 export const updateBookAssets = bookDetails => (
-    axios.put(`/books/${book.id}`, bookDetails)
+    axios.put(`http://localhost:5432/api/v1/books/${book.id}`, bookDetails)
 );
 
 /**
@@ -195,7 +195,7 @@ export const updateBookAssets = bookDetails => (
  */
 export const deleteBook = (book) => (
     dispatch => (
-        axios.delete(`/books/${book.id}`)
+        axios.delete(`http://localhost:5432/api/v1/books/${book.id}`)
         .then(response => {
             dispatch(bookDeleted(book.id));
             dispatch(addFlashMessage({
@@ -207,7 +207,7 @@ export const deleteBook = (book) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-bookDelete'
+                text: errors.response.data.message
             }));
             return errors
         })
@@ -301,7 +301,7 @@ export const uploadBookAssets = (bookAssets) => (
 
 export const searchBooks = (title, page) =>
     dispatch =>
-    axios.get(`/search?q=${encodeURIComponent(title)}&type=books&count=20&page=${page}`)
+    axios.get(`http://localhost:5432/api/v1/search?q=${encodeURIComponent(title)}&type=books&count=20&page=${page}`)
     .then(response => {
         dispatch(booksSearched(response.data.books));
         return response;
@@ -309,6 +309,6 @@ export const searchBooks = (title, page) =>
         dispatch(booksSearched({}));
         dispatch(addFlashMessage({
             type: 'error',
-            text: 'errors.response.data.message-search'
+            text: errors.response.data.message
         }));
     })

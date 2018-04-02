@@ -90,7 +90,7 @@ export const authorDeleted = (authorId) => ({
 
 export const getAuthors = () => (
     dispatch => (
-        axios.get('/authors')
+        axios.get('http://localhost:5432/api/v1/authors')
         .then(response => {
             dispatch(setAuthors(response.data.authors));
             return response;
@@ -99,7 +99,7 @@ export const getAuthors = () => (
             dispatch(setAuthors([]));
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-author'
+                text: errors.response.data.message
             }));
             return errors;
         })
@@ -115,7 +115,7 @@ export const getAuthors = () => (
 
 export const fetchAuthor = (id) => (
     dispatch => (
-        axios.get(`/authors/${id}`)
+        axios.get(`http://localhost:5432/api/v1/authors/${id}`)
         .then(response => {
             dispatch(authorFetched(response.data.author));
             return response;
@@ -139,7 +139,7 @@ export const fetchAuthor = (id) => (
 
 export const createAuthor = (authorDetails) => (
     dispatch => (
-        axios.post('/authors', authorDetails)
+        axios.post('http://localhost:5432/api/v1/authors', authorDetails)
         .then(response => {
             const {
                 message,
@@ -172,7 +172,7 @@ export const createAuthor = (authorDetails) => (
 
 export const editAuthor = authorDetails => (
     dispatch => (
-        axios.put(`/authors/${authorDetails.id}`, authorDetails)
+        axios.put(`http://localhost:5432/api/v1/authors/${authorDetails.id}`, authorDetails)
         .then(response => {
             const {
                 message,
@@ -188,7 +188,7 @@ export const editAuthor = authorDetails => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-editAuthor'
+                text: errors.response.data.message
             }));
             return errors;
         })
@@ -205,7 +205,7 @@ export const editAuthor = authorDetails => (
 
 export const assignAuthor = ({ authorId, bookId }) => (
     dispatch => (
-        axios.post(`/authors/${authorId}/books/${bookId}`, {})
+        axios.post(`http://localhost:5432/api/v1/authors/${authorId}/books/${bookId}`, {})
         .then((response) => {
             const {
                 message,
@@ -221,7 +221,7 @@ export const assignAuthor = ({ authorId, bookId }) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-assignAuthor'
+                text: errors.response.data.message
             }));
         })
     )
@@ -235,7 +235,7 @@ export const assignAuthor = ({ authorId, bookId }) => (
  */
 export const deleteAuthor = authorDetails => (
     dispatch => (
-        axios.delete(`/authors/${authorDetails.id}`, authorDetails)
+        axios.delete(`http://localhost:5432/api/v1/authors/${authorDetails.id}`, authorDetails)
         .then(response => {
             dispatch(deleteAuthor(authorDetails.id));
             dispatch(addFlashMessage({
@@ -246,7 +246,7 @@ export const deleteAuthor = authorDetails => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-authorDelete'
+                text: errors.response.data.message
             }));
             return errors
         })

@@ -145,7 +145,14 @@ module.exports = {
         inline: true,
         host: HOST,
         contentBase: '/client/public',
-        port: PORT
+        port: PORT,
+        proxy: {
+            'api/v1/*': {
+                target: 'http://localhost:5432',
+                secure: false,
+                changeOrigin: true
+            }
+        },
     },
     node: {
         fs: "empty"

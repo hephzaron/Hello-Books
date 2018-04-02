@@ -39,7 +39,7 @@ const addGenre = (genre) => ({
  */
 const fetchGenres = () => (
     dispatch => (
-        axios.get('/genre/books')
+        axios.get('http://localhost:5432/api/v1/genre/books')
         .then((response) => {
             dispatch(setGenres(response.data.genres));
             return response;
@@ -48,7 +48,7 @@ const fetchGenres = () => (
             dispatch(setGenres([]));
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-genres'
+                text: errors.response.data.message
             }))
             return errors
         })
@@ -64,7 +64,7 @@ const fetchGenres = () => (
 
 const createGenre = (genreDetails) => (
     dispatch => (
-        axios.post('/genre', genreDetails)
+        axios.post('http://localhost:5432/api/v1/genre', genreDetails)
         .then((response) => {
             const {
                 message,
@@ -80,7 +80,7 @@ const createGenre = (genreDetails) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: 'errors.response.data.message-create-genre'
+                text: errors.response.data.message
             }));
             return errors;
         })

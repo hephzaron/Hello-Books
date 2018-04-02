@@ -11,7 +11,7 @@ import { addFlashMessage } from './flashMessage';
 export const userSignupRequestAction = (userData) => (
     (dispatch) => (
         axios
-        .post('/users/signup', userData)
+        .post('http://localhost:5432/api/v1/users/register', userData)
         .then((response) => {
             dispatch(addFlashMessage({
                 type: 'success',

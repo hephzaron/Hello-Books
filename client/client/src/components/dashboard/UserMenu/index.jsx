@@ -4,6 +4,7 @@ import UserOptions from './UserOptions';
 import { logoutUser } from 'Actions/userAuth';
 import { showModal, closeModal } from 'Actions/modal';
 import modalTypes from '../../Modal/modalTypes';
+import PropTypes from 'prop-types';
 
 const { CHANGE_PASSWORD_MODAL } = modalTypes;
 
@@ -44,7 +45,8 @@ class UserDropdown extends Component {
    */
   signOut(event){
     event.preventDefault();
-    this.props.logoutUser()
+    this.props.logoutUser();
+    this.context.router.history.push('/');
   }
 
   changePassword(event){
@@ -67,6 +69,10 @@ class UserDropdown extends Component {
       </div>
     )
   }
+}
+
+UserDropdown.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

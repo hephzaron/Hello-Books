@@ -30,7 +30,7 @@ const propTypes = {
 };
 
 const SigninForm = (props) => (
-    <form onSubmit = {props.onSubmit}>
+    <form id = "signin-form" onSubmit = {props.onSubmit}>
       <FlashMessageList />
       <SingleInput
         identifier = "inputUsername"

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import  classnames from 'classnames';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
 import IconButton from 'material-ui/IconButton';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { logoutUser } from 'Actions/userAuth';
+import { connect } from 'react-redux';
 
 /**
  * @class CustomBadge
@@ -15,6 +16,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
  */
 
 class CustomBadge extends Component{
+  constructor(props){
+    super(props);
+    this.goToHomePage = this.goToHomePage.bind(this);
+  }
+  goToHomePage(){
+    event.preventDefault();
+    this.props.logoutUser();
+    this.context.router.history.goBack()
+  }
   render(){
     const {
       username,
@@ -46,7 +56,8 @@ class CustomBadge extends Component{
           <MuiThemeProvider>
             <IconButton
             iconStyle={styles.largeIcon}
-            style={styles.large}>
+            style={styles.large}
+            onClick={this.goToHomePage}>
             <ActionHome/>
             </IconButton>
           </MuiThemeProvider>
@@ -59,5 +70,9 @@ class CustomBadge extends Component{
 CustomBadge.propTypes = {
   user: PropTypes.object.isRequired
 }
+CustomBadge.contextTypes = {
+  router: PropTypes.object.isRequired
+}
 
-export default CustomBadge;
+export { CustomBadge }
+export default connect(null,{logoutUser})(CustomBadge)

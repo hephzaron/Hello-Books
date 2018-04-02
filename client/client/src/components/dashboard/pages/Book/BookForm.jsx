@@ -87,6 +87,7 @@ const BookForm = (props) => (
       }
     <SingleInput
       identifier = "inputQuantity"
+      type = "number"
       placeholder = "Quantity"
       name = "quantity"
       label = "Book quantity:"

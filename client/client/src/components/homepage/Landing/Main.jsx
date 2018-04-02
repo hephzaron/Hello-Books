@@ -1,22 +1,25 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Link,
   NavLink
 } from 'react-router-dom';
-import $ from 'jquery';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Home from 'HomePage/Home';
 import Register from 'HomePage/Register';
 import Signin from 'HomePage/Signin';
 
 import ResetPassword from 'HomePage/ResetPassword/ResetPasswordForm';
-import  ModalContainer  from 'Components/Modal';
 import logo from 'Public/images/logo.png';
 import Header from 'General/Header';
 import Dashboard from 'Components/dashboard';
+
+const propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired
+}
 
 /**
  * @description Renders the Landing page on user visit to site
@@ -41,7 +44,6 @@ class Main extends Component {
     )
   }
 
-
   componentDidMount(){  
     $(".dropdown-toggle").hover(()=>{
         $(".dropdown-menu").show()
@@ -62,30 +64,38 @@ class Main extends Component {
       borderRadius:'0px',
       borderStyle: 'none'
     };
-    
+
     return(
       <Router>
         <div>
-          <Header 
+        {
+          !this.props.isAuthenticated &&
+          <Fragment>
+            <Header 
               heading= "Welcome to HiLIB">
                 <ul className="nav navbar-right navbar-nav " id="navbar">
                   <li><NavLink exact to = "/" activeStyle={selected} > Home</NavLink></li>
                   <li><NavLink exact to = "/signin" activeStyle={selected}> Sign In</NavLink></li>
                   <li><NavLink exact to = "/register" activeStyle={selected}>Register</NavLink></li>
                 </ul>
-           </Header>
-          <Route exact path="/" component= {this.MyHomePage} />
-          <div className="route-container">
-          <Route exact path="/signin" component= {Signin}/>
-          <Route exact path="/register" component= {Register}/>
-          <Route exact path="/dashboard" component= { Dashboard }/>
-          <ModalContainer />
-          </div>
+            </Header>
+            <Route exact path="/" component= {this.MyHomePage} />
+            <Route  path="/signin" component= {Signin}/>
+            <Route path="/register" component= {Register}/>
+          </Fragment>
+        }
+          <Route path="/dashboard" component= { Dashboard }/>
         </div>
       </Router>
     
     )}
   }
 
+Main.propTypes = propTypes;
 
-export default Main;
+const mapStateToprops = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export { Main }
+export default connect(mapStateToprops)(Main)

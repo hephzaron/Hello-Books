@@ -8,7 +8,6 @@ import { userSignupRequestAction } from 'Actions/register';
 import RegisterForm from './RegisterForm';
 import { loadModal, showModal, hideModal } from 'Actions/modal';
 import modalTypes from 'Modal/modalTypes';
-import { browserHistory } from 'react-router';
 
 const { TERMS_OF_SERVICE_MODAL } = modalTypes;
 
@@ -21,18 +20,6 @@ const propTypes = {
   userSignupRequestAction: PropTypes.func.isRequired
 };
 
-/**Make state available globally */
-let state = {
-  user: {
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  },
-  isLoading: false,
-  isChecked: false,
-  errors: {}
-}
 
 /**
  * @description This renders the signup component
@@ -43,7 +30,17 @@ let state = {
 class Register extends Component {
   constructor(props){
     super(props);
-    this.state = state;
+    this.state = {
+      user: {
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
+      isLoading: false,
+      isChecked: false,
+      errors: {}
+    }
     
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -51,10 +48,6 @@ class Register extends Component {
     this.displayTerms = this.displayTerms.bind(this);
   };
 
-  componentWillUnmount(){
-    state = this.state;
-  }
-  
   /**
   * @description This handles form input onChnage event
   * @param {object} event-event handdler
@@ -89,8 +82,7 @@ class Register extends Component {
         if(data.response && data.response.status>=400){
           this.setState({isLoading:false})
         }else{
-          document.getElementById('signup-form').reset();
-          browserHistory.push('/dashboard');
+          this.context.router.history.push('/dashboard');
         }
       })
    };

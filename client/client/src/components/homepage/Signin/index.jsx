@@ -10,7 +10,6 @@ import { addFlashMessage } from 'Actions/flashMessage';
 import SigninForm from './SigninForm';
 /**Modal type constant */
 import modalTypes from  'Modal/modalTypes';
-import { browserHistory } from 'react-router';
 
 const { RESET_PASSWORD_MODAL } = modalTypes;
 
@@ -28,18 +27,6 @@ const propTypes = {
   showModal: PropTypes.func.isRequired
 };
 
-/*Make state available globally */
-let state = {
-  user: {
-    username: '',
-    password: '',
-    oauthID: ''
-  },
-  isLoading: false,
-  isChecked: true,
-  errors: {}
-};
-
 /**
  * @description -SignIn component
  * @class SignIn
@@ -54,17 +41,22 @@ class SignIn extends Component {
 
   constructor(props){
     super(props);
-    this.state = state
+
+    this.state = {
+      user: {
+        username: '',
+        password: '',
+        oauthID: ''
+      },
+      isLoading: false,
+      isChecked: true,
+      errors: {}
+    };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.toggleCheckbox = this.toggleCheckbox.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
-  }
-
-  componentWillUnmount(){
-    //Remember state for the next mount
-    state = this.state
   }
 
   /**
@@ -92,7 +84,8 @@ class SignIn extends Component {
     event.preventDefault();
     
     if(!this.isFormValid()){ return; }
-    
+
+    this.setState({errors:{}})
     this.setState({ isLoading: true });
     this.props.signin(this.state.user)
       .then((data) => {
@@ -101,7 +94,7 @@ class SignIn extends Component {
             isLoading: false
           });
         }else{
-          document.getElementById('signin-form').reset();
+          this.setState({isLoading:false})
           this.context.router.history.push('/dashboard');
         }
       });

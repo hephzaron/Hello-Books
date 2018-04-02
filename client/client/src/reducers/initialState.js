@@ -1,11 +1,6 @@
 export const initialAuthState = {
     isAuthenticated: false,
-    user: {
-        userId: 0,
-        username: 'username',
-        email: 'email@email.com',
-        memValue: 'platinum'
-    },
+    user: {},
 };
 
 export const initialModalState = {

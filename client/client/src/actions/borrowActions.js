@@ -79,7 +79,7 @@ export const borrowBook = ({ userId, bookId }) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: `errors.response.data.message-borrow-${bookId}`
+                text: errors.response.data.message
             }));
             return errors;
         })
@@ -160,7 +160,7 @@ export const returnBook = ({ userId, bookId }) => (
         .catch(errors => {
             dispatch(addFlashMessage({
                 type: 'error',
-                text: `errors.response.data.message-return-${bookId}`
+                text: errors.response.data.message
             }));
             return errors
         })

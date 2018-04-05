@@ -20,6 +20,7 @@ body {
     font-family: $font-stack;
     font-weight: 400;
     font-size: $font-size;
+    background-image: url('../images/background.jpg')
 }
 
 %dropdown-menu-triangle-shared {
@@ -35,7 +36,8 @@ body {
     border-radius: $radius;
 }
 
-@mixin dropdown-menu-triangle-before($direction, $border-size) {
+@mixin dropdown-menu-triangle-before($direction,
+$border-size) {
     @extend %dropdown-menu-triangle-shared;
     @if $direction=='up' {
         bottom: $before-triangle-height;
@@ -71,7 +73,8 @@ body {
     }
 }
 
-@mixin dropdown-menu-triangle-after($direction, $border-size) {
+@mixin dropdown-menu-triangle-after($direction,
+$border-size) {
     @extend %dropdown-menu-triangle-shared;
     @if $direction=='up' {
         bottom: $after-triangle-width;
@@ -109,20 +112,24 @@ left,
 right {
     .dropdown-menu-triangle-b-#{str-slice($direction,1,1)} {
         &:before {
-            @include dropdown-menu-triangle-before($direction, $border-size-before);
+            @include dropdown-menu-triangle-before($direction,
+            $border-size-before);
         }
         &:after {
-            @include dropdown-menu-triangle-after($direction, $border-size-after);
+            @include dropdown-menu-triangle-after($direction,
+            $border-size-after);
         }
     }
 }
 
 .dropdown-menu-triangle-b-d {
     &:before {
-        @include dropdown-menu-triangle-before('down', $border-size-before);
+        @include dropdown-menu-triangle-before('down',
+        $border-size-before);
     }
     &:after {
-        @include dropdown-menu-triangle-after('down', $border-size-after);
+        @include dropdown-menu-triangle-after('down',
+        $border-size-after);
     }
 }
 

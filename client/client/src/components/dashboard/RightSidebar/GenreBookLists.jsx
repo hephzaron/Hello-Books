@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { fetchGenres } from 'Actions/genreActions';
 import BookListItems from './BookListItems';
-import { genres } from '../pages/client-data';
 
 const propTypes = {
   genres: PropTypes.array
@@ -23,11 +22,8 @@ class GenreBookLists extends Component {
   constructor(props){
     super(props);
     this.state= {
-      isLoading: false,
-      genres: [
-        ...genres
-      ]
-      };
+      genres: []
+    };
   }
 
   /**
@@ -38,10 +34,22 @@ class GenreBookLists extends Component {
    * @returns { null }
    */
   componentWillMount(){
+    this.props.fetchGenres();
     this.setState({
-      isLoading:true
+      genres:[
+        ...this.props.genres
+      ]
     });
-    this.props.fetchGenres()
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.state.genres !== nextProps.genres){
+      this.setState({
+        genres:[
+          ...nextProps.genres
+        ]
+      })
+    }
   }
 
   render(){

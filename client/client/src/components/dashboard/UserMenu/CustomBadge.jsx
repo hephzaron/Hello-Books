@@ -20,7 +20,7 @@ class CustomBadge extends Component{
     super(props);
     this.goToHomePage = this.goToHomePage.bind(this);
   }
-  goToHomePage(){
+  goToHomePage(event){
     event.preventDefault();
     this.props.logoutUser();
     this.context.router.history.goBack()

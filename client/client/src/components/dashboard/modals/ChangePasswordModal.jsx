@@ -53,6 +53,7 @@ class ChangePasswordModal extends Component {
    */
 
   onChange(event){
+    event.preventDefault();
     this.setState({
       user:{
         ...this.state.user,
@@ -108,7 +109,8 @@ class ChangePasswordModal extends Component {
         this.setState({isLoading:false})
       }else{
         document.getElementById('change-password-form').reset();
-        this.context.router.push('/signin')
+        this.onClose();
+        this.context.router.history.push('/signin');
       }
     })
   }

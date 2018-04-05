@@ -50,7 +50,7 @@ export const signin = (userData) => (
             return response
         })
         .catch(
-            errors => {
+            (errors) => {
                 dispatch(addFlashMessage({
                     type: 'error',
                     text: errors.response.data.message
@@ -75,12 +75,14 @@ export const sendResetPasswordMail = (payload) => (
             type: 'success',
             text: response.data.message
         }));
+        return response;
     })
     .catch((errors) => {
         dispatch(addFlashMessage({
             type: 'error',
             text: errors.response.data.message
         }));
+        return errors;
     })
 )
 
@@ -99,12 +101,14 @@ export const resetPassword = (payload) => (
             type: 'success',
             text: response.data.message
         }));
+        return response;
     })
     .catch((errors) => {
         dispatch(addFlashMessage({
             type: 'error',
             text: errors.response.data.message
         }));
+        return errors;
     })
 
 )
@@ -118,11 +122,13 @@ export const changePassword = (payload) => (
             text: response.data.message
         }));
         dispatch(logoutUser());
+        return response;
     })
     .catch((errors) => {
         dispatch(addFlashMessage({
             type: 'error',
             text: errors.response.data.message
         }));
+        return errors;
     })
 )

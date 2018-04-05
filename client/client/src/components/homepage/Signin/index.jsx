@@ -66,6 +66,7 @@ class SignIn extends Component {
    * @memberof SignIn
    */
   onChange(event) {
+    event.preventDefault();
     this.setState({
       user: {
         ...this.state.user,
@@ -129,7 +130,8 @@ class SignIn extends Component {
    * @memberof SignIn
    */
   
-   handleResetClick(){
+   handleResetClick(event){
+     event.preventDefault();
      this.props.showModal(RESET_PASSWORD_MODAL)
     }
 

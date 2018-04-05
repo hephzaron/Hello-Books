@@ -16,6 +16,7 @@ import ResetPassword from 'HomePage/ResetPassword/ResetPasswordForm';
 import logo from 'Public/images/logo.png';
 import Header from 'General/Header';
 import Dashboard from 'Components/dashboard';
+import  ModalContainer  from 'Components/Modal';
 
 const propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
@@ -85,6 +86,7 @@ class Main extends Component {
           </Fragment>
         }
           <Route path="/dashboard" component= { Dashboard }/>
+          <ModalContainer />
         </div>
       </Router>
     

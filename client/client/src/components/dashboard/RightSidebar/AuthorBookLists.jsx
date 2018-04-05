@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { getAuthors } from 'Actions/authorActions';
 import BookListItems from './BookListItems';
-import { authors } from '../pages/client-data';
 
 const propTypes = {
   authors: PropTypes.array
@@ -22,10 +21,7 @@ class AuthorBookLists extends Component {
   constructor(props){
     super(props);
     this.state= {
-      isLoading: false,
-      authors: [
-        ...authors
-        ]
+      authors: []
       };
   }
 
@@ -37,20 +33,22 @@ class AuthorBookLists extends Component {
    * @returns { void }
    */
   componentWillMount(){
+    this.props.getAuthors();
     this.setState({
-      isLoading:true
+      authors: [
+        ...this.props.authors
+      ]
     });
-    this.props.getAuthors()
-      .then((data)=>{
-      if(data.response && data.response.status >= 400){
-        this.setState({
-          isLoading:false
-        });
-      }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.state.authors !== nextProps.authors){
       this.setState({
-        isLoading: false
-      });
-    });
+        authors:[
+          ...nextProps.authors
+        ]
+      })
+    }
   }
 
   render(){

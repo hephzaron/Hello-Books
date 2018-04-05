@@ -28,8 +28,8 @@ module.exports = {
             where: (
                 authorId ? { id: authorId } : {}
             ),
-            limit,
-            offset,
+            limit: (limit ? limit : null),
+            offset: (offset ? offset : null),
             order: [
                 ['id', 'ASC']
             ],

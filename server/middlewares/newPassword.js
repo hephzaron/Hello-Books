@@ -45,7 +45,7 @@ function changePassword(req, res) {
                         message: 'Internal Server Error'
                     });
                 });
-            } else if (!(newPassword === confirmPassword)) {
+            } else if (newPassword !== confirmPassword) {
                 res.status(400).send({
                     message: 'Password does not match'
                 });

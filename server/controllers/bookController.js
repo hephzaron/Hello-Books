@@ -98,12 +98,12 @@ module.exports = {
                 where: { id: req.params.bookId }
             }).then(books => {
                 if (!books) {
-                    res.status(404).send({
+                    return res.status(404).send({
                         message: 'Book not found'
                     });
                 }
                 if (books) {
-                    res.status(200).send({
+                    return res.status(200).send({
                         message: 'Book have been successfully deleted'
                     });
                 }

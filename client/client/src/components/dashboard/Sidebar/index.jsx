@@ -22,31 +22,8 @@ class Sidebar extends Component {
     this.state = {
       list: 'book',
       isLoading: false,
-      books:[
-        ...books
-      ],
-      borrowedBooks:[{
-        id: 1,
-        title: 'R - the tool for data science',
-        Borrowed: {
-          returned: false,
-          createdAt: '2018-03-04T15:36:19.802Z'
-        }
-      },{
-        id:2,
-        title: 'The loner and his castle',
-        Borrowed: {
-          returned: false,
-          createdAt: '2017-03-04T15:36:19.802Z'
-        }
-      },{
-        id:3,
-        title: 'A tale of the mountain man',
-        Borrowed: {
-          returned: false,
-          createdAt: '2017-02-04T15:36:19.802Z'
-        }
-      }]
+      books:[],
+      borrowedBooks:[]
     }
     this.listBook = this.listBook.bind(this);
     this.listBorrowedBook = this.listBorrowedBook.bind(this)
@@ -73,9 +50,18 @@ class Sidebar extends Component {
         });
       }
       this.setState({
-        isLoading: false
+        isLoading: false,
+        books:[
+          ...this.props.books
+        ]
       });
-    });
+    })
+    .catch(()=>{
+      this.setState({
+        isLoading:false,
+        books:[]
+      })
+    })
     
     this.props.fetchBorrowedBook(this.props.user)
       .then((data)=>{
@@ -83,11 +69,23 @@ class Sidebar extends Component {
         this.setState({
           isLoading:false
         });
+      this.setState({
+        isLoading: false,
+        borrowedBooks:[
+          ...this.props.borrowedBooks
+        ]
+      });
       }
       this.setState({
         isLoading: false
       });
-    });     
+    })
+    .catch(()=>{
+      this.setState({
+        isLoading:false,
+       borrowedBooks:[]
+      })
+    })     
   }
 
   /**

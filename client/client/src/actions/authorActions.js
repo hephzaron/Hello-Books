@@ -93,6 +93,10 @@ export const getAuthors = () => (
         axios.get('http://localhost:5432/api/v1/authors')
         .then(response => {
             dispatch(setAuthors(response.data.authors));
+            response.data.message ? dispatch(addFlashMessage({
+                type: 'success',
+                text: response.data.message
+            })) : null;
             return response;
         })
         .catch(errors => {

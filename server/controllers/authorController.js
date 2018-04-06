@@ -39,7 +39,8 @@ module.exports = {
         }).then((authors) => {
             if (!authors || authors.length === 0) {
                 return res.status(200).send({
-                    message: 'Oops! No author exists in this collection'
+                    message: 'Oops! No author exists in this collection',
+                    authors
                 });
             }
             return res.status(200).send(returnObject(authors, 'authors'))

@@ -32,25 +32,21 @@ class AuthorBookLists extends Component {
    * @param { null }
    * @returns { void }
    */
-  componentWillMount(){
-    this.props.getAuthors();
-    this.setState({
-      authors: [
-        ...this.props.authors
-      ]
-    });
-  }
-
-  componentWillReceiveProps(nextProps){
-    if(this.state.authors !== nextProps.authors){
+  componentDidMount(){
+    this.props.getAuthors()
+    .then(()=>{
       this.setState({
         authors:[
-          ...nextProps.authors
+          ...this.props.authors
         ]
-      })
-    }
+      });
+    })
+    .catch(()=>{
+      this.setState({
+        authors:[]
+      });
+    })
   }
-
   render(){
 
     return(

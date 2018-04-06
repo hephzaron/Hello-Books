@@ -33,23 +33,20 @@ class GenreBookLists extends Component {
    * @param { null }
    * @returns { null }
    */
-  componentWillMount(){
-    this.props.fetchGenres();
-    this.setState({
-      genres:[
-        ...this.props.genres
-      ]
-    });
-  }
-
-  componentWillReceiveProps(nextProps){
-    if(this.state.genres !== nextProps.genres){
-      this.setState({
-        genres:[
-          ...nextProps.genres
-        ]
+  componentDidMount(){
+    this.props.fetchGenres()
+      .then(()=>{
+        this.setState({
+          genres:[
+            ...this.props.genres
+          ]
+        });
       })
-    }
+      .catch(()=>{
+        this.setState({
+          genres:[]
+        })
+      });
   }
 
   render(){

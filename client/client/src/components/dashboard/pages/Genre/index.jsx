@@ -62,7 +62,7 @@ class GenrePage extends Component {
        if(data.response && data.response.status>=400){
          this.setState({isLoading:false})
        }else{
-         document.getElementById('genre-form').reset();
+        this.setState({isLoading:false})
        }
      })
 

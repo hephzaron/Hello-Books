@@ -16,7 +16,7 @@ const {
 
 const setGenres = (genres) => ({
     type: SET_GENRES,
-    ...genres
+    genres
 });
 
 /**

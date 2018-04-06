@@ -59,11 +59,7 @@ class GenrePage extends Component {
     this.setState({isLoading:true});
     this.props.createGenre(this.state.genre)
      .then(data=>{
-       if(data.response && data.response.status>=400){
-         this.setState({isLoading:false})
-       }else{
         this.setState({isLoading:false})
-       }
      })
 
   }

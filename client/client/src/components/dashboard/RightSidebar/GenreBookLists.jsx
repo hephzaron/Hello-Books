@@ -7,7 +7,7 @@ import { fetchGenres } from 'Actions/genreActions';
 import BookListItems from './BookListItems';
 
 const propTypes = {
-  genres: PropTypes.array
+  genres: PropTypes.array.isRequired
 }
 
 /**
@@ -27,13 +27,13 @@ class GenreBookLists extends Component {
   }
 
   /**
-   * @method componentWillMount 
+   * @method componentDidMount 
    * @memberof GenreBookLists
    * @description lifecycle method just before components mount to fetch genres
    * @param { null }
    * @returns { null }
    */
-  componentDidMount(){
+  componentWillMount(){
     this.props.fetchGenres()
       .then(()=>{
         this.setState({

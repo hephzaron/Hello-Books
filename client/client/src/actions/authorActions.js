@@ -20,7 +20,7 @@ const {
 
 export const setAuthors = (authors) => ({
     type: SET_AUTHORS,
-    ...authors
+    authors
 });
 
 /**

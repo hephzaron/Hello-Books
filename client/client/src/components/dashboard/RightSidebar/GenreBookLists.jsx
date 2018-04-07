@@ -27,7 +27,7 @@ class GenreBookLists extends Component {
   }
 
   /**
-   * @method componentDidMount 
+   * @method componentWillMount 
    * @memberof GenreBookLists
    * @description lifecycle method just before components mount to fetch genres
    * @param { null }

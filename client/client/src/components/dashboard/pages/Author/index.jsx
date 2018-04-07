@@ -72,7 +72,7 @@ componentWillReceiveProps(nextProps){
   /**
    * formatDate
    * @memberof AuthorPage
-   * @description format date before been displayed in form filed
+   * @description format date before been displayed in form filled
    * @param { object } object 
    * @returns { object } 
    */
@@ -114,19 +114,14 @@ componentWillReceiveProps(nextProps){
     event.preventDefault();
 
     if(!this.isFormValid()){ 
-      alert(this.state.author.dateOfDeath)
       return;
     }
     this.setState({errors:{}})    
     this.setState({isLoading:true});
     this.props.createAuthor(this.state.author)
-     .then(data=>{
-       if(data.response && data.response.status>=400){
+     .then(()=>{
          this.setState({isLoading:false})
-       }else{
-         document.getElementById('author-form').reset();
-       }
-     })
+     });
 
   }
   /**

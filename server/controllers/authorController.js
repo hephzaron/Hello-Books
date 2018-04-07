@@ -10,14 +10,12 @@ module.exports = {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 dateOfBirth: req.body.dateOfBirth,
-                dateOfDeath: req.body.dateOfDeath
+                dateOfDeath: req.body.dateOfDeath || null
             })
-            .then(author => {
-                return res.status(201).send({
-                    message: `${author.fullName}, successfully added`,
-                    author
-                });
-            })
+            .then(author => res.status(201).send({
+                message: `${author.fullName}, successfully added`,
+                author
+            }))
             .catch(() => res.status(500).send({ message: 'Internal Server Error' }));
     },
     getAuthors(req, res) {

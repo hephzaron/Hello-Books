@@ -32,7 +32,7 @@ class AuthorBookLists extends Component {
    * @param { null }
    * @returns { void }
    */
-  componentDidMount(){
+  componentWillMount(){
     this.props.getAuthors()
     .then(()=>{
       this.setState({

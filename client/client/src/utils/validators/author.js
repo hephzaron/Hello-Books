@@ -38,9 +38,6 @@ export default (inputs) => {
     if (!validDate.test(dateOfBirth) && !Validator.isEmpty(dateOfBirth)) {
         errors.dateOfBirth = 'This field must be of date type';
     }
-    if (!validDate.test(dateOfDeath) && !Validator.isEmpty(dateOfDeath)) {
-        errors.dateOfDeath = 'This field must be of date type';
-    }
     return {
         errors,
         isValid: isEmpty(errors)

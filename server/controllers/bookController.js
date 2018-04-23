@@ -14,8 +14,8 @@ module.exports = {
                 ISBN: req.body.ISBN,
                 quantity: req.body.quantity,
                 available: req.body.quantity,
-                documentURL: req.body.documentURL,
-                coverPhotoURL: req.body.coverPhotoURL
+                documentURL: req.body.documentURL || null,
+                coverPhotoURL: req.body.coverPhotoURL || null
 
             })
             .then(book => res.status(201).send({

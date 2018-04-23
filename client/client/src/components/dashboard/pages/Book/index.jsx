@@ -7,7 +7,6 @@ import validateGenre from 'Utils/validators/genre';
 import validFileType from 'Utils/validators/upload';
 import { createBook, editBook } from 'Actions/bookActions';
 import { fetchGenres } from 'Actions/genreActions';
-import { genres } from '../client-data';
 
 /**
  * @class BookPage
@@ -43,9 +42,7 @@ class BookPage extends Component {
         size: 0,
         fileDir: ''        
       },
-      genres: [
-        ...genres
-      ],
+      genres: [],
       showItems:false,
       isLoading: false,
       errors:{}
@@ -97,6 +94,21 @@ class BookPage extends Component {
         genre.id === genre_id )[0].name
       });
     }
+
+    this.props.fetchGenres()
+      .then(()=>{
+        this.setState({
+          genres:[
+            ...this.props.genres
+          ]
+        });
+      })
+      .catch(()=>{
+        this.setState({
+          genres:[]
+        })
+      });
+
   }
 
 /**
@@ -245,12 +257,8 @@ componentDidMount(){
     }
     this.setState({isLoading:true});
     this.props.createBook(this.state.book)
-     .then(data=>{
-       if(data.response && data.response.status>=400){
-         this.setState({isLoading:false})
-       }else{
-         document.getElementById('book-form').reset();
-       }
+     .then(()=>{
+       this.setState({isLoading:false})
      })
 
   }

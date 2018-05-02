@@ -2,14 +2,16 @@ import axios from 'axios';
 import types from './types';
 import { addFlashMessage } from './flashMessage';
 import cloudinary from 'cloudinary';
+import dotEnv from 'dotenv';
 import '../config/cloudinary';
 
+
 const {
-    SET_BOOKS,
-    ADD_BOOK,
-    BOOK_DELETED,
-    BOOK_EDITED,
-    BOOKS_SEARCHED
+  SET_BOOKS,
+  ADD_BOOK,
+  BOOK_DELETED,
+  BOOK_EDITED,
+  BOOKS_SEARCHED
 } = types;
 
 /**
@@ -20,8 +22,8 @@ const {
  */
 
 export const setBooks = (books) => ({
-    type: SET_BOOKS,
-    ...books
+  type: SET_BOOKS,
+  ...books
 });
 
 /**
@@ -31,8 +33,8 @@ export const setBooks = (books) => ({
  * @returns { object } action creator
  */
 export const addBook = (book) => ({
-    type: ADD_BOOK,
-    book
+  type: ADD_BOOK,
+  book
 });
 
 /**
@@ -42,8 +44,8 @@ export const addBook = (book) => ({
  * @returns {object} action creator
  */
 export const bookEdited = (book) => ({
-    type: BOOK_EDITED,
-    book
+  type: BOOK_EDITED,
+  book
 });
 
 /**
@@ -53,8 +55,8 @@ export const bookEdited = (book) => ({
  * @returns {object} action creator
  */
 export const bookDeleted = (book) => ({
-    type: BOOK_DELETED,
-    bookId: book.id
+  type: BOOK_DELETED,
+  bookId: book.id
 });
 
 /**
@@ -64,8 +66,8 @@ export const bookDeleted = (book) => ({
  * @returns  {object} action creator
  */
 export const booksSearched = result => ({
-    type: 'BOOKS_SEARCHED',
-    result
+  type: 'BOOKS_SEARCHED',
+  result
 })
 
 /**
@@ -75,21 +77,21 @@ export const booksSearched = result => ({
  * @returns { promise } -Axios http response
  */
 export const getBooks = () => (
-    dispatch => (
-        axios.get('http://localhost:5432/api/v1/books')
-        .then((response) => {
-            dispatch(setBooks(response.data.books));
-            return response
-        })
-        .catch((errors) => {
-            dispatch(setBooks([]));
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-            return errors
-        })
-    )
+  dispatch => (
+    axios.get('http://localhost:5432/api/v1/books')
+    .then((response) => {
+      dispatch(setBooks(response.data.books));
+      return response
+    })
+    .catch((errors) => {
+      dispatch(setBooks([]));
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+      return errors
+    })
+  )
 )
 
 /**
@@ -100,53 +102,53 @@ export const getBooks = () => (
  */
 
 export const createBook = (bookDetails) => (
-    dispatch => {
-        const {
-            fileDir,
-            imageDir
-        } = bookDetails;
-        const newBookDetails = {
-            ...bookDetails,
-            documentURL: '',
-            coverPhotoURL: ''
-        };
-        return axios.post('http://localhost:5432/api/v1/books', newBookDetails)
-            .then(response =>
-                uploadBookAssets({
-                    fileDir,
-                    imageDir
-                })
-                .then(bookAssets =>
-                    updateBookAssets({
-                        id: response.data.id,
-                        documentURL: bookAssets.documentURL,
-                        coverPhotoURL: bookAssets.coverPhotoURL
-                    })
-                    .then(updatedBook => {
-                        dispatch(addBook(updatedBook.data.book));
-                        dispatch(addFlashMessage({
-                            type: 'success',
-                            text: response.data.message
-                        }));
-                        return response;
-                    })
-                    .catch(errors => {
-                        dispatch(addFlashMessage({
-                            type: 'error',
-                            text: errors.response.data.message
-                        }));
-                        return errors
-                    })
-                )
-                .catch(errors => {
-                    dispatch(addFlashMessage({
-                        type: 'error',
-                        text: errors.response.data.message
-                    }));
-                    return errors
-                })
-            )
-    }
+  dispatch => {
+    const {
+      fileDir,
+      imageDir
+    } = bookDetails;
+    const newBookDetails = {
+      ...bookDetails,
+      documentURL: '',
+      coverPhotoURL: ''
+    };
+    return axios.post('http://localhost:5432/api/v1/books', newBookDetails)
+      .then(response =>
+        uploadBookAssets({
+          fileDir,
+          imageDir
+        })
+        .then(bookAssets =>
+          updateBookAssets({
+            id: response.data.id,
+            documentURL: bookAssets.documentURL,
+            coverPhotoURL: bookAssets.coverPhotoURL
+          })
+          .then(updatedBook => {
+            dispatch(addBook(updatedBook.data.book));
+            dispatch(addFlashMessage({
+              type: 'success',
+              text: response.data.message
+            }));
+            return response;
+          })
+          .catch(errors => {
+            dispatch(addFlashMessage({
+              type: 'error',
+              text: errors.response.data.message
+            }));
+            return errors
+          })
+        )
+        .catch(errors => {
+          dispatch(addFlashMessage({
+            type: 'error',
+            text: errors.response.data.message
+          }));
+          return errors
+        })
+      )
+  }
 )
 
 /**
@@ -156,24 +158,24 @@ export const createBook = (bookDetails) => (
  * @returns {promise} Axios http response
  */
 export const editBook = (bookDetails) => (
-    dispatch => (
-        axios.put(`http://localhost:5432/api/v1/books/${bookDetails.id}`, bookDetails)
-        .then((response) => {
-            dispatch(bookEdited(response.data.updatedBook));
-            dispatch(addFlashMessage({
-                type: 'success',
-                text: response.data.message
-            }));
-            return response;
-        })
-        .catch((errors) => {
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-            return errors;
-        })
-    )
+  dispatch => (
+    axios.put(`http://localhost:5432/api/v1/books/${bookDetails.id}`, bookDetails)
+    .then((response) => {
+      dispatch(bookEdited(response.data.updatedBook));
+      dispatch(addFlashMessage({
+        type: 'success',
+        text: response.data.message
+      }));
+      return response;
+    })
+    .catch((errors) => {
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+      return errors;
+    })
+  )
 )
 
 /**
@@ -184,7 +186,7 @@ export const editBook = (bookDetails) => (
  */
 
 export const updateBookAssets = bookDetails => (
-    axios.put(`http://localhost:5432/api/v1/books/${book.id}`, bookDetails)
+  axios.put(`http://localhost:5432/api/v1/books/${book.id}`, bookDetails)
 );
 
 /**
@@ -194,24 +196,24 @@ export const updateBookAssets = bookDetails => (
  * @returns {promise} Axios http response
  */
 export const deleteBook = (book) => (
-    dispatch => (
-        axios.delete(`http://localhost:5432/api/v1/books/${book.id}`)
-        .then(response => {
-            dispatch(bookDeleted(book.id));
-            dispatch(addFlashMessage({
-                type: 'success',
-                text: response.data.message
-            }));
-            return response;
-        })
-        .catch(errors => {
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-            return errors
-        })
-    )
+  dispatch => (
+    axios.delete(`http://localhost:5432/api/v1/books/${book.id}`)
+    .then(response => {
+      dispatch(bookDeleted(book.id));
+      dispatch(addFlashMessage({
+        type: 'success',
+        text: response.data.message
+      }));
+      return response;
+    })
+    .catch(errors => {
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+      return errors
+    })
+  )
 )
 
 /**
@@ -222,23 +224,23 @@ export const deleteBook = (book) => (
  * @returns {promise} Reject promise if upload fails
  */
 export const uploadCoverPhoto = (imageData) => (
-    cloudinary.v2.uploader.upload(
-        imageData, {
-            crop: 'limit',
-            width: 250,
-            height: 435,
-            eager: [{
-                width: 125,
-                height: 218,
-                crop: 'fill',
-                format: 'jpg'
-            }]
-        },
-        (error, result) => {
-            error ? Promise.reject(new Error('Oops! Photo could not be uploaded')) : null;
-            result ? Promise.resolve(result) : null
-        }
-    )
+  cloudinary.v2.uploader.upload(
+    imageData, {
+      crop: 'limit',
+      width: 250,
+      height: 435,
+      eager: [{
+        width: 125,
+        height: 218,
+        crop: 'fill',
+        format: 'jpg'
+      }]
+    },
+    (error, result) => {
+      error ? Promise.reject(new Error('Oops! Photo could not be uploaded')) : null;
+      result ? Promise.resolve(result) : null
+    }
+  )
 );
 
 /**
@@ -249,12 +251,12 @@ export const uploadCoverPhoto = (imageData) => (
  * @returns {promise} Reject promise if upload fails
  */
 export const uploadBookFile = (bookFile) => (
-    cloudinary.v2.uploader.upload(
-        bookFile, (error, result) => {
-            error ? Promise.reject(new Error('Oops! Book file could not be uploaded ')) : null;
-            result ? Promise.resolve(result) : null
-        }
-    )
+  cloudinary.v2.uploader.upload(
+    bookFile, (error, result) => {
+      error ? Promise.reject(new Error('Oops! Book file could not be uploaded ')) : null;
+      result ? Promise.resolve(result) : null
+    }
+  )
 );
 
 /**
@@ -265,15 +267,15 @@ export const uploadBookFile = (bookFile) => (
  * @returns {promise} Reject promise if delete fails
  */
 export const deleteCoverPhoto = (publicId) => {
-    if (publicId) {
-        return cloudinary.v2.uploader.destroy(
-            publicId, (error, result) => {
-                error ? Promise.reject(new Error('Oops! Could not delete photo')) : null
-                result ? Promise.resolve(result) : null
-            }
-        )
-    }
-    return Promise.resolve()
+  if (publicId) {
+    return cloudinary.v2.uploader.destroy(
+      publicId, (error, result) => {
+        error ? Promise.reject(new Error('Oops! Could not delete photo')) : null
+        result ? Promise.resolve(result) : null
+      }
+    )
+  }
+  return Promise.resolve()
 }
 
 /**
@@ -285,30 +287,30 @@ export const deleteCoverPhoto = (publicId) => {
  */
 
 export const uploadBookAssets = (bookAssets) => (
-    uploadBookFile(bookAssets.fileDir)
-    .then((bookDocument) =>
-        uploadCoverPhoto(bookAssets.imageDir)
-        .then((photo) =>
-            Promise.resolve({
-                documentURL: bookDocument.secure_url,
-                coverPhotoURL: photo.secure_url
-            }))
-        .catch(error =>
-            Promise.reject(error.message))
-    ).catch(error =>
-        Promise.reject(error.message))
+  uploadBookFile(bookAssets.fileDir)
+  .then((bookDocument) =>
+    uploadCoverPhoto(bookAssets.imageDir)
+    .then((photo) =>
+      Promise.resolve({
+        documentURL: bookDocument.secure_url,
+        coverPhotoURL: photo.secure_url
+      }))
+    .catch(error =>
+      Promise.reject(error.message))
+  ).catch(error =>
+    Promise.reject(error.message))
 )
 
 export const searchBooks = (title, page) =>
-    dispatch =>
-    axios.get(`http://localhost:5432/api/v1/search?q=${encodeURIComponent(title)}&type=books&count=20&page=${page}`)
-    .then(response => {
-        dispatch(booksSearched(response.data.books));
-        return response;
-    }).catch(errors => {
-        dispatch(booksSearched({}));
-        dispatch(addFlashMessage({
-            type: 'error',
-            text: errors.response.data.message
-        }));
-    })
+  dispatch =>
+  axios.get(`http://localhost:5432/api/v1/search?q=${encodeURIComponent(title)}&type=books&count=20&page=${page}`)
+  .then(response => {
+    dispatch(booksSearched(response.data.books));
+    return response;
+  }).catch(errors => {
+    dispatch(booksSearched({}));
+    dispatch(addFlashMessage({
+      type: 'error',
+      text: errors.response.data.message
+    }));
+  })

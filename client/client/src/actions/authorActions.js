@@ -3,12 +3,12 @@ import types from 'Actions/types';
 import { addFlashMessage } from './flashMessage';
 
 const {
-    SET_AUTHORS,
-    AUTHOR_FETCHED,
-    ADD_AUTHOR,
-    AUTHOR_EDITED,
-    AUTHOR_DELETED,
-    AUTHOR_ASSIGNED
+  SET_AUTHORS,
+  AUTHOR_FETCHED,
+  ADD_AUTHOR,
+  AUTHOR_EDITED,
+  AUTHOR_DELETED,
+  AUTHOR_ASSIGNED
 } = types
 
 /**
@@ -19,8 +19,8 @@ const {
  */
 
 export const setAuthors = (authors) => ({
-    type: SET_AUTHORS,
-    authors
+  type: SET_AUTHORS,
+  authors
 });
 
 /**
@@ -31,8 +31,8 @@ export const setAuthors = (authors) => ({
  */
 
 export const authorFetched = (author) => ({
-    type: AUTHOR_FETCHED,
-    author
+  type: AUTHOR_FETCHED,
+  author
 });
 
 /**
@@ -43,8 +43,8 @@ export const authorFetched = (author) => ({
  */
 
 export const addAuthor = (author) => ({
-    type: ADD_AUTHOR,
-    author
+  type: ADD_AUTHOR,
+  author
 });
 
 /**
@@ -54,8 +54,8 @@ export const addAuthor = (author) => ({
  * @returns {object} action creator
  */
 export const authorEdited = (author) => ({
-    type: AUTHOR_EDITED,
-    author
+  type: AUTHOR_EDITED,
+  author
 });
 
 /**
@@ -66,8 +66,8 @@ export const authorEdited = (author) => ({
  */
 
 export const authorAssigned = (authorBook) => ({
-    type: AUTHOR_ASSIGNED,
-    authorBook
+  type: AUTHOR_ASSIGNED,
+  authorBook
 });
 
 /**
@@ -77,8 +77,8 @@ export const authorAssigned = (authorBook) => ({
  * @returns  {object} action creator
  */
 export const authorDeleted = (authorId) => ({
-    type: AUTHOR_DELETED,
-    authorId
+  type: AUTHOR_DELETED,
+  authorId
 });
 
 /**
@@ -89,25 +89,25 @@ export const authorDeleted = (authorId) => ({
  */
 
 export const getAuthors = () => (
-    dispatch => (
-        axios.get('http://localhost:5432/api/v1/authors')
-        .then(response => {
-            dispatch(setAuthors(response.data.authors));
-            response.data.message ? dispatch(addFlashMessage({
-                type: 'success',
-                text: response.data.message
-            })) : null;
-            return response;
-        })
-        .catch(errors => {
-            dispatch(setAuthors([]));
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-            return errors;
-        })
-    )
+  dispatch => (
+    axios.get('http://localhost:5432/api/v1/authors')
+    .then(response => {
+      dispatch(setAuthors(response.data.authors));
+      response.data.message ? dispatch(addFlashMessage({
+        type: 'success',
+        text: response.data.message
+      })) : null;
+      return response;
+    })
+    .catch(errors => {
+      dispatch(setAuthors([]));
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+      return errors;
+    })
+  )
 )
 
 /**
@@ -118,20 +118,20 @@ export const getAuthors = () => (
  */
 
 export const fetchAuthor = (id) => (
-    dispatch => (
-        axios.get(`http://localhost:5432/api/v1/authors/${id}`)
-        .then(response => {
-            dispatch(authorFetched(response.data.author));
-            return response;
-        })
-        .catch(errors => {
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-            return errors;
-        })
-    )
+  dispatch => (
+    axios.get(`http://localhost:5432/api/v1/authors/${id}`)
+    .then(response => {
+      dispatch(authorFetched(response.data.author));
+      return response;
+    })
+    .catch(errors => {
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+      return errors;
+    })
+  )
 )
 
 /**
@@ -142,28 +142,28 @@ export const fetchAuthor = (id) => (
  */
 
 export const createAuthor = (authorDetails) => (
-    dispatch => (
-        axios.post('http://localhost:5432/api/v1/authors', authorDetails)
-        .then(response => {
-            const {
-                message,
-                author
-            } = response.data
-            dispatch(addAuthor(author));
-            dispatch(addFlashMessage({
-                type: 'success',
-                text: message
-            }));
-            return response
-        })
-        .catch(errors => {
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-            return errors
-        })
-    )
+  dispatch => (
+    axios.post('http://localhost:5432/api/v1/authors', authorDetails)
+    .then(response => {
+      const {
+        message,
+        author
+      } = response.data
+      dispatch(addAuthor(author));
+      dispatch(addFlashMessage({
+        type: 'success',
+        text: message
+      }));
+      return response
+    })
+    .catch(errors => {
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+      return errors
+    })
+  )
 );
 
 
@@ -175,28 +175,28 @@ export const createAuthor = (authorDetails) => (
  */
 
 export const editAuthor = authorDetails => (
-    dispatch => (
-        axios.put(`http://localhost:5432/api/v1/authors/${authorDetails.id}`, authorDetails)
-        .then(response => {
-            const {
-                message,
-                updatedAuthor
-            } = response.data;
-            dispatch(authorEdited(updatedAuthor));
-            dispatch(addFlashMessage({
-                type: 'success',
-                text: message
-            }));
-            return response;
-        })
-        .catch(errors => {
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-            return errors;
-        })
-    )
+  dispatch => (
+    axios.put(`http://localhost:5432/api/v1/authors/${authorDetails.id}`, authorDetails)
+    .then(response => {
+      const {
+        message,
+        updatedAuthor
+      } = response.data;
+      dispatch(authorEdited(updatedAuthor));
+      dispatch(addFlashMessage({
+        type: 'success',
+        text: message
+      }));
+      return response;
+    })
+    .catch(errors => {
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+      return errors;
+    })
+  )
 );
 
 /**
@@ -208,27 +208,27 @@ export const editAuthor = authorDetails => (
  */
 
 export const assignAuthor = ({ authorId, bookId }) => (
-    dispatch => (
-        axios.post(`http://localhost:5432/api/v1/authors/${authorId}/books/${bookId}`, {})
-        .then((response) => {
-            const {
-                message,
-                authorBook
-            } = response.data
-            dispatch(authorAssigned(authorBook));
-            dispatch(addFlashMessage({
-                type: 'success',
-                text: message
-            }));
-            return response;
-        })
-        .catch(errors => {
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-        })
-    )
+  dispatch => (
+    axios.post(`http://localhost:5432/api/v1/authors/${authorId}/books/${bookId}`, {})
+    .then((response) => {
+      const {
+        message,
+        authorBook
+      } = response.data
+      dispatch(authorAssigned(authorBook));
+      dispatch(addFlashMessage({
+        type: 'success',
+        text: message
+      }));
+      return response;
+    })
+    .catch(errors => {
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+    })
+  )
 )
 
 /**
@@ -238,21 +238,21 @@ export const assignAuthor = ({ authorId, bookId }) => (
  * @returns {promise} Axios http response
  */
 export const deleteAuthor = authorDetails => (
-    dispatch => (
-        axios.delete(`http://localhost:5432/api/v1/authors/${authorDetails.id}`, authorDetails)
-        .then(response => {
-            dispatch(deleteAuthor(authorDetails.id));
-            dispatch(addFlashMessage({
-                type: 'success',
-                text: response.data.message
-            }));
-        })
-        .catch(errors => {
-            dispatch(addFlashMessage({
-                type: 'error',
-                text: errors.response.data.message
-            }));
-            return errors
-        })
-    )
+  dispatch => (
+    axios.delete(`http://localhost:5432/api/v1/authors/${authorDetails.id}`, authorDetails)
+    .then(response => {
+      dispatch(deleteAuthor(authorDetails.id));
+      dispatch(addFlashMessage({
+        type: 'success',
+        text: response.data.message
+      }));
+    })
+    .catch(errors => {
+      dispatch(addFlashMessage({
+        type: 'error',
+        text: errors.response.data.message
+      }));
+      return errors
+    })
+  )
 )

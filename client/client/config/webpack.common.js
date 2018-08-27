@@ -105,8 +105,12 @@ module.exports = {
         test: /\.html$/,
         use: ['html-loader']
       }
-    ]
+    ],
+    noParse: function(content) {
+      return /node_modules\/ws/.test(content);
+    }
   },
+  externals: ['ws'],
   plugins: [
     HtmlWebpackPluginConfig,
     ProvidePlugin,
@@ -123,6 +127,7 @@ module.exports = {
   stats: {
     colors: true
   },
+  target: 'web',
   node: {
     fs: 'empty'
   }

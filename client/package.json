@@ -86,11 +86,12 @@
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "schema-utils": "^0.4.5",
-    "socket.io-client": "^2.0.4",
+    "socket.io-client": "^2.1.0",
     "stream": "0.0.2",
     "style-loader": "^0.19.1",
     "tether": "^1.4.3",
     "url-loader": "^0.6.2",
-    "validator": "^9.2.0"
+    "validator": "^9.2.0",
+    "websocket": "^1.0.26"
   }
 }

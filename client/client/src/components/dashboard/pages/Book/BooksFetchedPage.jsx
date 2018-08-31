@@ -15,7 +15,6 @@ class BooksFetchedPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user:{},
             pageOfItems: [],
             books:[...books],
             isLoading:false
@@ -52,8 +51,8 @@ class BooksFetchedPage extends Component {
     }
  
     render() {
-      const { user, books } = this.state
-      const cardActions = user.admin ? [{
+      const {  books } = this.state
+      const cardActions = this.props.user.admin ? [{
           label: 'Edit',
           iconClass: 'glyphicon glyphicon-pencil',
           onClick: this.editBook

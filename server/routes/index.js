@@ -10,7 +10,6 @@ const userCount = require('../middlewares').userCount;
 const userSignUp = require('../middlewares').userSignUp;
 const membershipVal = require('../middlewares').membershipVal;
 const authorize = require('../middlewares').authorize;
-const isLoggedIn = require('../middlewares').isLoggedIn;
 const newPassword = require('../middlewares').newPassword;
 const resetPassword = require('../email/passwordReset').resetPassword;
 const forgotPassword = require('../email/passwordReset').forgotPassword;
@@ -93,43 +92,43 @@ module.exports = (app, passport) => {
   // add book category
   app.post('/api/v1/genre',
     authorize.verifyUser,
-    //authorize.adminProtect,
+    authorize.adminProtect,
     genreController.create);
 
   // add books to library
   app.post('/api/v1/books',
     authorize.verifyUser,
-    //authorize.adminProtect,
+    authorize.adminProtect,
     bookController.create);
 
   // allow users to modify book information
   app.put('/api/v1/books/:bookId',
     authorize.verifyUser,
-    //authorize.adminProtect,
+    authorize.adminProtect,
     bookController.update);
 
   //create author details
   app.post('/api/v1/authors',
     authorize.verifyUser,
-    //authorize.adminProtect,
+    authorize.adminProtect,
     authorController.create);
 
   //update author details
   app.put('/api/v1/authors/:authorId',
     authorize.verifyUser,
-    //authorize.adminProtect,
+    authorize.adminProtect,
     authorController.update);
 
   // remove author
   app.delete('/api/v1/authors/:authorId',
     authorize.verifyUser,
-    //authorize.adminProtect,
+    authorize.adminProtect,
     authorController.delete);
 
   // allocate books to respective author
   app.post('/api/v1/authors/:authorId/books/:bookId',
     authorize.verifyUser,
-    //authorize.adminProtect,
+    authorize.adminProtect,
     ownerController.create);
   //Get all books in library
   app.get('/api/v1/books',
@@ -149,7 +148,7 @@ module.exports = (app, passport) => {
   //allow user to delete book record
   app.delete('/api/v1/books/:bookId',
     authorize.verifyUser,
-    //authorize.adminProtect,
+    authorize.adminProtect,
     bookController.delete); //
 
   // allow users to borrow book

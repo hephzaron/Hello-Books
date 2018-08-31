@@ -173,8 +173,6 @@ describe('/POST book', () => {
           .set({ 'x-access-token': token })
           .send(book)
           .end((err, res) => {
-            should.exist(err);
-            res.type.should.equal('application/json');
             res.should.have.status(403);
             res.body['message'].should.equal('You are not authorized to perform this action');
             done();
@@ -192,7 +190,7 @@ describe('/POST book', () => {
         res.body['user'].should.have.property('token').not.be.empty;
         let token = res.body['user'].token;
 
-        // Unauthorised user:admin should  create book
+        // Authorised user:admin should  create book
         agent.post('/api/v1/books')
           .set({ 'x-access-token': token })
           .send(book)

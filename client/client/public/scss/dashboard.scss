@@ -5,478 +5,479 @@ $button-width: 40%;
 $btn-toggled-color: #8DBCD9;
 $btn-default-color:#3075A5;
 %btn-style-shared {
-    color: rgb(244, 247, 250);
-    background-color: #64419C;
-    font-size: 15px;
-    font-weight: $font-weight;
-    padding-right: 25px;
-    padding-left: 25px;
-    border: 0;
-    border-radius: 0;
+  color: rgb(244, 247, 250);
+  background-color: #64419C;
+  font-size: 15px;
+  font-weight: $font-weight;
+  padding-right: 25px;
+  padding-left: 25px;
+  border: 0;
+  border-radius: 0;
 }
 
 %search-style-shared {
-    height: 100%;
-    margin-top: 6px;
-    margin-left: 0;
+  height: 100%;
+  margin-top: 6px;
+  margin-left: 0;
 }
 
 
 /*invert colors for active button*/
 
 @mixin on-active($background-color, $color:white) {
-    color: $background-color !important;
-    background-color: $color !important
+  color: $background-color !important;
+  background-color: $color !important
 }
 
 
 /**Custome styling for sidebar component*/
 
 .sidebar-toggle-button {
-    display: $display;
-    padding: 5px 0 0 0;
-    width: 100%;
-    .btn {
-        @extend %btn-style-shared;
-        &-l {
-            width: $button-width
-        }
-        &-r {
-            width: 100%-$button-width;
-        }
+  display: $display;
+  padding: 5px 0 0 0;
+  width: 100%;
+  .btn {
+    @extend %btn-style-shared;
+    &-l {
+      width: $button-width
     }
+    &-r {
+      width: 100%-$button-width;
+    }
+  }
 }
 
 .active {
-    color: #2D0C37 !important;
-    background-color: #967DBD !important;
+  color: #2D0C37 !important;
+  background-color: #967DBD !important;
 }
 
 hr {
-    margin: 4px 0px 4px 0px
+  margin: 4px 0px 4px 0px
 }
 
 %sidebar-style-common {
-    font-size: 15px;
-    font-weight: bold;
-    color: rgb(75, 12, 46)
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(75, 12, 46)
 }
 
 @mixin sidebar-views($float, $margin-left) {
-    @extend %sidebar-style-common;
-    float: $float;
-    margin-left: $margin-left;
-    &:hover {
-        color: rgb(9, 73, 91);
-    }
+  @extend %sidebar-style-common;
+  float: $float;
+  margin-left: $margin-left;
+  &:hover {
+    color: rgb(9, 73, 91);
+  }
 }
 
 %col-md {
-    border: 0;
-    margin: 0;
-    padding: 0;
-    height: 100%
+  border: 0;
+  margin: 0;
+  padding: 0;
+  height: 100%
 }
 
 .container-fluid,
 .col-md {
+  @extend %col-md;
+  &-6 {
+    @extend %col-md
+  }
+  ;
+  &-3 {
     @extend %col-md;
-    &-6 {
-        @extend %col-md
-    }
-    ;
-    &-3 {
-        @extend %col-md;
-        background-color: grey
-    }
+    background-color: grey
+  }
 }
 
 @mixin sidebar-default-style($textAlign:center, $defWidth:100%, $defHeight:100%, $defMargin:0) {
-    text-align: $textAlign;
-    width: $defWidth;
-    height: $defHeight;
-    margin: $defMargin
+  text-align: $textAlign;
+  width: $defWidth;
+  height: $defHeight;
+  margin: $defMargin
 }
 
 .admin-sidebar {
+  @include sidebar-default-style();
+  border: 0;
+  padding: 10px 0px 0px 0px;
+  background: #B3B3B3;
+  &>.btn {
+    width: 200px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: $font-weight;
+    font-size: 20px;
+    background-color: $btn-default-color;
+    color: white;
+    &:hover,
+    &:active {
+      @include on-active($btn-default-color, white)
+    }
+  }
+  .scrollbar {
+    float: left;
+    height: 400px;
+    width: 100%;
+    background: #F5F5F5;
+    overflow-y: scroll;
+    margin-bottom: 25px
+  }
+  .force-overflow {
+    min-height: 500px;
+    text-align: left;
+    li {
+      padding: 0 2px 2px;
+      &:hover,
+      &:active {
+        border-left: 2px solid #56A5EC
+      }
+    }
+    h5 {
+      cursor: pointer;
+      font-weight: bold;
+      color: #4863A0;
+      &>span {
+        float: right
+      }
+      &:hover {
+        color: #625D5D
+      }
+    }
+    p>.badge {
+      float: right;
+      color: #2B3856;
+      background-color: #BCC6CC;
+      &:hover {
+        @include on-active(#BCC6CC, #2B3856);
+        cursor: pointer;
+      }
+    }
+  }
+  #wrapper {
     @include sidebar-default-style();
-    border: 0;
-    padding: 10px 0px 0px 0px;
-    background: #B3B3B3;
-    &>.btn {
-        width: 200px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-weight: $font-weight;
-        font-size: 20px;
-        background-color: $btn-default-color;
-        color: white;
-        &:hover,
-        &:active {
-            @include on-active($btn-default-color, white)
-        }
+    padding: 4px
+  }
+  .dropdown {
+    float: right;
+    a:hover {
+      color: white;
+      background-color: rgb(9, 60, 83);
     }
-    .scrollbar {
-        float: left;
-        height: 400px;
-        width: 100%;
-        background: #F5F5F5;
-        overflow-y: scroll;
-        margin-bottom: 25px
-    }
-    .force-overflow {
-        min-height: 500px;
-        text-align: left;
-        li {
-            padding: 0 2px 2px;
-            &:hover,
-            &:active {
-                border-left: 2px solid #56A5EC
-            }
-        }
-        h5 {
-            cursor: pointer;
-            font-weight: bold;
-            color: #4863A0;
-            &>span {
-                float: right
-            }
-            &:hover {
-                color: #625D5D
-            }
-        }
-        p>.badge {
-            float: right;
-            color: #2B3856;
-            background-color: #BCC6CC;
-            &:hover {
-                @include on-active(#BCC6CC, #2B3856);
-                cursor: pointer;
-            }
-        }
-    }
-    #wrapper {
-        @include sidebar-default-style();
-        padding: 4px
-    }
-    .dropdown {
-        float: right;
-        a:hover {
-            color: white;
-            background-color: rgb(9, 60, 83);
-        }
-    }
+  }
 }
 
 #sidebar-views {
-    @include sidebar-default-style();
+  @include sidebar-default-style();
+  margin-bottom: 0;
+  span {
+    @include sidebar-views(left, 25%);
+    margin-top: 5px;
     margin-bottom: 0;
-    span {
-        @include sidebar-views(left, 25%);
-        margin-top: 5px;
-        margin-bottom: 0;
-        &:hover {
-            cursor: pointer
-        }
-        p {
-            @include sidebar-views(right, 20px);
-        }
+    &:hover {
+      cursor: pointer
     }
+    p {
+      @include sidebar-views(right, 20px);
+    }
+  }
 }
 
 
 /**Custom styles for search component in navbar*/
 
 .search-container {
-    float: left;
-    min-width: 200px;
-    width: 50%
+  float: left;
+  min-width: 200px;
+  height: 40px;
+  width: 50%
 }
 
 .glyphicon-search {
-    @extend %search-style-shared;
-    font-size: $font-size*1.5;
-    background-color: rgb(9, 60, 83);
-    color: white;
-    padding: 1px 5px 0 5px;
-    width: 50px;
-    border-radius: 0 5px 5px 0;
-    float: left
+  @extend %search-style-shared;
+  font-size: $font-size*1.5;
+  background-color: rgb(9, 60, 83);
+  color: white;
+  padding: 1px 5px 0 5px;
+  width: 50px;
+  border-radius: 0 5px 5px 0;
+  float: left
 }
 
 .search-input {
-    @extend %search-style-shared;
-    border-radius: 5px 0 0 5px;
-    width: 70%;
-    float: left
+  @extend %search-style-shared;
+  border-radius: 5px 0 0 5px;
+  width: 70%;
+  float: left
 }
 
 @mixin badge ($membership-value) {
-    @if $membership-value=='platinum' {
-        background-color: whitesmoke
-    }
-    @if $membership-value=='silver' {
-        background-color: silver
-    }
-    @if $membership-value=='gold' {
-        background-color: gold
-    }
+  @if $membership-value=='platinum' {
+    background-color: whitesmoke
+  }
+  @if $membership-value=='silver' {
+    background-color: silver
+  }
+  @if $membership-value=='gold' {
+    background-color: gold
+  }
 }
 
 @each $membership-value in platinum,
 silver,
 gold {
-    .badge-#{str($membership-value)} {
-        @include badge($membership-value)
-    }
+  .badge-#{str($membership-value)} {
+    @include badge($membership-value)
+  }
 }
 
 
 /*Custom style for user components on navbar*/
 
 %center-vertically {
-    display: table-cell;
-    vertical-align: middle;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 %img-common-style {
-    @extend %center-vertically;
-    float: left;
-    margin-right: 5px;
+  @extend %center-vertically;
+  float: left;
+  margin-right: 5px;
 }
 
 %span-common-style {
-    @extend %center-vertically;
-    font-size: 18px;
-    color: #206581;
-    height: 50px
+  @extend %center-vertically;
+  font-size: 18px;
+  color: #206581;
+  height: 50px
 }
 
 @mixin align($align) {
-    display: table;
-    text-align: $align
+  display: table;
+  text-align: $align
 }
 
 .user-avatar {
-    @include align(center);
-    float: right;
-    img {
-        @extend %img-common-style;
-        &:hover {
-            cursor: pointer
-        }
+  @include align(center);
+  float: right;
+  img {
+    @extend %img-common-style;
+    &:hover {
+      cursor: pointer
     }
-    span {
-        @extend %span-common-style
-    }
+  }
+  span {
+    @extend %span-common-style
+  }
 }
 
 #user-options {
-    &>li {
-        @include align(left);
-        padding: 0;
-        margin: 2px 0 2px 0;
-        width: 100%;
-        &>a {
-            font-weight: bold;
-            &:hover {
-                color: white;
-                background-color: rgb(9, 60, 83);
-            }
-        }
-        img {
-            @extend %img-common-style;
-            margin-left: 7px
-        }
-        span {
-            @extend %span-common-style;
-            font-style: italic;
-            padding: 0 9px 12px 7px;
-            p {
-                margin: 0;
-                padding: 0
-            }
-        }
+  &>li {
+    @include align(left);
+    padding: 0;
+    margin: 2px 0 2px 0;
+    width: 100%;
+    &>a {
+      font-weight: bold;
+      &:hover {
+        color: white;
+        background-color: rgb(9, 60, 83);
+      }
     }
+    img {
+      @extend %img-common-style;
+      margin-left: 7px
+    }
+    span {
+      @extend %span-common-style;
+      font-style: italic;
+      padding: 0 9px 12px 7px;
+      p {
+        margin: 0;
+        padding: 0
+      }
+    }
+  }
 }
 
 .navbar {
-    .dropdown {
-        margin-top: 27px
-    }
+  .dropdown {
+    margin-top: 27px
+  }
 }
 
 
 /*Custom styling for spinner components*/
 
 .loader {
-    position: fixed;
-    top: 45%;
-    left: 45%;
-    &>p {
-        font-weight: bold;
-        font-size: 30px;
-        color: rgb(19, 17, 139)
-    }
+  position: fixed;
+  top: 45%;
+  left: 45%;
+  &>p {
+    font-weight: bold;
+    font-size: 30px;
+    color: rgb(19, 17, 139)
+  }
 }
 
 .spinner {
-    text-align: center;
-    top: calc(50%-4em);
-    left: calc(50%-4em);
-    width: 10em;
-    height: 10em;
-    border: 1.1em solid rgba(39, 44, 126, 0.2);
-    border-left: 1.1em solid #c04f4f;
-    border-radius: 50%;
-    animation: load8 1.1s infinite linear;
+  text-align: center;
+  top: calc(50%-4em);
+  left: calc(50%-4em);
+  width: 10em;
+  height: 10em;
+  border: 1.1em solid rgba(39, 44, 126, 0.2);
+  border-left: 1.1em solid #c04f4f;
+  border-radius: 50%;
+  animation: load8 1.1s infinite linear;
 }
 
 @keyframes load8 {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 
 /*Custom styling for right sidebar*/
 
 .sort-sidebar {
-    text-align: center;
-    background-color: #9BA3A8;
-    padding: 10px 5px 5px 5px;
-    border-left: 3px solid gray;
-    height: 600px;
-    .btn {
-        color: rgb(48, 6, 71);
-        background-color: $btn-toggled-color;
-    }
-    &>span {
-        color: #323537;
-        font-weight: bolder;
-        padding: 4px 4px 5px 4px;
-        border-radius: 3px;
-    }
+  text-align: center;
+  background-color: #9BA3A8;
+  padding: 10px 5px 5px 5px;
+  border-left: 3px solid gray;
+  height: 600px;
+  .btn {
+    color: rgb(48, 6, 71);
+    background-color: $btn-toggled-color;
+  }
+  &>span {
+    color: #323537;
+    font-weight: bolder;
+    padding: 4px 4px 5px 4px;
+    border-radius: 3px;
+  }
 }
 
 .active-r {
-    @include on-active(#614051, white);
-    border-bottom: 3px solid $btn-toggled-color !important
+  @include on-active(#614051, white);
+  border-bottom: 3px solid $btn-toggled-color !important
 }
 
 .sad-face:after {
-    content: "\01F61E"
+  content: "\01F61E"
 }
 
 
 /*Custom style for nested dropdown list*/
 
 #booklist-dropdown {
-    text-align: left;
-    padding: 0;
-    list-style-type: none;
-    color: #165E89;
+  text-align: left;
+  padding: 0;
+  list-style-type: none;
+  color: #165E89;
+  width: 100%;
+  height: 500px;
+  background-color: white;
+  min-height: 500px;
+  overflow-y: scroll;
+  ul {
+    margin-left: 20px;
+    padding: 0
+  }
+  li.dropdown-toggle {
+    font-weight: bold;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  li.dropdown-item {
+    font-weight: normal !important;
     width: 100%;
-    height: 500px;
-    background-color: white;
-    min-height: 500px;
-    overflow-y: scroll;
-    ul {
-        margin-left: 20px;
-        padding: 0
+    list-style-type: none;
+    padding-left: 2px;
+    overflow: hidden;
+    &:hover,
+    &:active {
+      color: white;
+      background-color: #11303D;
+      cursor: pointer !important
     }
-    li.dropdown-toggle {
-        font-weight: bold;
-        &:hover {
-            cursor: pointer;
-        }
-    }
-    li.dropdown-item {
-        font-weight: normal !important;
-        width: 100%;
-        list-style-type: none;
-        padding-left: 2px;
-        overflow: hidden;
-        &:hover,
-        &:active {
-            color: white;
-            background-color: #11303D;
-            cursor: pointer !important
-        }
-    }
-    span {
-        margin-right: 2px;
-        font-size: 10px;
-        font-weight: bold
-    }
+  }
+  span {
+    margin-right: 2px;
+    font-size: 10px;
+    font-weight: bold
+  }
 }
 
 @mixin form-style($form-width) {
-    form {
-        margin-bottom: 0 !important;
-        padding-bottom: 10px !important;
-        padding-top: 10px !important;
-        margin-top: 20px;
-        width: 70%;
-        textarea {
-            width: 100%
-        }
-        .btn-success {
-            width: 100%;
-            padding: 2px;
-            border: 0;
-            margin-bottom: 0;
-            background-color: $btn-default-color;
-            height: 35px;
-            text-transform: capitalize;
-            &:hover {
-                @include on-active($btn-default-color);
-                border: 2px solid $btn-default-color
-            }
-        }
+  form {
+    margin-bottom: 0 !important;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+    margin-top: 20px;
+    width: 70%;
+    textarea {
+      width: 100%
     }
+    .btn-success {
+      width: 100%;
+      padding: 2px;
+      border: 0;
+      margin-bottom: 0;
+      background-color: $btn-default-color;
+      height: 35px;
+      text-transform: capitalize;
+      &:hover {
+        @include on-active($btn-default-color);
+        border: 2px solid $btn-default-color
+      }
+    }
+  }
 }
 
 %form-dropdown {
-    .dropdown {
-        ul {
-            text-align: left;
-            position: absolute;
-            list-style-type: none;
-            padding: 0;
-            left: 0;
-            top: 100%;
-            width: 100%;
-            height: 200px;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            background-color: #C8D1D7;
-            z-index: 2;
-            li {
-                cursor: pointer;
-                padding-left: 5px;
-                &:hover {
-                    @include on-active(white, $btn-default-color);
-                    font-weight: bold;
-                }
-            }
+  .dropdown {
+    ul {
+      text-align: left;
+      position: absolute;
+      list-style-type: none;
+      padding: 0;
+      left: 0;
+      top: 100%;
+      width: 100%;
+      height: 200px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      background-color: #C8D1D7;
+      z-index: 2;
+      li {
+        cursor: pointer;
+        padding-left: 5px;
+        &:hover {
+          @include on-active(white, $btn-default-color);
+          font-weight: bold;
         }
+      }
     }
+  }
 }
 
 
 /**Custom style for center page and form modals*/
 
 .col-md-6 {
-    @include form-style(70%);
-    @extend %form-dropdown
+  @include form-style(70%);
+  @extend %form-dropdown
 }
 
 .modal-dialog-div {
-    @include form-style(100%);
-    @extend %form-dropdown
+  @include form-style(100%);
+  @extend %form-dropdown
 }
 
 
@@ -485,196 +486,196 @@ gold {
 $width: 100%;
 $display: inline-block;
 .inputfile {
-    opacity: 0;
-    &-box {
-        position: relative;
-        display: $display;
-        width: $width;
-        height: 40px !important;
-        margin-bottom: 0 !important;
-    }
+  opacity: 0;
+  &-box {
+    position: relative;
+    display: $display;
+    width: $width;
+    height: 40px !important;
+    margin-bottom: 0 !important;
+  }
 }
 
 #image-file,
 #doc-file {
-    float: left;
-    width: 0px;
+  float: left;
+  width: 0px;
 }
 
 .preview {
-    width: $width;
-    height: 40px !important;
-    display: $display;
-    margin-bottom: 4px;
-    padding-bottom: 0px;
-    border: 2px solid rgb(151, 190, 223);
-    .btn {
-        text-align: left;
-        padding-left: 2px;
-        padding-right: 2px;
-        height: 100%;
-        width: 110px;
-        p {
-            float: right;
-            position: relative;
-            bottom: 20px;
-        }
+  width: $width;
+  height: 40px !important;
+  display: $display;
+  margin-bottom: 4px;
+  padding-bottom: 0px;
+  border: 2px solid rgb(151, 190, 223);
+  .btn {
+    text-align: left;
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 100%;
+    width: 110px;
+    p {
+      float: right;
+      position: relative;
+      bottom: 20px;
     }
-    &>p {
-        position: relative;
-        left: 115px;
-        bottom: 25px;
-        height: 10px
-    }
+  }
+  &>p {
+    position: relative;
+    left: 115px;
+    bottom: 25px;
+    height: 10px
+  }
 }
 
 .upload-file {
-    height: 40px;
-    margin-bottom: 10px
+  height: 40px;
+  margin-bottom: 10px
 }
 
 
 /*Custom style for author list page*/
 
 %parent-linked-list {
-    height: 100%;
-    margin: 0;
-    border: 0;
+  height: 100%;
+  margin: 0;
+  border: 0;
 }
 
 %linked-list-h5 {
-    cursor: pointer;
-    font-weight: bold;
-    color: #4863A0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #4863A0;
 }
 
 @mixin linked-list-btn($btn-width, $btn-font-size, $btn-float) {
-    width: $btn-width;
-    font-weight: $font-weight;
-    font-size: $btn-font-size;
-    background-color: $btn-default-color;
-    color: white;
-    border: 0;
-    float: $btn-float
+  width: $btn-width;
+  font-weight: $font-weight;
+  font-size: $btn-font-size;
+  background-color: $btn-default-color;
+  color: white;
+  border: 0;
+  float: $btn-float
 }
 
 @mixin parent-linked-list($textAlign) {
-    @extend %parent-linked-list;
-    text-align: $textAlign
+  @extend %parent-linked-list;
+  text-align: $textAlign
 }
 
 .author-list,
 .genre-list {
-    @include parent-linked-list(left);
-    .list-group-item {
-        margin: 0;
-        padding: 0;
-        &>span {
-            margin: 3px 0px 3px 20px;
-            font-weight: bold;
-            color: #585554;
-            &:hover,
-            &:active {
-                @include on-active($btn-default-color, white);
-                cursor: pointer;
-                font-weight: bolder
-            }
-        }
-        &-text {
-            margin-left: 10px;
-            color: #BF6012
-        }
+  @include parent-linked-list(left);
+  .list-group-item {
+    margin: 0;
+    padding: 0;
+    &>span {
+      margin: 3px 0px 3px 20px;
+      font-weight: bold;
+      color: #585554;
+      &:hover,
+      &:active {
+        @include on-active($btn-default-color, white);
+        cursor: pointer;
+        font-weight: bolder
+      }
     }
-    h5 {
-        @extend %linked-list-h5;
-        background-color: #D1CAC6;
-        color: rgb(9, 16, 80);
-        padding: 7px;
-        &>.badge {
-            float: right;
-            color: #2B3856;
-            background-color: white
-        }
+    &-text {
+      margin-left: 10px;
+      color: #BF6012
     }
-    .pager {
-        margin: 3px 5px;
-        &>li a {
-            &:hover {
-                border: 1px solid #5F79D9;
-                background-color: white;
-                color: #5F79D9;
-                cursor: pointer;
-            }
-        }
+  }
+  h5 {
+    @extend %linked-list-h5;
+    background-color: #D1CAC6;
+    color: rgb(9, 16, 80);
+    padding: 7px;
+    &>.badge {
+      float: right;
+      color: #2B3856;
+      background-color: white
     }
+  }
+  .pager {
+    margin: 3px 5px;
+    &>li a {
+      &:hover {
+        border: 1px solid #5F79D9;
+        background-color: white;
+        color: #5F79D9;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 %scroll-props {
-    border-radius: 50%;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    font-size: 20px;
-    padding: 10px;
-    position: fixed;
-    z-index: 1;
-    top: 45%;
-    &:hover {
-        cursor: pointer;
-        padding: 12px;
-    }
+  border-radius: 50%;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 20px;
+  padding: 10px;
+  position: fixed;
+  z-index: 1;
+  top: 45%;
+  &:hover {
+    cursor: pointer;
+    padding: 12px;
+  }
 }
 
 .book-paginate {
-    overflow-x: hidden;
+  overflow-x: hidden;
+  width: 100%;
+  padding-top: 25px;
+  .glyphicon-pencil,
+  .glyphicon-trash {
+    border: 2px solid #B6B6B4;
+    border-radius: 10%;
+    color: #B6B6B4;
+    padding: 3px;
+    &:hover {
+      cursor: pointer;
+      color: #2B547E;
+      border: 2px solid #2B547E;
+    }
+  }
+  #scroll-left {
+    @extend %scroll-props;
+  }
+  #scroll-right {
+    @extend %scroll-props;
+    margin-left: 45%
+  }
+  p {
+    z-index: 1;
+    position: absolute;
+    left: 45%;
+    font-weight: bold;
+    padding: 4px
+  }
+  #page-navigator {
+    float: left;
+    padding: 0;
+    margin: 0;
     width: 100%;
-    padding-top: 25px;
-    .glyphicon-pencil,
-    .glyphicon-trash {
-        border: 2px solid #B6B6B4;
-        border-radius: 10%;
-        color: #B6B6B4;
-        padding: 3px;
-        &:hover {
-            cursor: pointer;
-            color: #2B547E;
-            border: 2px solid #2B547E;
-        }
+    position: absolute;
+    top: 105%;
+    left: 3%;
+    a:hover {
+      cursor: pointer;
     }
-    #scroll-left {
-        @extend %scroll-props;
-    }
-    #scroll-right {
-        @extend %scroll-props;
-        margin-left: 45%
-    }
-    p {
-        z-index: 1;
-        position: absolute;
-        left: 45%;
-        font-weight: bold;
-        padding: 4px
-    }
-    #page-navigator {
-        float: left;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        position: absolute;
-        top: 105%;
-        left: 3%;
-        a:hover {
-            cursor: pointer;
-        }
-    }
+  }
 }
 
 
 /*Custom style for footer*/
 
 footer {
-    text-align: center;
-    color: #A22612;
-    font-weight: $font-weight;
-    padding-top: 10px;
-    border-top: 1px solid #1D299E
+  text-align: center;
+  color: #A22612;
+  font-weight: $font-weight;
+  padding-top: 10px;
+  border-top: 1px solid #1D299E
 }

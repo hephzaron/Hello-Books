@@ -47,7 +47,7 @@ class Dashboard extends Component {
       <Router>
         <div>
           <Header 
-              heading= "HiLIB Administrator">
+              heading= "HiLIB">
               <CustomBadge
                 user={this.props.user}/>
               <UserMenu/>

@@ -80,7 +80,8 @@ class CustomSidebar extends Component {
   render(){
     return(
       <div className={classnames(`${this.props.sidebarClass}`)}>
-        <div className="btn btn-default dropdown-create-options" >Create</div>
+        {this.props.user.admin && 
+          <div className="btn btn-default dropdown-create-options" >Create</div>}
         <CreateOptions
           clickAuthor = {this.clickAuthor}
           clickGenre = {this.clickGenre}

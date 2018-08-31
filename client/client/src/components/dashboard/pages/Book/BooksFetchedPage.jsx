@@ -15,6 +15,7 @@ class BooksFetchedPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            user:{},
             pageOfItems: [],
             books:[...books],
             isLoading:false
@@ -51,8 +52,8 @@ class BooksFetchedPage extends Component {
     }
  
     render() {
-      const { books } = this.state
-      const cardActions = [{
+      const { user, books } = this.state
+      const cardActions = user.admin ? [{
           label: 'Edit',
           iconClass: 'glyphicon glyphicon-pencil',
           onClick: this.editBook
@@ -61,7 +62,7 @@ class BooksFetchedPage extends Component {
             iconClass: 'glyphicon glyphicon-trash',
             onClick: this.deleteBook
         }
-      ]
+      ]:[]
         return (
             <div className="book-paginate"> 
                 <div className="container">
@@ -96,7 +97,8 @@ class BooksFetchedPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  books: state.books['books']
+  books: state.books['books'],
+  user: state.auth['user']
 });
 
 export { BooksFetchedPage }

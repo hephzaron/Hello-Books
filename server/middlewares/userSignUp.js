@@ -1,5 +1,3 @@
-// Ensure username and email entry at registration is unique
-
 const LocalUsers = require('../models').LocalUser;
 
 module.exports = {
@@ -45,7 +43,7 @@ module.exports = {
           res.status(409).send({ message: 'username already exist' });
         }
       }
-    ).catch((errors) => res.status(500).send({ message: 'Internal Server Error-1', errors }));
+    ).catch((errors) => res.status(500).send({ message: 'Internal Server Error', errors }));
 
   }
 

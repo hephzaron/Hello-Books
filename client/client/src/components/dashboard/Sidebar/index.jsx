@@ -138,7 +138,8 @@ class Sidebar extends Component {
       <CustomSidebar
         sidebarClass = "admin-sidebar"
         listBook = {this.listBook}
-        listBorrowedBook = {this.listBorrowedBook}>
+        listBorrowedBook = {this.listBorrowedBook}
+        user={this.props.user}>
         {this.state.list==='book' && 
           <LinkedBookList
             items={this.state.books}

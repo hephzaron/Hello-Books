@@ -13,6 +13,7 @@ class AuthorsFetchedPage extends Component {
   constructor(props){
     super(props);
     this.state = {
+      user:{},
       isLoading: false,
       authors: [...authors]
     }
@@ -59,8 +60,8 @@ class AuthorsFetchedPage extends Component {
         items={this.state.authors}
         isLoading={this.state.isLoading}
         pageOffset = { 5 }
-        onEditClick = {(author)=>this.onEditAuthor(author)}
-        onDeleteClick = {(author)=>this.onDeleteAuthor(author)}/>
+        onEditClick = {this.state.user.admin ? (author)=>this.onEditAuthor(author) : false}
+        onDeleteClick = {this.state.user.admin ? (author)=>this.onDeleteAuthor(author) : false}/>
     )
   }
 }
@@ -70,7 +71,8 @@ AuthorsFetchedPage.propTypes = {
 }
 
 const mapStateToProps = (state) =>({
-  authors: state.authors['authors']
+  authors: state.authors['authors'],
+  user: state.auth['user']
 })
 
 const actionCreators = {
